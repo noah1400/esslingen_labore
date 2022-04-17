@@ -1,0 +1,11 @@
+7	8	Herr	Siegfried Metzger	16.02.1963	nan	Löschen	Kein Datum
+21	22	Frau	Elisabeth	Rau	im Februar 1965	Korrektur	Monat reicht für Alter
+23	24	Herr	Manfred	Wagner	VHVeHvZZXM	Löschen	Kein Datum
+39	40	Herr	Werner	Hartung	27.09.814	Löschen	Kein Datum
+41	42	Herr	Christoph	Weiß		Löschen	Kein Datum
+54	55	Frau	Heike	Schneider	unbekannt	Löschen	Kein Datum
+64	65	Herr	Oliver	Berger	xxxx	Löschen	Kein Datum
+65	66	Herr	Thomas	Alt	20.11.	Löschen	Kein Datum
+73	74	Herr	Jochen	Walter	24.10.2824	Löschen	Kein Datum
+81	82	Frau	Dorothea	Seidel	xxxx	Löschen	Kein Datum
+100	101	Frau	Kerstin	Kaiser	12.12.2540	Löschen	Kein Datum
