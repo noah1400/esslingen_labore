@@ -1,0 +1,5 @@
+Boss: Mayer, Gerd
+Gehalt: 1000
+
+Angestellter: Mueller, Rainer
+Lohn: 400
