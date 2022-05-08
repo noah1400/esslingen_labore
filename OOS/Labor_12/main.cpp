@@ -54,7 +54,7 @@ public:
 	A(int a = 0xA) : a(a) {}
 };
 
-class B : public A {
+class B : virtual public A {
 public:
 	int b; 
 	B(int a = 0xBA, int b = 0xB) : A(a), b(b) {}
@@ -66,13 +66,13 @@ public:
 		: B(a, b) {} 
 };
 
-class C2 : public B { 
+class C2 : virtual public B { 
 public:
 	C2(int a = 0xC2A, int b = 0xC2B) 
 		: B(a, b) {} 
 };
 
-class C3 : public B {
+class C3 : virtual public B {
 public:
 	C3(int a = 0xC2A, int b = 0xC2B) 
 		: B(a, b) {} 
@@ -82,7 +82,7 @@ class D1 : public C2, public C3 {
 public:
 	D1(int C2_a = 0xD1C2A, int C3_a = 0xD1C3A, 
 	   int C2_b = 0xD1C2B, int C3_b = 0xD1C3B) 
-		: C2(C2_a, C2_b), C3(C3_a, C3_b) {}                                                      
+		: A(0xD1A),C2(C2_a, C2_b), C3(C3_a, C3_b) {}                                                      
 	void print() {
 		cout << "D1::print() ..." << endl;
 		string strArr[] = 
@@ -97,7 +97,7 @@ class D2 : public C1, public C2, public C3 {
 public:
 	D2(int C1_a = 0xD2C1A, int C2_a = 0xD2C2A, int C3_a = 0xD2C3A, 
 	   int C1_b = 0xD2C1B, int C2_b = 0xD2C2B, int C3_b = 0xD2C3B) 
-		: C1(C1_a, C1_b), C2(C2_a, C2_b), C3(C3_a, C3_b) {}                         
+		: B(0x0,0xD2B),C1(C1_a, C1_b), C2(C2_a, C2_b), C3(C3_a, C3_b) {}                              
 	void print() { 
 		cout << "D2::print() ..." << endl;
 		string strArr[] = { "C1::a", "C2::a", "C3::a", 
