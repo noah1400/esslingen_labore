@@ -16,6 +16,10 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Noah");
 MODULE_DESCRIPTION("KMALLOC MODULE");
 
+//variables
+static int size = sizeof(char*);
+char **kmallocArr;
+
 // read parameters from instruction line
 static int loop_cnt = 0;
 static int alloc_size = 0;
@@ -40,20 +44,25 @@ static void tasklet_handler(unsigned long data)
     printk(KERN_INFO "Tasklet handler\n");
     int i;
     unsigned long start, end, total;
-    void *ptr;
     start = rdtsc();
     for (i = 0; i < loop_cnt; i++) {
-        ptr = kmalloc(alloc_size, GFP_KERNEL);
-        kfree(ptr);
+        kmallocArr[i] = kmalloc(alloc_size, GFP_KERNEL);
     }
     end = rdtsc();
     total = end - start;
-    printk(KERN_INFO "Total time: %lu\n", total);
+    printk(KERN_INFO "Total cycles: %lu\n", total);
 }
 
 // module init function
 static int kmalloc_init(void){
     printk(KERN_INFO "KMALLOC MODULE LOADED\n");
+    // Validating the parameters
+    if (loop_cnt <= 0 || alloc_size <= 0) {
+        printk(KERN_INFO "Invalid parameters\n");
+        return -1;
+    }
+    // Setting up kmallocArr
+    kmallocArr = kmalloc_array(loop_cnt, size, GFP_KERNEL);
     tasklet_schedule(&tasklet);
     return 0;
 }
@@ -62,6 +71,11 @@ static int kmalloc_init(void){
 static void kmalloc_exit(void){
     printk(KERN_INFO "KMALLOC MODULE UNLOADED\n");
     tasklet_kill(&tasklet);
+    // Freeing kmallocArr
+    int i;
+    for (i = 0; i < loop_cnt; i++) {
+        kfree(kmallocArr[i]);
+    }
 }
 
 // register init and exit functions
