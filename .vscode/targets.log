@@ -8,7 +8,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This program built for i386-pc-mingw32
  
 
-# �Make�-Datenbank; erstellt am: Tue May 17 13:55:37 2022
+# �Make�-Datenbank; erstellt am: Thu May 19 09:40:54 2022
 
 # Variablen
 
@@ -16,8 +16,6 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 <D = $(patsubst %/,%,$(dir $<))
 # automatisch
 ?F = $(notdir $?)
-# Umgebung
-ELECTRON_NO_ATTACH_CONSOLE = 1
 # Makefile
 MAKEFLAGS = Rrqp
 # Umgebung
@@ -36,7 +34,8 @@ HOMEDRIVE = C:
 CURDIR := c:/Users/noahs/Documents/Coding/esslingen_labore
 # Standard
 SHELL := sh.exe
-# Umgebung
+# U 
+mgebung
 WINDIR = C:\WINDOWS
 # Umgebung
 VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{"*":"de"},"_languagePackId":"76abe230f76758c10463f0219f362aef.de","_translationsConfigFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\tcf.json","_cacheRoot":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de","_resolvedLanguagePackCoreLocation":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\da15b6fd3ef856477bf6f4fb29ba1b7af717770d","_corruptedFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\corrupted.info","_languagePackSupport":true}
@@ -47,6 +46,8 @@ PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # Makefile
 MAKEFILE_LIST := 
 # Umgebung
+FPS_BROWSER_USER_PROFILE_STRING = Default
+# Umgebung
 TMP = C:\Users\noahs\AppData\Local\Temp
 # Umgebung
 VSCODE_VERBOSE_LOGGING = true
@@ -55,9 +56,9 @@ PROGRAMW6432 = C:\Program Files
 # Umgebung
 PROGRAMDATA = C:\ProgramData
 # Umgebung
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-2c72d2c6-e263-412d-a435-5779556dac14-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e958ff0e-3ab6-4d95-a7d0-91d05daba01a-sock
 # Umgebung
-VSCODE_CWD = C:\Users\noahs\AppData\Local\GitHubDesktop\app-3.0.0
+VSCODE_CWD = C:\Users\noahs\AppData\Local\Programs\Microsoft VS Code
 # Umgebung
 PATH = C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\MATLAB\R2021a\bin;C:\Program Files (x86)\Brackets\command;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Symfony;C:\Program Files\PuTTY\;C:\Program Files\CMake\bin;C:\Program Files\nodejs\;C:\Program Files\Graphviz\bin;C:\Program Files\Git\cmd;C:\Program Files\Go\bin;C:\Program Files\Pandoc\;C:\Users\noahs\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\noahs\AppData\Local\Programs\Python\Python310\;D:\programme\anaconda;D:\programme\anaconda\Library\mingw-w64\bin;D:\programme\anaconda\Library\usr\bin;D:\programme\anaconda\Library\bin;D:\programme\anaconda\Scripts;C:\Users\noahs\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\noahs\AppData\Local\Programs\Python\Python39\;C:\Users\noahs\AppData\Local\Microsoft\WindowsApps;C:\Users\noahs\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\mingw64\bin;C:\xampp\php;C:\Users\noahs\AppData\Roaming\Composer\vendor\bin;C:\Program Files (x86)\Nmap;C:\gtk\bin;C:\gtk\lib\pkgconfig;C:\Program Files (x86)\GnuWin32\bin;C:\Program Files\nodejs;C:\msys64\mingw64\bin;C:\Users\noahs\AppData\Local\GitHubDesktop\bin;C:\Users\noahs\go\bin;C:\Program Files\apache-maven-3.8.4\bin;C:\Users\noahs\AppData\Local\Programs\MiKTeX\miktex\bin\x64\
 # Umgebung
@@ -81,7 +82,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatisch
 %F = $(notdir $%)
 # Umgebung
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_9572_SNSSBKYNCIBJLTWI
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_13308_CSRQDZYUEORAAITC
 # Umgebung
 VSCODE_PIPE_LOGGING = true
 # Umgebung
@@ -99,11 +100,9 @@ PUBLIC = C:\Users\Public
 # Umgebung
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # Umgebung
-VSCODE_CLI = 1
-# Umgebung
 VSCODE_CODE_CACHE_PATH = C:\Users\noahs\AppData\Roaming\Code\CachedData\da15b6fd3ef856477bf6f4fb29ba1b7af717770d
 # Umgebung
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # Umgebung
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # Umgebung
@@ -116,8 +115,6 @@ USERDOMAIN = DESKTOP-E9M1CO7
 MAKE = $(MAKE_COMMAND)
 # Standard
 MAKECMDGOALS := all
-# Umgebung
-LOCAL_GIT_DIRECTORY = C:\Users\noahs\AppData\Local\GitHubDesktop\app-3.0.0\resources\app\git
 # Umgebung
 JAVA_HOME = C:\Program Files\Java\jdk-16.0.2
 # Standard
@@ -180,8 +177,7 @@ LC_ALL = C
 SUFFIXES := 
 # Umgebung
 SYSTEMDRIVE = C:
-# U 
-mgebung
+# Umgebung
 SESSIONNAME = Console
 # Umgebung
 PROCESSOR_REVISION = 8e0a
@@ -192,11 +188,13 @@ LANG = C
 # Umgebung
 PROCESSOR_LEVEL = 6
 # Umgebung
-VSCODE_PID = 9572
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
+# Umgebung
+VSCODE_PID = 13308
 # Umgebung
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # variable set hash-table stats:
-# Load=91/1024=9%, Rehash=0, Collisions=9/108=8%
+# Load=90/1024=9%, Rehash=0, Collisions=9/107=8%
 
 # Pattern-specific Variable Values
 
@@ -238,10 +236,12 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # D:\programme\anaconda\Library\mingw-w64\bin (Schl�ssel (key) D:/programme/anaconda/Library/mingw-w64/bin,  letzte �nderung (mtime) 1646914563): 15 Dateien, keine Unm�glichkeiten.
 # C:\Program Files (x86)\Brackets\command (Schl�ssel (key) C:/Program Files (x86)/Brackets/command,  letzte �nderung (mtime) 1631215056): 4 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\go\bin: Konnte den Status nicht feststellen.
-# C:\Program Files\Symfony (Schl�ssel (key) C:/Program Files/Symfony,  letzte �nderung (mtime) 1631228179): 5 Dateien, keine Unm�glichkeiten.
+# C:\Program Files\Symfony (Schl�ssel (key) C:/Program Files/Symfony 
+,  letzte �nderung (mtime) 1631228179): 5 Dateien, keine Unm�glichkeiten.
 # C:\msys64\mingw64\bin (Schl�ssel (key) C:/msys64/mingw64/bin,  letzte �nderung (mtime) 1648821421): 209 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\AppData\Local\Programs\Python\Python39\ (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Python/Python39/,  letzte �nderung (mtime) 1647247040): 5 Dateien, keine Unm�glichkeiten.
-# C:\Program Files\Git\cmd (Schl�ssel (key) C:/Program Files/Git/cmd,  letzte �nderung (mtime) 1641772313): 8 Dateien, keine Unm�glichkeiten.
+# C:\Program Files\Git\cmd (Schl�ssel (key) C:/Program Files/Git/cmd,  letzte �nderung (mtime) 164 
+1772313): 8 Dateien, keine Unm�glichkeiten.
 # C:\WINDOWS\system32 (Schl�ssel (key) C:/WINDOWS/system32,  letzte �nderung (mtime) 1652786715): 2984 Dateien, keine Unm�glichkeiten.
 # C:\Program Files\CMake\bin (Schl�ssel (key) C:/Program Files/CMake/bin,  letzte �nderung (mtime) 1633640245): 7 Dateien, keine Unm�glichkeiten.
 # C:\Program Files\Graphviz\bin (Schl�ssel (key) C:/Program Files/Graphviz/bin,  letzte �nderung (mtime) 1641068437): 60 Dateien, keine Unm�glichkeiten.
@@ -274,7 +274,8 @@ all:
 # Dies ist kein Ziel:
 makefile:
 #  A default, MAKEFILES, or -include/sinclude makefile.
-#  Suche nach impliziten Regeln wurde durchgef�hrt.
+#  Suche nach impliziten Reg 
+eln wurde durchgef�hrt.
 #  Die Datei existiert nicht.
 #  Datei wurde aktualisiert.
 #  Aktualisierung fehlgeschlagen.
@@ -289,11 +290,9 @@ makefile:
 
 # Dies ist kein Ziel:
 GNUmakefile:
-#  A default, MAKEFILES, or -include/sinclude ma 
-make.exe: *** Keine Regel, um �all� zu erstellen.  Schluss.
-
-kefile.
-#  Suche nach impliziten Regeln wurde durchgef�hrt.
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Suche nach impliziten Regeln wurde durchgef� 
+hrt.
 #  Die Datei existiert nicht.
 #  Datei wurde aktualisiert.
 #  Aktualisierung fehlgeschlagen.
@@ -311,8 +310,11 @@ kefile.
 # # of strings in strcache: 0
 # # of strcache buffers: 0
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
-# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
+# strcache free: total = 0 / max = 0 / min = 4096  
+make.exe: *** Keine Regel, um �all� zu erstellen.  Schluss.
 
-# �Make�-Datenbank; beendet am: Tue May 17 13:55:37 2022
+/ avg = 0
+
+# �Make�-Datenbank; beendet am: Thu May 19 09:40:54 2022
 
  

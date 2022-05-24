@@ -1,7 +1,6 @@
 make.exe --dry-run --always-make --keep-going --print-directory
 make.exe: Entering directory `c:/Users/noahs/Documents/Coding/esslingen_labore'
+make.exe: Leaving directory `c:/Users/noahs/Documents/Coding/esslingen_labore'
  
 make.exe: *** Keine Targets angegeben und keine �make�-Steuerdatei gefunden.  Schluss.
 
-make.exe: Leaving directory `c:/Users/noahs/Documents/Coding/esslingen_labore'
- 

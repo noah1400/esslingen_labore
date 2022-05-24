@@ -12,17 +12,12 @@ class Gericht {
     public:
         Gericht(string name);
         void belegtMit(string zutat);
-        virtual void zubereitung();
+        virtual void zubereitung()=0;
 };
 
 Gericht::Gericht(string name): name(name) {}
 void Gericht::belegtMit(string zutat) {
     zutaten.push_back(zutat);
-}
-void Gericht::zubereitung() {
-    for (string zutat : zutaten) {
-        cout << "- " << zutat << endl;
-    }
 }
 
 class Pizza: public Gericht {
@@ -38,7 +33,9 @@ void Pizza::belegtMit(string zutat) {
 }
 void Pizza::zubereitung() {
     cout << "Pizza "<< name <<". Pizzaboden, belegt mit:" <<endl;
-    Gericht::zubereitung();
+    for (string zutat : zutaten) {
+        cout << "- " << zutat << endl;
+    }
 }
 
 class Burger: public Gericht {
@@ -53,7 +50,9 @@ void Burger::belegtMit(string zutat){
 }
 void Burger::zubereitung() {
     cout << name <<". Brötchen mit:" <<endl;
-    Gericht::zubereitung();
+    for (string zutat : zutaten) {
+        cout << "- " << zutat << endl;
+    }
 }
 
 int main(int argc, char* argv[])

@@ -32,10 +32,18 @@ void AuthenticationResult::setUsername(string username) {
     this->username = username;
 }
 
+
+
+
+
 class IAuthentification {
     public:
         virtual AuthenticationResult authenticate() = 0;
 };
+
+
+
+
 
 class Client {
     IAuthentification* auth = nullptr;
@@ -58,6 +66,10 @@ void Client::execute(){
     }
 }
 
+
+
+
+
 class MockAuth : public IAuthentification {
     public:
         AuthenticationResult authenticate();
@@ -66,6 +78,10 @@ class MockAuth : public IAuthentification {
 AuthenticationResult MockAuth::authenticate() {
     return AuthenticationResult(true, "Default");
 }
+
+
+
+
 
 class UsernamePassword : public IAuthentification {
     public:
@@ -85,6 +101,10 @@ AuthenticationResult UsernamePassword::authenticate(){
         return AuthenticationResult(false, username);
     }
 }
+
+
+
+
 
 class Certificate : public IAuthentification {
     public:
