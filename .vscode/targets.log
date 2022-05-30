@@ -8,7 +8,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This program built for i386-pc-mingw32
  
 
-# �Make�-Datenbank; erstellt am: Thu May 19 09:40:54 2022
+# �Make�-Datenbank; erstellt am: Thu May 26 15:07:03 2022
 
 # Variablen
 
@@ -34,11 +34,10 @@ HOMEDRIVE = C:
 CURDIR := c:/Users/noahs/Documents/Coding/esslingen_labore
 # Standard
 SHELL := sh.exe
-# U 
-mgebung
+# Umgebung
 WINDIR = C:\WINDOWS
 # Umgebung
-VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{"*":"de"},"_languagePackId":"76abe230f76758c10463f0219f362aef.de","_translationsConfigFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\tcf.json","_cacheRoot":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de","_resolvedLanguagePackCoreLocation":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\da15b6fd3ef856477bf6f4fb29ba1b7af717770d","_corruptedFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{"*":"de"},"_languagePackId":"76abe230f76758c10463f0219f362aef.de","_translationsConfigFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\tcf.json","_cacheRoot":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de","_resolvedLanguagePackCoreLocation":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"C:\\Users\\noahs\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\corrupted.info","_languagePackSupport":true}
 # Umgebung
 ONEDRIVE = C:\Users\noahs\OneDrive
 # Umgebung
@@ -56,7 +55,7 @@ PROGRAMW6432 = C:\Program Files
 # Umgebung
 PROGRAMDATA = C:\ProgramData
 # Umgebung
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e958ff0e-3ab6-4d95-a7d0-91d05daba01a-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-b51203ea-8308-4311-bc88-56484a9086de-sock
 # Umgebung
 VSCODE_CWD = C:\Users\noahs\AppData\Local\Programs\Microsoft VS Code
 # Umgebung
@@ -82,7 +81,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatisch
 %F = $(notdir $%)
 # Umgebung
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_13308_CSRQDZYUEORAAITC
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_1272_LQOKCFERPCDMVQFV
 # Umgebung
 VSCODE_PIPE_LOGGING = true
 # Umgebung
@@ -100,7 +99,7 @@ PUBLIC = C:\Users\Public
 # Umgebung
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # Umgebung
-VSCODE_CODE_CACHE_PATH = C:\Users\noahs\AppData\Roaming\Code\CachedData\da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+VSCODE_CODE_CACHE_PATH = C:\Users\noahs\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # Umgebung
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # Umgebung
@@ -142,7 +141,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 # Umgebung
 OS = Windows_NT
 # Umgebung
-VSCODE_IPC_HOOK = \\.\pipe\21e549ea41fdfa9c8b517321119b6aea-1.67.1-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\21e549ea41fdfa9c8b517321119b6aea-1.67.2-main-sock
 # Umgebung
 HOMEPATH = \Users\noahs
 # Umgebung
@@ -161,6 +160,8 @@ SYSTEMROOT = C:\WINDOWS
 +F = $(notdir $+)
 # Umgebung
 APPDATA = C:\Users\noahs\AppData\Roaming
+# Umgebung
+__COMPAT_LAYER = DetectorsAppHealth
 # Umgebung
 TEMP = C:\Users\noahs\AppData\Local\Temp
 # Umgebung
@@ -190,11 +191,11 @@ PROCESSOR_LEVEL = 6
 # Umgebung
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # Umgebung
-VSCODE_PID = 13308
+VSCODE_PID = 1272
 # Umgebung
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # variable set hash-table stats:
-# Load=90/1024=9%, Rehash=0, Collisions=9/107=8%
+# Load=91/1024=9%, Rehash=0, Collisions=9/108=8%
 
 # Pattern-specific Variable Values
 
@@ -208,7 +209,7 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # C:\Users\noahs\AppData\Local\Programs\Python\Python310\ (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Python/Python310/,  letzte �nderung (mtime) 1647380323): 20 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\AppData\Local\Programs\Python\Python310\Scripts\ (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Python/Python310/Scripts/,  letzte �nderung (mtime) 1648001721): 30 Dateien, keine Unm�glichkeiten.
 # C:\Program Files\Pandoc\ (Schl�ssel (key) C:/Program Files/Pandoc/,  letzte �nderung (mtime) 1652338566): 6 Dateien, keine Unm�glichkeiten.
-# C:\Users\noahs\AppData\Local\Programs\Microsoft VS Code\bin (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Microsoft VS Code/bin,  letzte �nderung (mtime) 1652327695): 4 Dateien, keine Unm�glichkeiten.
+# C:\Users\noahs\AppData\Local\Programs\Microsoft VS Code\bin (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Microsoft VS Code/bin,  letzte �nderung (mtime) 1652946136): 4 Dateien, keine Unm�glichkeiten.
 # C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (Schl�ssel (key) C:/WINDOWS/System32/WindowsPowerShell/v1.0/,  letzte �nderung (mtime) 1634827433): 42 Dateien, keine Unm�glichkeiten.
 # C:\WINDOWS\System32\Wbem (Schl�ssel (key) C:/WINDOWS/System32/Wbem,  letzte �nderung (mtime) 1652658574): 170 Dateien, keine Unm�glichkeiten.
 # . (Schl�ssel (key) c:/Users/noahs/Documents/Coding/esslingen_labore,  letzte �nderung (mtime) 1652786482): 8 Dateien, keine Unm�glichkeiten.
@@ -228,7 +229,7 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # C:\Program Files\PuTTY\ (Schl�ssel (key) C:/Program Files/PuTTY/,  letzte �nderung (mtime) 1633078270): 12 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\AppData\Local\GitHubDesktop\bin (Schl�ssel (key) C:/Users/noahs/AppData/Local/GitHubDesktop/bin,  letzte �nderung (mtime) 1641763210): 4 Dateien, keine Unm�glichkeiten.
 # C:\Program Files (x86)\Common Files\Oracle\Java\javapath (Schl�ssel (key) C:/Program Files (x86)/Common Files/Oracle/Java/javapath,  letzte �nderung (mtime) 1651001782): 5 Dateien, keine Unm�glichkeiten.
-# C:\Users\noahs\AppData\Local\Microsoft\WindowsApps (Schl�ssel (key) C:/Users/noahs/AppData/Local/Microsoft/WindowsApps,  letzte �nderung (mtime) 1652136735): 22 Dateien, keine Unm�glichkeiten.
+# C:\Users\noahs\AppData\Local\Microsoft\WindowsApps (Schl�ssel (key) C:/Users/noahs/AppData/Local/Microsoft/WindowsApps,  letzte �nderung (mtime) 1653500708): 22 Dateien, keine Unm�glichkeiten.
 # D:\programme\anaconda\Scripts (Schl�ssel (key) D:/programme/anaconda/Scripts,  letzte �nderung (mtime) 1646914680): 344 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\AppData\Local\Programs\Python\Python39\Scripts\ (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Python/Python39/Scripts/,  letzte �nderung (mtime) 1644102719): 33 Dateien, keine Unm�glichkeiten.
 # C:\WINDOWS (Schl�ssel (key) C:/WINDOWS,  letzte �nderung (mtime) 1652658743): 129 Dateien, keine Unm�glichkeiten.
@@ -236,12 +237,10 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 # D:\programme\anaconda\Library\mingw-w64\bin (Schl�ssel (key) D:/programme/anaconda/Library/mingw-w64/bin,  letzte �nderung (mtime) 1646914563): 15 Dateien, keine Unm�glichkeiten.
 # C:\Program Files (x86)\Brackets\command (Schl�ssel (key) C:/Program Files (x86)/Brackets/command,  letzte �nderung (mtime) 1631215056): 4 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\go\bin: Konnte den Status nicht feststellen.
-# C:\Program Files\Symfony (Schl�ssel (key) C:/Program Files/Symfony 
-,  letzte �nderung (mtime) 1631228179): 5 Dateien, keine Unm�glichkeiten.
+# C:\Program Files\Symfony (Schl�ssel (key) C:/Program Files/Symfony,  letzte �nderung (mtime) 1631228179): 5 Dateien, keine Unm�glichkeiten.
 # C:\msys64\mingw64\bin (Schl�ssel (key) C:/msys64/mingw64/bin,  letzte �nderung (mtime) 1648821421): 209 Dateien, keine Unm�glichkeiten.
 # C:\Users\noahs\AppData\Local\Programs\Python\Python39\ (Schl�ssel (key) C:/Users/noahs/AppData/Local/Programs/Python/Python39/,  letzte �nderung (mtime) 1647247040): 5 Dateien, keine Unm�glichkeiten.
-# C:\Program Files\Git\cmd (Schl�ssel (key) C:/Program Files/Git/cmd,  letzte �nderung (mtime) 164 
-1772313): 8 Dateien, keine Unm�glichkeiten.
+# C:\Program Files\Git\cmd (Schl�ssel (key) C:/Program Files/Git/cmd,  letzte �nderung (mtime) 1641772313): 8 Dateien, keine Unm�glichkeiten.
 # C:\WINDOWS\system32 (Schl�ssel (key) C:/WINDOWS/system32,  letzte �nderung (mtime) 1652786715): 2984 Dateien, keine Unm�glichkeiten.
 # C:\Program Files\CMake\bin (Schl�ssel (key) C:/Program Files/CMake/bin,  letzte �nderung (mtime) 1633640245): 7 Dateien, keine Unm�glichkeiten.
 # C:\Program Files\Graphviz\bin (Schl�ssel (key) C:/Program Files/Graphviz/bin,  letzte �nderung (mtime) 1641068437): 60 Dateien, keine Unm�glichkeiten.
@@ -254,7 +253,10 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-E9M1CO7
 
 # Keine impliziten Regeln vorhanden.
 
-# Dateien
+# D 
+make.exe: *** Keine Regel, um �all� zu erstellen.  Schluss.
+
+ateien
 
 # Dies ist kein Ziel:
 all:
@@ -274,8 +276,7 @@ all:
 # Dies ist kein Ziel:
 makefile:
 #  A default, MAKEFILES, or -include/sinclude makefile.
-#  Suche nach impliziten Reg 
-eln wurde durchgef�hrt.
+#  Suche nach impliziten Regeln wurde durchgef�hrt.
 #  Die Datei existiert nicht.
 #  Datei wurde aktualisiert.
 #  Aktualisierung fehlgeschlagen.
@@ -291,8 +292,7 @@ eln wurde durchgef�hrt.
 # Dies ist kein Ziel:
 GNUmakefile:
 #  A default, MAKEFILES, or -include/sinclude makefile.
-#  Suche nach impliziten Regeln wurde durchgef� 
-hrt.
+#  Suche nach impliziten Regeln wurde durchgef�hrt.
 #  Die Datei existiert nicht.
 #  Datei wurde aktualisiert.
 #  Aktualisierung fehlgeschlagen.
@@ -310,11 +310,8 @@ hrt.
 # # of strings in strcache: 0
 # # of strcache buffers: 0
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
-# strcache free: total = 0 / max = 0 / min = 4096  
-make.exe: *** Keine Regel, um �all� zu erstellen.  Schluss.
+# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-/ avg = 0
-
-# �Make�-Datenbank; beendet am: Thu May 19 09:40:54 2022
+# �Make�-Datenbank; beendet am: Thu May 26 15:07:03 2022
 
  
