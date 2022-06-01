@@ -1,0 +1,17 @@
+Endziffer 35
+Testat-Aufgabe sr_aufg_3 Aufgabenteil d)
+
+Sie spielen an 4 Tagen KENO. Dabei kreuzen
+Sie jeden Tag in einem Tippfeld 6 Kästchen an.
+Ihr Einsatz beträgt jeden Tag 2 Euro.
+
+Wenn Sie an einem Tag 0, 1 oder 2 Richtige haben,
+erhalten Sie von der Lottogesellschaft nichts ausbezahlt,
+d. h. Sie verlieren Ihren Einsatz von 2 Euro.
+
+Wie wahrscheinlich ist es, dass dies an den 4 Tagen
+genau 3-mal vorkommt?
+
+Mit anderen Worten: Wie wahrscheinlich ist es, dass Sie
+bei 4 Spielen genau 3-mal einen Verlust
+von 2 Euro haben?
