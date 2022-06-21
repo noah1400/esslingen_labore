@@ -1,0 +1,11 @@
+PID:59092 time: min:39240 max:43811397 Ticks Avg without min/max:51427.884868 Ticks (for 100000 measurements) for 64 Bytes (2.96 MB/s)
+PID:59092 time: min:38880 max:5199134 Ticks Avg without min/max:51355.872357 Ticks (for 100000 measurements) for 256 Bytes (11.96 MB/s)
+PID:59092 time: min:40319 max:8743703 Ticks Avg without min/max:45996.577872 Ticks (for 100000 measurements) for 1024 Bytes (53.44 MB/s)
+PID:59092 time: min:41039 max:8566582 Ticks Avg without min/max:57083.652593 Ticks (for 100000 measurements) for 4096 Bytes (172.13 MB/s)
+PID:59092 time: min:46080 max:6261857 Ticks Avg without min/max:59873.066821 Ticks (for 100000 measurements) for 16384 Bytes (682.59 MB/s)
+PID:59092 time: min:61199 max:36792818 Ticks Avg without min/max:73390.060281 Ticks (for 100000 measurements) for 65536 Bytes (2353.98 MB/s)
+PID:59092 time: min:108720 max:44224316 Ticks Avg without min/max:120454.125723 Ticks (for 100000 measurements) for 262144 Bytes (6402.34 MB/s)
+PID:59092 time: min:274680 max:46095602 Ticks Avg without min/max:328839.737405 Ticks (for 100000 measurements) for 1048576 Bytes (10240.08 MB/s)
+PID:59092 time: min:1032843 max:72234911 Ticks Avg without min/max:1518593.340917 Ticks (for 100000 measurements) for 4194304 Bytes (9337.65 MB/s)
+PID:59092 time: min:11117909 max:145161384 Ticks Avg without min/max:14949588.414738 Ticks (for 100000 measurements) for 16777216 Bytes (3846.76 MB/s)
+PID:59093 (CHILD) exits
