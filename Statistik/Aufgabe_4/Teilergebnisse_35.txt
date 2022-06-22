@@ -1,0 +1,74 @@
+Statistik Labor
+Teilergebnisse
+Endziffern der Matrikelnr.: 35
+ 
+Hinweis: Jedes Fragezeichen ? steht für eine von Ihnen zu bestimmende Ziffer.
+ 
+Aufgabe 1f)
+ 
+Mittelwert des Alters (alle Beschäftigten):           ??,9412
+Varianz des Alters (alle Beschäftigten):             ???,7589
+Standardabweichung des Alters (alle Beschäftigten):   ??,4000
+Mittelwert des Alters (Frauen):                       ??,0196
+Varianz des Alters (Frauen):                          ??,9796
+Standardabweichung des Alters (Frauen):                ?,9488
+Mittelwert des Alters (Männer):                       ??,8627
+Varianz des Alters (Männer):                         ???,2408
+Standardabweichung des Alters (Männer):               ??,4254
+ 
+Bitte vergessen Sie nicht, außerdem die Mediane und Spannweiten zu berechnen.
+ 
+Aufgabe 2f)
+ 
+Prognose für das Jahr 2020: ?3?,8? Millionen Einwohner
+ 
+Aufgabe 3
+ 
+a) Varianz            von X10: ????5,77??
+   Standardabweichung von X10:   ???,87??
+ 
+b) Varianz            von X9:  ????8,07??
+   Standardabweichung von X9:    ???,92??
+ 
+   Varianz            von X8:   ???8,72??
+   Standardabweichung von X8:     ??,20??
+ 
+   Varianz            von X7:    ??1,78??
+   Standardabweichung von X7:     ??,21??
+ 
+   Varianz            von X6:    ??1,35??
+   Standardabweichung von X6:     ??,35??
+ 
+   Varianz            von X5:     ?6,01??
+   Standardabweichung von X5:      ?,48??
+ 
+   Varianz            von X4:     ?1,26??
+   Standardabweichung von X4:      ?,35??
+ 
+   Varianz            von X3:     ?0,99??
+   Standardabweichung von X3:      ?,58??
+ 
+   Varianz            von X2:     ?0,43??
+   Standardabweichung von X2:      ?,23??
+ 
+d) Die gesuchte Wahrscheinlichkeit ist 0,?18?
+ 
+Aufgabe 4b)
+ 
+Messreihe 1: Mittelwert         = ???,91??
+Messreihe 1: Varianz            =   ?,84??
+Messreihe 1: Standardabweichung =   ?,96??
+Messreihe 1: Median             = ???,84??
+Messreihe 1: Spannweite         =   ?,87??
+ 
+Messreihe 2: Mittelwert         =  ??,60??
+Messreihe 2: Varianz            =   ?,14??
+Messreihe 2: Standardabweichung =   ?,37??
+Messreihe 2: Median             =  ??,71??
+Messreihe 2: Spannweite         =   ?,98??
+ 
+Messreihe 3: Mittelwert         =   ?,00??
+Messreihe 3: Varianz            =   ?,44??
+Messreihe 3: Standardabweichung =   ?,33??
+Messreihe 3: Median             =   ?,97??
+Messreihe 3: Spannweite         =   ?,90??
