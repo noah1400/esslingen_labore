@@ -1,4 +1,6 @@
 make.exe --dry-run --always-make --keep-going --print-directory
-Der Befehl "make.exe" ist entweder falsch geschrieben oder
-konnte nicht gefunden werden.
+make.exe: Entering directory `c:/Users/noahs/Documents/Coding/esslingen_labore'
+make.exe: Leaving directory `c:/Users/noahs/Documents/Coding/esslingen_labore'
+ 
+make.exe: *** Keine Targets angegeben und keine �make�-Steuerdatei gefunden.  Schluss.
 
