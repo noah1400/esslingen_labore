@@ -1,1 +1,3 @@
 .vscode/
+# all pdf files in all subdirectories
+**/*.pdf
