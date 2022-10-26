@@ -1,2 +1,2 @@
 # Modellbildung und Simulation
-Projekte sind nicht ganz ausgefüllt, geben somit nicht volle Punktzahl.
+The tasks are not 100% solved and therefore do not receive maximum points.
