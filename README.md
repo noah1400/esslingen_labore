@@ -5,6 +5,10 @@ All laboratory tasks of the University of Applied Sciences Esslingen. Solutions 
 Feel free to add them and help new students.
 Just fork the repository, add your labs and create a Pull Request.
 
+## Contributing
+#### Tasks are missing? 
+Feel free to add them and help new students.
+Just fork the repository, add your labs and create a Pull Request.
 #### If you want to contribute you have to follow these requirements:
 - Labs must be marked as passed
 - File structure must be consistent with the other laboratories
