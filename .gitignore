@@ -3,6 +3,7 @@
 Statistik/**/.ipynb_checkpoints
 **/*.pdf
 **/*.exe
+**/*.gch
 **/*.out
 **/*.zip
 **/*.html
