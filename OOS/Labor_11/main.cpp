@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 	b.g('a');// a) keine Fehlermeldung; b) Ausgabe: b.g('a') B::g(int)
 	cout << "a.g(''a'') ";
 	a.g("a");// a) keine Fehlermeldung; b) Ausgabe: a.g(''a'') A::g(string)
-	//cout << "b.g(''a'') ";
+	cout << "b.g(''a'') ";
 	//b.g("a"); // a) Fehlermeldung
 	cout << "a.h(1) ";
 	a.h(1);// a) keine Fehlermeldung; b) Ausgabe: a.h(1) A::h(char)
