@@ -1,11 +1,11 @@
-import subprocess
 import re
 import matplotlib.pyplot as plt
+from math import log
 
 BENCH_DIR = "../out/"
 BENCH_NAMES = ["mmap_out.txt","pipes_out.txt","readv_out.txt"]
 SIZES = [64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216]
-SIZES = [x * 0.001 for x in SIZES]
+SIZES = [log(x) for x in SIZES]
 
 for name in BENCH_NAMES:
     print("executing ", name)

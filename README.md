@@ -1,5 +1,5 @@
 # esslingen_labore
-All laboratory tasks of the University of Applied Sciences Esslingen. Solutions are without guarantee. I do not recommend copy and paste the solutions, if multiple students copy the solutions it can cause the plagiarism check algorithm to trigger.
+All laboratory tasks of the University of Applied Sciences Esslingen. Solutions are without guarantee. I do not recommend copy and paste the solutions.
 
 ## Contributing
 #### Tasks are missing? 
