@@ -1,0 +1,78 @@
+1.
+How many instances are available?
+- db2ilist
+What is the current instance?
+- db2 get instance 
+How many databases are cataloged in the DB2 instance?
+- db2 list database directory
+
+2.Connect to the database SAMPLE and select from the EMPLOYEE table.
+    Insert another employee into the EMPLOYEE table with your firstname and
+    lastname.
+- db2 connect to sample 
+- db2 insert into employee(EMPNO, FIRSTNME, LASTNAME, EDLEVEL) values(3001, 'Noah', 'Scholz', 20)
+
+
+
+
+4.
+- set db2instance=DEVELOP
+- db2set DB2COMM=TCPIP
+- update dbm cfg using SVCENAME db2c_develop
+open C:\Windows\system32\drivers\etc\services and add
+db2c_DEVELOP 50004/TCP
+- db2start
+- db2sampl 
+Configure your windows firewall to allow inbound communication via
+TCP port 50004
+
+5-6.
+- set db2instance=DB2
+- db2 catalog tcpip node RMTNODE remote <ip-addr> SERVER 50004 REMOTE_INSTANCE DEVELOP
+- db2 catalog database SAMPLE as RMTSAMP at node RMTNODE AUTHENTICATION SERVER
+Why using a database alias?
+    Because we have database with the same name one local one remote
+7. Examine the node and database directories, for each instance separately
+- set db2instance=DB2
+- db2 list node directory
+- db2 list database directory
+
+- set db2instance=DEVELOP
+- db2 list node directory
+- db2 list database directory
+
+8. Connect to the remote RMTSAMP database as user Administrator.
+- db2 connect to RMTSAMP USER Administrator USING Database22ws
+8.1 Show the proof that you really see the remote EMPLOYEE table of your classmate instead of yours.
+- db2 select * from employee
+    Look at last row if classmate has inserted his/her name it will be there.
+
+9. Open a second DB2 Command Window. Let user Su connect to the local
+SAMPLE database using Lab2-Usr as password. Get a list of all tables.
+- db2 connect to sample user Su using Lab2-Usr
+- db2 list tables
+
+10. Open a third DB2 Command Window. Let user Bob connect to the remote
+RMTSAMP database using Lab2-Usr as password. Get a list of all tables.
+- db2 connect to RMTSAMP user Bob using Lab2-Usr 
+- db2 list tables
+
+11. Switch back to your first DB2 Command Window. List out all connections
+to the current instance DB2. Which applications do you expect to be
+connected, which ones are missing, why are they missing?
+- set db2instance=DB2
+- db2 list applications 
+    only Su connection gets listed because
+    all other connection are either to connected to DEVELOP (classmates connection)
+    or connected to remote database (Bob)
+
+12. Attach to node RMTNODE. List out all the connections to RMTNODE
+- db2 attach to RMTNODE
+
+13. Force the application of Bob to stop.
+- db2 force application (<application handler>)
+
+14. ???
+
+15. Detach from node RMNODE.
+- db2 detach
