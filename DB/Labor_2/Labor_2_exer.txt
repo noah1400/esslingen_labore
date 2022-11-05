@@ -28,7 +28,7 @@ TCP port 50004
 
 5-6.
 - set db2instance=DB2
-- db2 catalog tcpip node RMTNODE remote 18.197.109.62 SERVER 50004 REMOTE_INSTANCE DEVELOP
+- db2 catalog tcpip node RMTNODE remote <ip-addr> SERVER 50004 REMOTE_INSTANCE DEVELOP
 - db2 catalog database SAMPLE as RMTSAMP at node RMTNODE AUTHENTICATION SERVER
 Why using a database alias?
     Because we have database with the same name one local one remote
