@@ -4,7 +4,9 @@ If we have multiple environments like development/testing/staging.
 
 2. Try to compare a node catalog with a telephone directory.
 
-???
+You can compare a person who calls a number out of the phone directory
+with a db2 client connecting to a database or attaching an instance. 
+
 
 3. Why do we need database aliases?
 
