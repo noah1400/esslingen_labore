@@ -1,0 +1,39 @@
+1. When do we use two instances?
+
+If we have multiple environments like development/testing/staging.
+
+2. Try to compare a node catalog with a telephone directory.
+
+You can compare a person who calls a number out of the phone directory
+with a db2 client connecting to a database or attaching an instance. 
+
+
+3. Why do we need database aliases?
+
+if I have a database named SAMPLE, 
+I can catalog it as SAMP_USR – and then only have users connecting in to SAMP_USR. 
+If I then want to prevent users from connecting, 
+I can uncatalog the alias SAMP_USR, 
+and the users who were connecting in to SAMP_USR will not be able to connect, 
+but I or anyone connecting into SAMPLE will be able to.
+
+4. Name some system objects.
+- Db2 catalog
+    Db2 maintains a set of tables that contain information about the data that Db2 controls. 
+    These tables are collectively known as the catalog.
+- Db2 directory 
+    The Db2 directory contains information that Db2 uses during normal operation.
+- Buffer pools
+    Buffer pools are areas of virtual storage that temporarily store pages of table spaces or indexes.
+
+5. Do not mix up database catalog and system catalog - tell the difference.
+
+
+    ???
+
+6. What is the difference between connecting to a database and attaching to an instance?
+    Connecting to databases defines on which database sql commands should be executed.
+    The ATTACH command enables an application to specify the instance
+    at which instance-level commands are to be executed. 
+    This instance can be the current instance, 
+    another instance on the same workstation, or an instance on a remote workstation.
