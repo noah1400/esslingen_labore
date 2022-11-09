@@ -14,7 +14,6 @@ How many databases are cataloged in the DB2 instance?
 
 
 
-
 4.
 - set db2instance=DEVELOP
 - db2set DB2COMM=TCPIP
