@@ -1,0 +1,200 @@
+1. What is a transaction? Give an example.
+
+A transaction is a sequence of actions between the application and the database; 
+the sequence begins when data in the database is read or written. 
+A transaction is also known as a unit of work.
+
+For example, Consider what happens when you access funds in a bank account. 
+A banking transaction might involve the transfer of funds from one account to another.
+During the transaction, an application program first subtracts the funds from the first account, 
+and then it adds the funds to the second account. 
+Following the subtraction step, 
+the data is inconsistent. 
+Consistency is reestablished after the funds are added to the second account.
+
+2.  Name the ACID-Rules for a transaction. Give definitions.
+
+Atomicity
+
+Atomicity means that a transaction either succeeds or fails as a whole. 
+Nearly every transaction involves more than one table. 
+This means that each transaction as defined by the application involves more than one change. 
+Atomicity means that either all changes related to a single transaction occur 
+or all changes related to a single transaction fail.
+
+Consistency
+
+Consistency means that a transaction cannot succeed 
+if it violates any rules defined at the database level – these could be unique constraints, 
+check constraints, triggers or any other logic that is defined at the database level. 
+If a violation to one of these rules is detected, the transaction as a whole must fail.
+
+Isolation
+
+Isolation refers to the concept that the action on the data must be the same 
+if two transactions happen concurrently as it would be if they happened serially. 
+That is, that the data is changed in the same way if two transactions happen at the same time 
+as if they happen one after another.
+
+Durability
+
+Durability means that when a user is told that a transaction is successful, 
+the results of that transaction are externalized such that even if the server were to be rebooted, 
+the data would reflect that. 
+DB2 uses transaction logs to ensure this is true
+
+3. What does concurrency mean in general? Give a definition.
+
+Data concurrency is the ability to allow multiple users to affect multiple transaction 
+within a database. 
+Simply, data concurrency allows multiple users to access data all at the same time.
+
+4. Problems which can happen if there is no concurrency control.
+
+Bank transactions
+
+Bankaccount: 800 €
+
+A wants to withdraw 200 €
+B wants to withdraw 400 €
+
+A and B fetches current balance at the same time and substract their value.
+A and B sets Bank balance to new ammount.
+
+- A fetches 800€
+- B fetches 800€
+- A substracts 200€ from balance
+    - 800€ - 200€ = 600€
+- B substracts 400€ from balance
+    - 800€ - 400€ = 400€
+- A sets balance to new value
+    - balance = 600€
+- B set balance to new value
+    - balance = 400€
+
+New Balance: 400€
+
+Balance should be 200€ Because 800€ - 200€ - 400€ = 200€
+
+5. Give an example for lost update, 
+uncommitted read / dirty read, 
+non-repeatable read, phantom read.
+
+lost update
+
+example above
+
+uncommitted read / dirty read
+
+Let’s say that Mike is booking a ticket to see his favorite band, 
+Nickelback, in concert. 
+He selects the last two seats available. 
+Meanwhile, Ian tries to buy a ticket, but the concert is sold out. 
+Mike realizes that he cannot get a babysitter, and the transaction is cancelled. 
+On the night of the concert, there are two empty seats that could have been full
+if Ian hadn’t incorrectly seen that the concert was sold out.
+
+Non-repeatable read
+
+Let’s say this time that Mike is looking for tickets 
+to a Taylor Swift concert to enjoy with his two daughters. 
+He looks online and sees that there are three seats left. 
+Meanwhile, Ian completes a transaction to buy those two seats 
+to share the concert with his daughter.
+When Mike tries to check out, he gets an error that there is only one seat remaining, 
+when he was clearly just told that they were available.
+
+phantom read
+
+Let’s say Mike is buying tickets to Macklemore and Ryan Lewis this time. 
+He goes to see if there are any seats left for less than $40. 
+There aren’t any. Meanwhile, the concert venue decides to reduce the price of a number of tickets. 
+Mike increases his limit to $80. This time, he finds a seat for $38.
+
+A phantom read is similar to a non-repeatable read, 
+but in this case instead of different values, 
+you see additional rows that did not match the criteria before.
+
+6. Name the different levels of protection to isolate data.
+
+Repeatable Read
+Read Stability
+Cursor Stability
+Uncommitted Read
+
+7. Talking about locking:
+
+Lock attribute
+
+Database manager locks have several basic attributes.
+These attributes include the following:
+
+Mode
+The type of access allowed for the lock owner, 
+as well as the type of access allowed for concurrent users of the locked object. 
+It is sometimes referred to as the state of the lock.
+Object
+The resource being locked. The only type of object that you can lock explicitly is a table. 
+The database manager also sets locks on other types of resources, such as rows and table spaces. 
+The object being locked determines the granularity of the lock.
+Lock count
+The length of time during which a lock is held. 
+The isolation level under which a query runs affects the lock count.
+
+Lock conversion
+
+Changing the mode of a lock that is already held is called lock conversion.
+Lock conversion occurs when a process accesses a data object on which it already holds a lock, 
+and the access mode requires a more restrictive lock than the one already held. 
+A process can hold only one lock on a data object at any given time, 
+although it can request a lock on the same data object many times indirectly through a query.
+
+Lock escalation
+
+Lock escalation is the process of converting many fine-grain locks to fewer coarse-grain locks, 
+which reduces memory overhead at the cost of decreasing concurrency.
+
+Lock wait behavior
+
+A lock wait occurs when a transaction tries to obtain a lock on a resource 
+that is already held by another transaction. 
+When the duration of the lock wait time is extended, 
+this results in a slow down of SQL query execution. 
+You likely have a lock wait problem if you are experiencing long 
+or unexpected lock wait times and no lock timeouts.
+
+dead lock behavior
+
+A deadlock is created when two applications lock data that is needed by the other, 
+resulting in a situation in which neither application can continue executing 
+without the intervention of the deadlock detector. 
+The deadlock slows down the participant transaction while it waits for deadlock detection, 
+wastes system resources by rolling back the victim transaction, 
+and causes extra system work and transaction log access during the whole process. 
+You likely have a deadlock problem if you are experiencing an increased number of deadlocks 
+than the baseline number and transactions are being re-executed.
+
+lock table statement
+
+The LOCK TABLE statement prevents concurrent application processes from using or changing a table. 
+The lock is released when the unit of work issuing the LOCK TABLE statement
+either commits or terminates.
+
+Lock size parameter
+
+The size (sometimes scope or level) of a lock on data in a table 
+describes the amount of data that is controlled by the lock. 
+The same piece of data can be controlled by locks of different sizes.
+
+8. Compare and contrast lock timeout and deadlock detector.
+???
+
+9. Find out how locks affect concurrency, performance, and data integrity.
+???
+
+10. How do you decide which isolation level to use?
+
+You decide what requirements the application needs and what isolation level it meets.
+
+https://www.ibm.com/docs/en/db2/10.1.0?topic=issues-isolation-levels
+
