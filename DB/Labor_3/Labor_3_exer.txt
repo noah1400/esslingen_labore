@@ -1,0 +1,44 @@
+db2 –tvf createDB2CERT.ddl
+
+set DB2OPTIONS=+c
+
+db2 connect tp db2cert 
+
+A:
+db2 select * from test
+db2 update test set cut_score = 80 where char(number) = '500'
+
+B:
+db2 select * from test
+
+
+Command in window b will get stuck because it is waiting for the lock to be opened
+
+
+A: 
+db2 commit
+
+As soon as a commit is issued in window A the command in window B will succeed
+because there is no lock anymore
+
+db2 get db configuration for db2cert 
+
+ Interval for checking deadlock (ms)         (DLCHKTIME) = 20000
+ Lock timeout (sec)                        (LOCKTIMEOUT) = 20000
+
+db2 update database configuration for db2cert using LOCKTIMEOUT 20 
+db2 update database configuration for db2cert using DLCHKTIME 20000
+
+A:
+db2 disconnect current
+db2 change isolation rr
+db2 connect to db2cert
+db2 –tvf cursor.ddl
+db2 open cur1
+db2 fetch cur1             till end of table
+
+B:
+db2 connect to db2cert
+db2 update monitor switches using lock on
+db2 get snapshot for locks on db2cert
+
