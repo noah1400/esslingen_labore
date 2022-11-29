@@ -1,16 +1,21 @@
+import pandas as pd
 import math
 number_of_rows = [300, 200, 800, 25, 100]
 
 # DB2 Datatype sizes in bytes
-varchar_size = lambda l: l+2
+
+
+def varchar_size(l): return l+2  # ???
+
+
 smallint_size = 2
 date_size = 4
 decimal_size = 6
 int_size = 4
 timestamp_size = 10
 char_size = 1
-CLOB_size = 144 # descriptor size
-BLOB_size = 144 # descriptor size
+CLOB_size = 144  # descriptor size
+BLOB_size = 144  # descriptor size
 
 CLOB_actual_size = 1024000
 BLOB_actual_size = 512000
@@ -19,42 +24,72 @@ full_row_size_books = varchar_size(50) + smallint_size*2
 full_row_size_speaker = smallint_size+date_size+varchar_size(25)
 full_row_size_stock = smallint_size+decimal_size+int_size
 full_row_size_reorder = smallint_size+timestamp_size
-full_row_size_author = smallint_size+varchar_size(50)+char_size+CLOB_size+BLOB_size
+full_row_size_author = smallint_size + \
+    varchar_size(50)+char_size+CLOB_size+BLOB_size
 
 
+def avg_row_size(l): return l
 
-avg_row_size = lambda l: l
 
 books_avg_key_size = 2
 speaker_avg_key_size = 0
 stock_avg_key_size = 2
 reorder_avg_key_size = 0
-author_avg_key_size = 27 + 2 # ???
+author_avg_key_size = 27 + 2  # ???
 
 
-
-def calc_rows_per_page(ars): # average row size
-    rpp = math.floor(4028/(ars+10))
+def calc_rows_per_page(ars: int) -> int:
+    """
+    Calculation of rows per page
+    @param ars: average row size
+    """
+    rpp = math.floor(4028/(ars+10))  # 4028 / (average row size + 10)
     return rpp
 
-def calc_number_of_pages(tnor, rpp): # total number of rows, rows per page
-    return math.ceil((tnor/rpp)*1.1)
 
-def calc_index_size(aiks, nor): # average index key size, number of rows
-    return (aiks+9)*nor*2
+def calc_number_of_pages(tnor: int, rpp: int) -> int:
+    """
+    Calculation of number of pages for a table
+    @param tnor: total number of rows
+    @param rpp: rows per page
+    """
+    return math.ceil((tnor/rpp)*1.1)  # total number of rows / rows per page * 1.1
 
-def calc_lob_data_obj(lcs, norwld): # lob column size, number of rows with lob data
-    return lcs*norwld*1.5
 
-def calc_alloc_obj(ldo): # lob data object
+# average index key size, number of rows
+def calc_index_size(aiks: int, nor: int) -> int:
+    """
+    Calculation of Index size
+    @param aiks: average index key size
+    @param nor: number of rows
+    """
+    return (aiks+9)*nor*2  # ( average index key size + 9 ) * number of rows * 2
+
+
+def calc_lob_data_obj(lcs: int, norwld: int) -> float:
+    """
+    Calculation of LOB Data Object in bytes
+    @param lcs: lob column sizes
+    @param norwld: number of rows with lob data
+    """
+    return lcs*norwld*1.5  # LOB column sizes * number of rows with lob data * 1.5
+
+
+def calc_alloc_obj(ldo: int) -> int:
+    """
+    Calculation of LOB Allocation Object in bytes
+    @param ldo: lob data object
+    """
+    # ((LOB data object / 65,536,000,000)+(LOB data object / 8,192,000) * 4096)
     return (math.ceil(ldo/65536000000)+math.ceil(ldo/8192000)*4096)
 
-books_ars = full_row_size_books # average row size
-books_rpp = calc_rows_per_page(books_ars) # rows per page
-books_nor = number_of_rows[0] # number of rows
-books_nop = calc_number_of_pages(books_nor, books_rpp) # number of pages
-books_is = calc_index_size(books_avg_key_size, books_nor) # index size
-books_lobs = 0 # LOB Size
+
+books_ars = full_row_size_books  # average row size
+books_rpp = calc_rows_per_page(books_ars)  # rows per page
+books_nor = number_of_rows[0]  # number of rows
+books_nop = calc_number_of_pages(books_nor, books_rpp)  # number of pages
+books_is = calc_index_size(books_avg_key_size, books_nor)  # index size
+books_lobs = 0  # LOB Size
 
 
 speaker_ars = full_row_size_speaker
@@ -86,10 +121,6 @@ author_is = calc_index_size(author_avg_key_size, author_nor)
 author_lobs = calc_lob_data_obj(CLOB_actual_size+BLOB_actual_size, author_nor)
 author_alloc_obj = calc_alloc_obj(author_lobs)
 
-print("author_lobs: ", author_lobs)
-print("author_alloc_obj: ", author_alloc_obj)
-
-
 
 """
 Dataframe
@@ -102,7 +133,6 @@ REORDER
 AUTHOR
 """
 
-import pandas as pd
 
 data = {
     'Table Name': ['BOOKS', 'SPEAKER', 'STOCK', 'REORDER', 'AUTHOR'],
@@ -131,6 +161,8 @@ DMS05               C:\dms\dms05.data                                           
 DMS06               C:\dms\dms06.data                                           4
 SMS01               C:\sms\sms01,C:\sms\sms02                                   4
 """
+
+
 df = pd.DataFrame({
     'Table Space Name': ['DMS01', 'DMS02', 'DMS03', 'DMS04', 'DMS05', 'DMS06', 'SMS01'],
     'Container Location': ['C:\dms\dms01.data', 'C:\dms\dms02.data', 'C:\dms\dms03.data', 'C:\dms\dms04.data', 'C:\dms\dms05.data', 'C:\dms\dms06.data', 'C:\sms\sms01,C:\sms\sms02'],
