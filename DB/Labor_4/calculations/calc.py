@@ -8,8 +8,8 @@ decimal_size = 6
 int_size = 4
 timestamp_size = 10
 char_size = 1
-CLOB_size = 144 # descriptor to file of 1024000 bytes
-BLOB_size = 144 # descriptor to file of 512000 bytes
+CLOB_size = 144 # descriptor size
+BLOB_size = 144 # descriptor size
 
 CLOB_actual_size = 1024000
 BLOB_actual_size = 512000
@@ -45,7 +45,6 @@ books_rpp = calc_rows_per_page(books_ars) # rows per page
 books_nor = number_of_rows[0] # number of rows
 books_nop = calc_number_of_pages(books_nor, books_rpp) # number of pages
 books_is = calc_index_size(avg_index_key_size, books_nor) # index size
-books_norwld = 0 # number of rows with lob data
 
 
 speaker_ars = avg_row_size(full_row_size_speaker)
