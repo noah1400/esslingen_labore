@@ -116,4 +116,25 @@ print(df)
 
 # dataframe to csv
 df.to_csv('output.csv', index=False)
+# convert to excel
+# https://convertio.co/de/csv-xlsx/
 
+"""
+Dataframe
+
+Table Space Name    Container Location      Number of pages in each container   Extent Size (number of pages)
+DMS01               C:\dms\dms01.data                                           4
+DMS02               C:\dms\dms02.data                                           2
+DMS03               C:\dms\dms03.data                                           8
+DMS04               C:\dms\dms04.data                                           2
+DMS05               C:\dms\dms05.data                                           2
+DMS06               C:\dms\dms06.data                                           4
+SMS01               C:\sms\sms01,C:\sms\sms02                                   4
+"""
+df = pd.DataFrame({
+    'Table Space Name': ['DMS01', 'DMS02', 'DMS03', 'DMS04', 'DMS05', 'DMS06', 'SMS01'],
+    'Container Location': ['C:\dms\dms01.data', 'C:\dms\dms02.data', 'C:\dms\dms03.data', 'C:\dms\dms04.data', 'C:\dms\dms05.data', 'C:\dms\dms06.data', 'C:\sms\sms01,C:\sms\sms02'],
+    'Number of pages in each container': [0, 0, 0, 0, 0, 0, 0],
+    'Extent Size (number of pages)': [4, 2, 8, 2, 2, 4, 4]
+})
+print(df)
