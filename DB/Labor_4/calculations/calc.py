@@ -5,7 +5,7 @@ number_of_rows = [300, 200, 800, 25, 100]
 # DB2 Datatype sizes in bytes
 
 
-def varchar_size(l): return l+2  # ???
+def varchar_size(l): return l/2+2  # ???
 
 
 smallint_size = 2
@@ -26,9 +26,6 @@ full_row_size_stock = smallint_size+decimal_size+int_size
 full_row_size_reorder = smallint_size+timestamp_size
 full_row_size_author = smallint_size + \
     varchar_size(50)+char_size+CLOB_size+BLOB_size
-
-
-def avg_row_size(l): return l
 
 
 books_avg_key_size = 2
@@ -144,7 +141,7 @@ df = pd.DataFrame(data)
 print(df)
 
 # dataframe to csv
-df.to_csv('output.csv', index=False)
+df.to_csv('partA.csv', index=False)
 # convert to excel
 # https://convertio.co/de/csv-xlsx/
 
@@ -162,10 +159,40 @@ SMS01               C:\sms\sms01,C:\sms\sms02                                   
 """
 
 
+"""
+Calculate the number of pages in each container
+
+Using first table in Part B as lookup for the correct numbers
+"""
+
+DMS01_number_of_extents = math.ceil(3+number_of_rows[4]+(author_nop/4))
+DMS02_number_of_extents = math.ceil(3+number_of_rows[4]+number_of_rows[2]+(author_nop/2)+(stock_nop/2))
+DMS03_number_of_extents = math.ceil(3+number_of_rows[4]+(author_nop/8))
+DMS04_number_of_extents = math.ceil(3+number_of_rows[0]+number_of_rows[1]+(books_nop/2)+(speaker_nop/2))
+DMS05_number_of_extents = math.ceil(3+number_of_rows[0]+(books_nop/2))
+DMS06_number_of_extents = math.ceil(3+number_of_rows[2]+(stock_nop/4))
+SMS01_number_of_extents = math.ceil(3+number_of_rows[3]+(reorder_nop/4))
+
+"""
+Number of extents times extent size
+"""
+
+DMS01_number_of_pages_in_each_container = 4*DMS01_number_of_extents
+DMS02_number_of_pages_in_each_container = 2*DMS02_number_of_extents
+DMS03_number_of_pages_in_each_container = 8*DMS03_number_of_extents
+DMS04_number_of_pages_in_each_container = 2*DMS04_number_of_extents
+DMS05_number_of_pages_in_each_container = 2*DMS05_number_of_extents
+DMS06_number_of_pages_in_each_container = 4*DMS06_number_of_extents
+SMS01_number_of_pages_in_each_container = 4*SMS01_number_of_extents
+
+
 df = pd.DataFrame({
     'Table Space Name': ['DMS01', 'DMS02', 'DMS03', 'DMS04', 'DMS05', 'DMS06', 'SMS01'],
     'Container Location': ['C:\dms\dms01.data', 'C:\dms\dms02.data', 'C:\dms\dms03.data', 'C:\dms\dms04.data', 'C:\dms\dms05.data', 'C:\dms\dms06.data', 'C:\sms\sms01,C:\sms\sms02'],
-    'Number of pages in each container': [0, 0, 0, 0, 0, 0, 0],
+    'Number of pages in each container': [DMS01_number_of_pages_in_each_container, DMS02_number_of_pages_in_each_container, DMS03_number_of_pages_in_each_container, DMS04_number_of_pages_in_each_container, DMS05_number_of_pages_in_each_container, DMS06_number_of_pages_in_each_container, SMS01_number_of_pages_in_each_container],
     'Extent Size (number of pages)': [4, 2, 8, 2, 2, 4, 4]
 })
 print(df)
+
+# dataframe to csv
+df.to_csv('partB.csv', index=False)
