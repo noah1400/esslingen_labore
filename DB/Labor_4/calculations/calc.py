@@ -56,7 +56,6 @@ def calc_number_of_pages(tnor: int, rpp: int) -> int:
     return math.ceil((tnor/rpp)*1.1)  # total number of rows / rows per page * 1.1
 
 
-# average index key size, number of rows
 def calc_index_size(aiks: int, nor: int) -> int:
     """
     Calculation of Index size
