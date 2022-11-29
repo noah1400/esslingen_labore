@@ -1,10 +1,10 @@
 import math
-number_of_rows = [300, 200, 8000, 25, 100]
+number_of_rows = [300, 200, 800, 25, 100]
 
 # DB2 Datatype sizes in bytes
 varchar_size = lambda l: l
-smallint_size = 2*2
-date_size = 4*4
+smallint_size = 2
+date_size = 4
 decimal_size = 6
 int_size = 4
 timestamp_size = 10
@@ -22,7 +22,6 @@ full_row_size_reorder = smallint_size+timestamp_size
 full_row_size_author = smallint_size+varchar_size(50)+char_size+CLOB_size+BLOB_size
 
 avg_row_size = lambda l, nor: math.ceil(l/nor)
-avg_index_key_size = 1
 
 books_avg_key_size = 2
 speaker_avg_key_size = 0
