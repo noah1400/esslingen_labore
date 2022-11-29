@@ -1,0 +1,63 @@
+1. Describe the storage objects: tablespace, buffer pool, container.
+
+tablespace:
+A Db2 table space is a set of volumes on disks that hold the data sets in which tables are actually stored. 
+Every table is stored in table space.
+
+buffer pool:
+A buffer pool is an area of main memory that has been allocated by the database manager
+for the purpose of caching table and index data as it is read from disk. 
+Every Db2® database must have a buffer pool.
+Each new database has a default buffer pool defined, called IBMDEFAULTBP.
+
+container:
+
+???
+
+2. Explain the overhead of a data page.
+
+68 bytes of overhead for
+the database manager
+
+???
+
+3. Explain the purpose of large object descriptors.
+
+Only a LOB
+descriptor is placed in the base table row, rather than the LOB itself. Each of the
+LOBs themselves are stored in a separate LOBs location controlled by the database
+manager. In this arrangement, the movement of rows between the buffer pool and
+disk storage will take less time for rows with LOB descriptors than they would if
+they included the complete LOBs.
+
+4. Explain an index. Talk about advantages and disadvantages.
+
+As data is added to a table, it is appended to the bottom (unless other actions have
+been carried out on the table or the data being added). There is no inherent order
+to the data. When searching for a particular row of data, each row of the table
+from first to last must be checked. Indexes are used as a means to access the data
+within the table in an order that might otherwise not be available.
+
+Improve performance:    In most cases, access to data is faster with an index.
+                        Although an index cannot be created for a view, an index created for the table
+                        on which a view is based can sometimes improve the performance of operations
+                        on that view.
+Ensure uniqueness:      A table with a unique index cannot have rows with identical
+                        keys.
+
+Takes extra space...
+
+5. Explain a container.
+
+???
+
+6.  Explain an extent.
+
+An extent is a block of storage within a table space container. 
+It represents the number of pages of data that will be written to a container before writing to the next container. 
+When you create a table space, you can choose the extent size
+based on your requirements for performance and storage management.
+
+7. Explain prefetch.
+
+Prefetch is a mechanism for reading a set of pages into the buffer pool with only one asynchronous I/O operation.
