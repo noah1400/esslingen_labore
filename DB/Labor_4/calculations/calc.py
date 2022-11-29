@@ -29,7 +29,7 @@ books_avg_key_size = 2
 speaker_avg_key_size = 0
 stock_avg_key_size = 2
 reorder_avg_key_size = 0
-author_avg_key_size = 27
+author_avg_key_size = 27 + 2 # ???
 
 
 
@@ -83,8 +83,11 @@ author_rpp = calc_rows_per_page(author_ars)
 author_nor = number_of_rows[4]
 author_nop = calc_number_of_pages(author_nor, author_rpp)
 author_is = calc_index_size(author_avg_key_size, author_nor)
-author_lobs = calc_lob_data_obj(CLOB_actual_size+BLOB_actual_size, 2)
+author_lobs = calc_lob_data_obj(CLOB_actual_size+BLOB_actual_size, author_nor)
 author_alloc_obj = calc_alloc_obj(author_lobs)
+
+print("author_lobs: ", author_lobs)
+print("author_alloc_obj: ", author_alloc_obj)
 
 
 
@@ -106,8 +109,11 @@ data = {
     'Number of Rows per Page': [books_rpp, speaker_rpp, stock_rpp, reorder_rpp, author_rpp],
     'Table Pages': [books_nop, speaker_nop, stock_nop, reorder_nop, author_nop],
     'Index Size (bytes)': [books_is, speaker_is, stock_is, reorder_is, author_is],
-    'LOB Size (bytes)': [books_lobs, speaker_lobs, stock_lobs, reorder_lobs, author_lobs],
-    'Alloc Obj (bytes)': [0, 0, 0, 0, author_alloc_obj]
+    'LOB Size (bytes)': [0, 0, 0, 0, author_alloc_obj+author_lobs]
 }
 df = pd.DataFrame(data)
 print(df)
+
+# dataframe to csv
+df.to_csv('output.csv', index=False)
+

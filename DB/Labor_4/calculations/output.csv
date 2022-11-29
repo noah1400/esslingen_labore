@@ -1,0 +1,6 @@
+Table Name,Number of Rows per Page,Table Pages,Index Size (bytes),LOB Size (bytes)
+BOOKS,61,6,6600,0.0
+SPEAKER,93,3,3600,0.0
+STOCK,183,5,17600,0.0
+REORDER,183,1,450,0.0
+AUTHOR,11,11,7600,230518785.0
