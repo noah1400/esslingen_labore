@@ -50,7 +50,6 @@ def calc_rows_per_page(ars: int) -> int:
     Calculation of rows per page
     @param ars: average row size
     """
-    print(ars)
     rpp = math.floor(4028/(ars+10))  # 4028 / (average row size + 10)
     return rpp
 
