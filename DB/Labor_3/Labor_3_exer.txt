@@ -35,7 +35,7 @@ db2 change isolation rr
 db2 connect to db2cert
 db2 –tvf cursor.ddl
 db2 open cur1
-db2 fetch cur1             till end of table
+db2 fetch cur1                           till end of table
 
 B:
 db2 connect to db2cert

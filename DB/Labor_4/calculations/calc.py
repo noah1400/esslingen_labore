@@ -1,3 +1,8 @@
+
+TO_TXT_FILE = True  # set to True to write the tables to a text file
+TO_CSV_FILE = True  # set to True to create two csv files
+
+
 import pandas as pd
 import math
 number_of_rows = [300, 200, 800, 25, 100]
@@ -5,7 +10,8 @@ number_of_rows = [300, 200, 800, 25, 100]
 # DB2 Datatype sizes in bytes
 
 
-def varchar_size(l): return l/2+2  # ???
+def varchar_size(l):
+    return l/2+2    # *0.5 because varchar is 50% full +2 bytes
 
 
 smallint_size = 2
@@ -20,11 +26,12 @@ BLOB_size = 144  # descriptor size
 CLOB_actual_size = 1024000
 BLOB_actual_size = 512000
 
-full_row_size_books = varchar_size(50) + smallint_size*2
-full_row_size_speaker = smallint_size+date_size+varchar_size(25)
-full_row_size_stock = smallint_size+decimal_size+int_size
-full_row_size_reorder = smallint_size+timestamp_size
-full_row_size_author = smallint_size + \
+# average row size
+avg_row_size_books = varchar_size(50) + smallint_size*2
+avg_row_size_speaker = smallint_size+date_size+varchar_size(25)
+avg_row_size_stock = smallint_size+decimal_size+int_size
+avg_row_size_reorder = smallint_size+timestamp_size
+avg_row_size_author = smallint_size + \
     varchar_size(50)+char_size+CLOB_size+BLOB_size
 
 
@@ -32,7 +39,10 @@ books_avg_key_size = 2
 speaker_avg_key_size = 0
 stock_avg_key_size = 2
 reorder_avg_key_size = 0
-author_avg_key_size = 27 + 2  # ???
+
+
+author_avg_key_size = varchar_size(50)
+author_avg_key_size2 = 2
 
 
 def calc_rows_per_page(ars: int) -> int:
@@ -40,6 +50,7 @@ def calc_rows_per_page(ars: int) -> int:
     Calculation of rows per page
     @param ars: average row size
     """
+    print(ars)
     rpp = math.floor(4028/(ars+10))  # 4028 / (average row size + 10)
     return rpp
 
@@ -80,7 +91,7 @@ def calc_alloc_obj(ldo: int) -> int:
     return (math.ceil(ldo/65536000000)+math.ceil(ldo/8192000)*4096)
 
 
-books_ars = full_row_size_books  # average row size
+books_ars = avg_row_size_books  # average row size
 books_rpp = calc_rows_per_page(books_ars)  # rows per page
 books_nor = number_of_rows[0]  # number of rows
 books_nop = calc_number_of_pages(books_nor, books_rpp)  # number of pages
@@ -88,32 +99,35 @@ books_is = calc_index_size(books_avg_key_size, books_nor)  # index size
 books_lobs = 0  # LOB Size
 
 
-speaker_ars = full_row_size_speaker
+speaker_ars = avg_row_size_speaker
 speaker_rpp = calc_rows_per_page(speaker_ars)
 speaker_nor = number_of_rows[1]
 speaker_nop = calc_number_of_pages(speaker_nor, speaker_rpp)
 speaker_is = calc_index_size(speaker_avg_key_size, speaker_nor)
 speaker_lobs = 0
 
-stock_ars = full_row_size_stock
+stock_ars = avg_row_size_stock
 stock_rpp = calc_rows_per_page(stock_ars)
 stock_nor = number_of_rows[2]
 stock_nop = calc_number_of_pages(stock_nor, stock_rpp)
 stock_is = calc_index_size(stock_avg_key_size, stock_nor)
 stock_lobs = 0
 
-reorder_ars = full_row_size_reorder
+reorder_ars = avg_row_size_reorder
 reorder_rpp = calc_rows_per_page(reorder_ars)
 reorder_nor = number_of_rows[3]
 reorder_nop = calc_number_of_pages(reorder_nor, reorder_rpp)
 reorder_is = calc_index_size(reorder_avg_key_size, reorder_nor)
 reorder_lobs = 0
 
-author_ars = full_row_size_author
+author_ars = avg_row_size_author
 author_rpp = calc_rows_per_page(author_ars)
 author_nor = number_of_rows[4]
 author_nop = calc_number_of_pages(author_nor, author_rpp)
-author_is = calc_index_size(author_avg_key_size, author_nor)
+author_is1 = calc_index_size(author_avg_key_size, author_nor)
+author_is2 = calc_index_size(author_avg_key_size2, author_nor)
+
+author_is = [author_is1, author_is2]
 author_lobs = calc_lob_data_obj(CLOB_actual_size+BLOB_actual_size, author_nor)
 author_alloc_obj = calc_alloc_obj(author_lobs)
 
@@ -138,10 +152,16 @@ data = {
     'LOB Size (bytes)': [0, 0, 0, 0, author_alloc_obj+author_lobs]
 }
 df = pd.DataFrame(data)
-print(df)
+print(df.to_string(index=False))
+
+# print df.to_string(index=False) in txt file
+if (TO_TXT_FILE):
+    with open('tables.txt', 'w') as f:
+        f.write(df.to_string(index=False))
 
 # dataframe to csv
-df.to_csv('partA.csv', index=False)
+if (TO_CSV_FILE):
+    df.to_csv('partA.csv', index=False)
 # convert to excel
 # https://convertio.co/de/csv-xlsx/
 
@@ -162,16 +182,24 @@ SMS01               C:\sms\sms01,C:\sms\sms02                                   
 """
 Calculate the number of pages in each container
 
-Using first table in Part B as lookup for the correct numbers
+Using first table in Part B as lookup for the correct number of tables
 """
 
-DMS01_number_of_extents = math.ceil(3+number_of_rows[4]+(author_nop/4))
-DMS02_number_of_extents = math.ceil(3+number_of_rows[4]+number_of_rows[2]+(author_nop/2)+(stock_nop/2))
-DMS03_number_of_extents = math.ceil(3+number_of_rows[4]+(author_nop/8))
-DMS04_number_of_extents = math.ceil(3+number_of_rows[0]+number_of_rows[1]+(books_nop/2)+(speaker_nop/2))
-DMS05_number_of_extents = math.ceil(3+number_of_rows[0]+(books_nop/2))
-DMS06_number_of_extents = math.ceil(3+number_of_rows[2]+(stock_nop/4))
-SMS01_number_of_extents = math.ceil(3+number_of_rows[3]+(reorder_nop/4))
+# 1 container
+# 3 overhead
+# 2 user data
+# + tables
+# + number of pages / extent size
+
+# * extentsize
+
+DMS01_number_of_extents = 1+3+2+1+math.ceil(author_nop/4)
+DMS02_number_of_extents = 1+3+2+2+math.ceil((author_nop+stock_nop)/2)
+DMS03_number_of_extents = 1+3+2+1+math.ceil(author_nop/8)
+DMS04_number_of_extents = 1+3+2+2+math.ceil((books_nop+speaker_nop)/2)
+DMS05_number_of_extents = 1+3+2+1+math.ceil(books_nop/2)
+DMS06_number_of_extents = 1+3+2+1+math.ceil(stock_nop/4)
+SMS01_number_of_extents = 1+3+2+1+math.ceil(reorder_nop/4)
 
 """
 Number of extents times extent size
@@ -192,7 +220,14 @@ df = pd.DataFrame({
     'Number of pages in each container': [DMS01_number_of_pages_in_each_container, DMS02_number_of_pages_in_each_container, DMS03_number_of_pages_in_each_container, DMS04_number_of_pages_in_each_container, DMS05_number_of_pages_in_each_container, DMS06_number_of_pages_in_each_container, SMS01_number_of_pages_in_each_container],
     'Extent Size (number of pages)': [4, 2, 8, 2, 2, 4, 4]
 })
-print(df)
+print(df.to_string(index=False))
+
+# append to txt file
+if (TO_TXT_FILE):
+    with open('tables.txt', 'a') as f:
+        f.write("\n\n\n")
+        f.write(df.to_string(index=False))
 
 # dataframe to csv
-df.to_csv('partB.csv', index=False)
+if (TO_CSV_FILE):
+    df.to_csv('partB.csv', index=False)
