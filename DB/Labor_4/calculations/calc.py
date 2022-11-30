@@ -193,13 +193,13 @@ Using first table in Part B as lookup for the correct number of tables
 
 # * extentsize
 
-DMS01_number_of_extents = 1+3+2+1+math.ceil(author_nop/4)
-DMS02_number_of_extents = 1+3+2+2+math.ceil((author_nop+stock_nop)/2)
-DMS03_number_of_extents = 1+3+2+1+math.ceil(author_nop/8)
-DMS04_number_of_extents = 1+3+2+2+math.ceil((books_nop+speaker_nop)/2)
-DMS05_number_of_extents = 1+3+2+1+math.ceil(books_nop/2)
-DMS06_number_of_extents = 1+3+2+1+math.ceil(stock_nop/4)
-SMS01_number_of_extents = 1+3+2+1+math.ceil(reorder_nop/4)
+DMS01_number_of_extents = 1+3+2+1+math.ceil(author_nop/4)   # 1 Table
+DMS02_number_of_extents = 1+3+2+2+math.ceil((author_nop+stock_nop)/2)   # 2 Tables
+DMS03_number_of_extents = 1+3+2+1+math.ceil(author_nop/8)   # 1 Table
+DMS04_number_of_extents = 1+3+2+2+math.ceil((books_nop+speaker_nop)/2)  # 2 Tables
+DMS05_number_of_extents = 1+3+2+1+math.ceil(books_nop/2)    # 1 Table
+DMS06_number_of_extents = 1+3+2+1+math.ceil(stock_nop/4)    # 1 Table
+SMS01_number_of_extents = 1+3+2+1+math.ceil(reorder_nop/4)  # 1 Table
 
 """
 Number of extents times extent size
