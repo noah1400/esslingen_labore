@@ -1,10 +1,10 @@
 
+import math
+import pandas as pd
 TO_TXT_FILE = True  # set to True to write the tables to a text file
 TO_CSV_FILE = True  # set to True to create two csv files
 
 
-import pandas as pd
-import math
 number_of_rows = [300, 200, 800, 25, 100]
 
 # DB2 Datatype sizes in bytes
@@ -193,9 +193,11 @@ Using first table in Part B as lookup for the correct number of tables
 # * extentsize
 
 DMS01_number_of_extents = 1+3+2+1+math.ceil(author_nop/4)   # 1 Table
-DMS02_number_of_extents = 1+3+2+2+math.ceil((author_nop+stock_nop)/2)   # 2 Tables
+DMS02_number_of_extents = 1+3+2+2 + \
+    math.ceil((author_nop+stock_nop)/2)   # 2 Tables
 DMS03_number_of_extents = 1+3+2+1+math.ceil(author_nop/8)   # 1 Table
-DMS04_number_of_extents = 1+3+2+2+math.ceil((books_nop+speaker_nop)/2)  # 2 Tables
+DMS04_number_of_extents = 1+3+2+2 + \
+    math.ceil((books_nop+speaker_nop)/2)  # 2 Tables
 DMS05_number_of_extents = 1+3+2+1+math.ceil(books_nop/2)    # 1 Table
 DMS06_number_of_extents = 1+3+2+1+math.ceil(stock_nop/4)    # 1 Table
 SMS01_number_of_extents = 1+3+2+1+math.ceil(reorder_nop/4)  # 1 Table
