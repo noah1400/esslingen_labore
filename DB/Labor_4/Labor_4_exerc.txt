@@ -1,0 +1,19 @@
+db2 list tablespaces show detail
+
+Listing all tablespaces = db2 list tablespaces | findstr Name
+
+Number of containers 2
+
+db2 list tablespace containers for 10 show detail
+
+
+
+db2 ALTER TABLESPACE DMS03 ADD (FILE 'c:\dms\more' 723)
+
+
+db2 "alter tablespace DMS05 prefetchsize 64"
+
+
+db2 list tablespaces show detail
+
+total pages 18

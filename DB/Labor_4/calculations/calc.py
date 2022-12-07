@@ -184,6 +184,14 @@ Calculate the number of pages in each container
 Using first table in Part B as lookup for the correct number of tables
 """
 
+def getAdditionals(extentSize, nop):
+    # zu verbraten
+    p = nop-2*extentSize
+    if (p > 0):
+        return math.ceil(p/extentSize)
+    else:
+        return 0
+
 # 1 container
 # 3 overhead
 # 2 user data
@@ -192,15 +200,27 @@ Using first table in Part B as lookup for the correct number of tables
 
 # * extentsize
 
-DMS01_number_of_extents = 1+3+2+1+math.ceil(author_nop/4)   # 1 Table
-DMS02_number_of_extents = 1+3+2+2 + \
-    math.ceil((author_nop+stock_nop)/2)   # 2 Tables
-DMS03_number_of_extents = 1+3+2+1+math.ceil(author_nop/8)   # 1 Table
-DMS04_number_of_extents = 1+3+2+2 + \
-    math.ceil((books_nop+speaker_nop)/2)  # 2 Tables
-DMS05_number_of_extents = 1+3+2+1+math.ceil(books_nop/2)    # 1 Table
-DMS06_number_of_extents = 1+3+2+1+math.ceil(stock_nop/4)    # 1 Table
-SMS01_number_of_extents = 1+3+2+1+math.ceil(reorder_nop/4)  # 1 Table
+"""
+1 extent für jeden container (hier nur 1) als overhead im container/administration
+3 overhead im tablespace/administration
++2 extent für erste tabelle
++ (tabellen-1)*2
+
+wenn nop größer als (2*extentsize) dann +n extents bis (n*extentsize+2) größer als nop
+
+
+
+
+
+"""
+
+DMS01_number_of_extents = 1+3+2+getAdditionals(4, author_nop)   # 1 Table
+DMS02_number_of_extents = 1+3+2+2+getAdditionals(2,author_nop)+getAdditionals(2,stock_nop)   # 2 Tables
+DMS03_number_of_extents = 1+3+2+getAdditionals(8,author_nop)   # 1 Table
+DMS04_number_of_extents = 1+3+2+2+getAdditionals(2,books_nop)+getAdditionals(2, speaker_nop)  # 2 Tables
+DMS05_number_of_extents = 1+3+2+getAdditionals(2,books_nop)    # 1 Table
+DMS06_number_of_extents = 1+3+2+getAdditionals(4,stock_nop)    # 1 Table
+SMS01_number_of_extents = 1+3+2+getAdditionals(4,reorder_nop)  # 1 Table
 
 """
 Number of extents times extent size
