@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
             for (int l = 0; l < 20; l++)
             {
                 // print current generation
-                if (field[k][l] == 1)
+                if ((field[k][l] & 1) == 1)
                 {
                     printf("%c", '#'); // alive
                 }
@@ -64,17 +64,17 @@ int main(int argc, char *argv[])
                 // Any live cell with two or three live neighbours survives.
                 // Any dead cell with three live neighbours becomes a live cell.
                 // All other live cells die in the next generation. Similarly, all other dead cells stay dead.
-                if (field[k][l] == 1 &&
+                if ((field[k][l] & 1) == 1 &&
                     (neighbors == 2 || neighbors == 3))
                 {
                     field[k][l] |= (1 << 1);
                 }
-                else if (field[k][l] == 0 &&
+                else if ((field[k][l] & 1) == 0 &&
                          neighbors == 3)
                 {
                     field[k][l] |= (1 << 1);
                 }
-                else if (field[k][l] == 1)
+                else if ((field[k][l] & 1) == 1)
                 {
                     field[k][l] &= ~(1 << 1);
                 }
