@@ -56,6 +56,9 @@ What is the advantage of relying on an authentication facility outside the DB2-S
 
 Compare and contrast authorities and privileges. How well can they be compared to access control in the a system?
 
+        Authorities: permissions on actions on the system
+        Privileges: permission on actions on the data/database
+
         Authorities and privileges are similar to access control in a system, 
         but they have some key differences.
 
