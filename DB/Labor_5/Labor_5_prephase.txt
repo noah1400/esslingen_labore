@@ -1,0 +1,172 @@
+Talk about threats on a computer system. What are the counter measures?
+
+    Threats on a computer system include:
+
+        - Viruses and malware that can damage or steal data
+        - Unauthorized access or hacking attempts
+        - Denial of service attacks, which can make a system unavailable to users
+        - Physical damage or destruction of hardware
+        - Natural disasters, such as fires or floods
+        - Human error or mistakes, such as accidentally deleting important files
+
+    In the context of DB2 database management, some counter measures that can be taken to mitigate these threats include:
+
+        - Installing and regularly updating antivirus and anti-malware software
+        - Implementing strong password policies and using two-factor authentication
+        - Implementing firewalls and other network security measures
+        - Implementing regular backups of data to protect against loss or corruption
+        - Ensuring physical security of hardware, such as keeping servers in a secure location
+        - Providing training to users on security best practices and safe computing habits.
+
+
+Some key differences between safety and security include:
+
+        Safety measures are typically reactive and designed
+        to prevent or mitigate the effects of accidents or incidents, 
+        while security measures are proactive and designed to prevent or deter 
+        threats from occurring in the first place.
+        Safety measures are often focused on physical aspects, 
+        such as protecting against falls or fires, 
+        while security measures often focus on protecting against digital or informational threats, 
+        such as hacking or espionage.
+        Safety measures are often mandatory and regulated by law, 
+        while security measures are often optional and implemented 
+        based on an organization's specific needs and risks.
+
+
+What is the advantage of relying on an authentication facility outside the DB2-System?
+
+        One advantage of relying on an authentication facility outside the DB2 system
+        is that it can provide a centralized and consistent way of managing
+        user authentication and access control. This can make it easier to manage access to the DB2 system, 
+        as well as other systems or resources within an organization.
+
+        Another advantage is that an external authentication
+        facility can often provide additional security measures, 
+        such as two-factor authentication or support for strong passwords, 
+        which can help to protect against unauthorized access to the DB2 system.
+
+        In addition, using an external authentication facility
+        can also make it easier to manage access for a large number of users, 
+        as the facility can handle the authentication process and provide 
+        the necessary credentials to the DB2 system, 
+        without the need to manage individual user accounts within the DB2 system itself. 
+        This can save time and resources, and reduce the potential for errors or inconsistencies
+        in user access control.
+
+Compare and contrast authorities and privileges. How well can they be compared to access control in the a system?
+
+        Authorities and privileges are similar to access control in a system, 
+        but they have some key differences.
+
+        Authorities refer to the level of control that a user has over certain objects or resources 
+        within the DB2 system. For example, a user may have the authority to create new tables, 
+        or to update existing data within a database. 
+        Authorities are typically granted to users based on their role within an organization, 
+        and they can be customized to provide the specific level of control that is appropriate for each user.
+
+        Privileges, on the other hand, refer to the specific actions that a user is allowed to perform 
+        within the DB2 system. For example, a user may have the privilege to SELECT data 
+        from a specific table, or to INSERT new records into a database. 
+        Privileges are typically granted to users on an individual basis, 
+        and they can be fine-tuned to allow or restrict specific actions within the DB2 system.
+
+        Both authorities and privileges can be compared to access control in a system, 
+        as they both determine what actions a user is allowed to perform within the DB2 system. 
+        However, authorities tend to be more broad and apply to a group of users, 
+        while privileges are more granular and apply to individual users. 
+        In this way, authorities and privileges can work together 
+        to provide a flexible and customizable system of access control within the DB2 system.
+
+
+The following tasks can be handled by both the operating system and DB2, 
+depending on the specific configuration and requirements of the system:
+
+Creating a user/group: 
+    This task is typically handled by the operating system, 
+    as it involves creating a new user account with a specific username and password. 
+    However, the DB2 system may also provide the ability to create users and groups within the database, 
+    and to assign specific privileges and authorities to these users and groups.
+
+Adding a user to a group:
+    This task is typically handled by the operating system,
+    as it involves assigning a user to a specific group of users within the system. 
+    However, the DB2 system may also provide the ability to create and manage groups of users 
+    within the database, and to assign specific privileges and authorities to these groups.
+
+Authenticating a user (verifying identity):
+    This task is typically handled by the operating system, 
+    as it involves verifying the username and password of a user who is attempting to log into the system. 
+    However, the DB2 system may also provide its own authentication mechanism, 
+    which can be used to verify the identity of a user before allowing access to the database.
+
+Giving privileges to a user/group:
+    This task can be handled by both the operating system and the DB2 system. 
+    The operating system may provide the ability to assign specific privileges to a user, 
+    such as the ability to read or write files, or to run certain applications. 
+    The DB2 system may also provide the ability to grant specific privileges to a user or group of users
+    within the database, such as the ability to SELECT or INSERT data.
+
+Giving authorities to a group:
+    This task can also be handled by both the operating system and the DB2 system. 
+    The operating system may provide the ability to assign specific authorities to a group of users, 
+    such as the ability to manage user accounts or to access certain resources within the system. 
+    The DB2 system may also provide the ability to grant specific authorities to a group of users 
+    within the database, such as the ability to create or drop tables, 
+    or to grant privileges to other users.
+
+What is package?
+
+    In the context of DB2 databases, 
+    a package is a pre-compiled collection of SQL statements and control information 
+    that is used to access data in a database. 
+    A package typically contains a set of related SQL statements, 
+    such as queries or updates, that are executed together to perform a specific task.
+
+    Packages can be created by the DB2 system, or by users, 
+    and they can be used to improve the performance of SQL statements 
+    by reducing the amount of compilation and optimization that is required 
+    each time the statements are executed. This can make it faster and more efficient 
+    to access data in the database, especially for complex or frequently-used queries.
+
+    Packages can also be used to improve the security of a DB2 database, 
+    as they can provide a way to control access to specific sets of SQL statements, 
+    and to grant or revoke privileges to users or groups of users. 
+    This can help to ensure that only authorized users are able to access and manipulate data 
+    in the database.
+
+Static and dynamic embedded SQL are two different ways of incorporating SQL statements 
+into a program written in a host language, such as C or COBOL. 
+The main differences between static and dynamic embedded SQL are:
+
+Static embedded SQL: 
+    In static embedded SQL, 
+    SQL statements are included directly in the source code of the host program,
+    and they are compiled along with the rest of the program. 
+    This means that the SQL statements are fixed and cannot be changed at runtime, 
+    unless the source code is modified and recompiled. 
+    Static embedded SQL is typically easier to use, 
+    as it allows the SQL statements to be easily integrated into the host program, 
+    and it can provide better performance, as the SQL statements are pre-compiled and optimized 
+    at compile time.
+
+Dynamic embedded SQL: 
+    In dynamic embedded SQL, 
+    SQL statements are not included directly in the source code of the host program. 
+    Instead, they are stored in a separate file, 
+    and they are passed to the DB2 system at runtime, 
+    using a special API or interface. 
+    This allows the SQL statements to be modified or changed at runtime, 
+    without the need to recompile the host program. 
+    Dynamic embedded SQL is more flexible, 
+    as it allows the SQL statements to be easily changed 
+    or adapted to different situations, but it can be more complex to use, 
+    as it requires additional programming and coordination between the host program and the DB2 system.
+
+Overall, 
+the choice between static and dynamic embedded SQL depends on the specific requirements 
+and goals of the host program. 
+Static embedded SQL is typically better suited for programs that have well-defined and stable SQL 
+statements that are not expected to change often, 
+while dynamic embedded SQL is better suited 
+for programs that need to be able to adapt to changing data or conditions at runtime.
