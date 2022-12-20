@@ -85,7 +85,7 @@ db2stop
 db2start
 
 3.
-db2 catalog tcpip node db2node on <server_name> at <port_number>
+db2 catalog local node db2node instance db2a
 
 4.
 Yes, Cathy can terminate applications since she was added to the SYSADM group
