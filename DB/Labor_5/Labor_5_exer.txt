@@ -1,0 +1,91 @@
+1.  To create a new group called "grpdb2a" and a user called "db2a" with the password "Lab5-Adm", 
+    you will need to be logged in as a user with administrative privileges. 
+    From the operating system, you can run the "compmgmt.msc" command to open the Computer Management tool. 
+    From here, you can create the new group and user 
+    by following the steps for creating a new group and user in the operating system you are using. 
+    Once you have created the group and user, make sure to add the "db2a" user to the "grpdb2a" group, 
+    the remote desktop user group, and make the user a local administrator.
+
+2.  To create a new instance called "db2a", open a DB2 Command Window and enter the command "db2icrt db2a". 
+    This should create a new service. To check that the service exists, 
+    you can run the "services.msc" command and look for the new service in the list.
+
+3.  Close all programs and log in as the "db2a" user. 
+    It is important to make sure you are logged in as "db2a" for the next steps to work correctly.
+
+4.  Open a DB2 Command Window and determine the current default instance by running the command "db2 get instance". 
+    To change the default instance to "db2a", run the command "db2 update dbm cfg using instance db2a".
+
+5.  To set the "SYSADM" group for the "db2a" instance to "grpdb2a", 
+    run the command "db2 update dbm cfg using SYSADM_GROUP grpdb2a".
+
+6.  Any changes made to the database manager configuration require recycling the instance before they take effect. 
+    To start the "db2a" instance and apply the changes, run the command "db2start".
+
+7.  To confirm that the current instance of the session is "db2a", run the command "db2 get instance".
+
+8.  To create a new "SAMPLE" database in the "db2a" instance, run the "db2sampl" executable. 
+    This will create a new directory under C:\ containing control information for the instance 
+    and a subdirectory for the database. Make sure that the directories are created correctly.
+
+
+B1
+
+1. 
+set db2instance=db2a 
+db2start 
+db2 connect to sample user Cathy using Lab5-Usr 
+
+2. 
+db2 "select grantee, createtabauth from syscat.dbauth where grantee='PUBLIC'" -> Y
+
+5.
+REVOKE CREATETAB ON DATABASE FROM PUBLIC
+
+
+B2
+1. 
+db2 bind CONSTAT.BND
+db2 bind CONDYN.BND
+
+2.
+CONSTAT.EXE 
+    -> Not successfull, missing execute permission
+
+3.
+db2 select grantee, EXECUTEAUTH from syscat.Packageauth where pkgname='CONSTAT'
+
+4.
+db2 GRANT EXECUTE ON PACKAGE CONSTAT TO CATHY
+
+5.
+CONDYN.EXE 
+    -> Not successfull, missing execute permission
+
+6.
+db2 GRANT EXECUTE ON PACKAGE CONDYN TO CATHY
+
+7. 
+CONDYN.EXE 
+    -> Not successfull, missing select permission
+
+8.
+db2 GRANT SELECT ON TABLE DB2A.STAFF TO CATHY
+
+
+B3
+
+1. 
+DB2 UPDATE DBM CFG USING SYSADM_GROUP dbgrp
+    This will add the "dbgrp" group, which Cathy is a member of, to the SYSADM group in the db2a instance.
+DB2 GET DBM CFG | findstr "SYSADM_GROUP"
+
+2.
+db2stop
+db2start
+
+3.
+db2 catalog tcpip node db2node on <server_name> at <port_number>
+
+4.
+Yes, Cathy can terminate applications since she was added to the SYSADM group
