@@ -1,5 +1,5 @@
 # esslingen_labore
-All laboratory tasks of the University of Applied Sciences Esslingen. Solutions are without guarantee. I do not recommend copy and paste the solutions.
+Laboratory tasks of the University of Applied Sciences Esslingen. Solutions are without guarantee. I do not recommend copy and paste the solutions.
 
 ## Contributing
 #### Tasks are missing? 
