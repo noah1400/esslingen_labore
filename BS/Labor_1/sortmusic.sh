@@ -1,4 +1,19 @@
 #!/bin/bash
+
+: <<EOF
+This script is used to sort a collection of MP3 files based on various criteria. 
+The criteria can be chosen by calling one of the three main functions: sort_by_year, sort_by_artist, or sort_by_disc.
+
+The sort_by_year function sorts the MP3 files by the year they were released, 
+as indicated by the year tag in the MP3 file's metadata. 
+The sort_by_artist function sorts the MP3 files by the artist's name, as indicated by the artist tag in the metadata. 
+The sort_by_disc function sorts the MP3 files by the album they belong to, as indicated by the album tag in the metadata.
+
+For each MP3 file, 
+the script first determines the version of the ID3 tag (which stores the metadata) and then extracts the relevant information based on the version. 
+It then creates a directory for the extracted information if it does not already exist and copies the MP3 file into the appropriate directory.
+EOF
+
 BASE_DIR="./sorted"
 function sort_by_year(){
 	for filename in *.mp3; do
