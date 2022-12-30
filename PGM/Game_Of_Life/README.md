@@ -1,5 +1,3 @@
-`shift.c` erfüllt das Labor mit nur einem Array und benutzt dabei bit shifting.
+`shift.c` erfüllt die Laboraufgabe mit nur einem einzigen Array und nutzt dabei Bit-Shifting. Dadurch wird weniger Speicher benötigt und die Geschwindigkeit des Programms könnte möglicherweise auch erhöht werden.
 
-Das reduziert den benötigten Speicher und erhöht womöglich auch die Geschwindigkeit.
-
-`improved.c` benutzt funktionen und einen struct, welcher eine Zelle darstellt, dadurch wird der code übersichtlicher
+`improved.c` nutzt Funktionen und einen Struct, um eine Zelle darzustellen, wodurch der Code übersichtlicher wird. Diese Implementierung könnte nicht so effizient in Bezug auf Speicherbedarf und Geschwindigkeit sein, aber sie könnte wegen ihrer verbesserten Lesbarkeit und Wartbarkeit bevorzugt werden.
