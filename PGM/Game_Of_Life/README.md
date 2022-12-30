@@ -2,4 +2,4 @@
 
 Das reduziert den benötigten Speicher und erhöht womöglich auch die Geschwindigkeit.
 
-`improved.c` benutzt funktionen, dadurch wird der code übersichtlicher
+`improved.c` benutzt funktionen und einen struct, welcher eine Zelle darstellt, dadurch wird der code übersichtlicher
