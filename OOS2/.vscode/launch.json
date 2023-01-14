@@ -1,0 +1,43 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Acamo",
+            "request": "launch",
+            "mainClass": "acamo.Acamo",
+            "projectName": "OOS2 Lab SWB"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "vmArgs": "--module-path lib\\JavaFX\\javafx-sdk-19\\lib --add-modules javafx.controls,javafx.fxml,javafx.web,javafx.graphics",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch OOS2Lab1Starter",
+            "request": "launch",
+            "mainClass": "OOS2Lab1Starter",
+            "projectName": "OOS2 Lab SWB"
+        },
+        {
+            "type": "java",
+            "name": "Launch OOS2Lab4ActiveAircraftsTest",
+            "request": "launch",
+            "mainClass": "OOS2Lab4ActiveAircraftsTest",
+            "projectName": "OOS2 Lab SWB"
+        },
+        {
+            "type": "java",
+            "name": "Launch Acamo",
+            "request": "launch",
+            "mainClass": "Acamo",
+            "projectName": "OOS2 Lab SWB"
+        }
+    ]
+}
