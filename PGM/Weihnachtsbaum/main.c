@@ -21,13 +21,13 @@ void tree_print_piece(int height, int index)
         printf("/");
         for (int j = 0; j < i * 2 + index * 2; j++)
         {
-            if (i == 2 && (j == 0 || j == i * 2 + index * 2 - 1))
+            if (i == 2 && (j == 0 || j == (i + index) * 2 - 1))
             {
                 printf("_"); // first and last char of the last row
             }
             else if (j % 4 == 1)
             {
-                printf("i"); // i if j is dividable by 4
+                printf("i"); // "i" if j is a multiple of 4 + 1 (1, 5, 9, ...) 
             }
             else
             {
