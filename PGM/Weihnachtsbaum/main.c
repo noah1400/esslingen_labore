@@ -62,21 +62,21 @@ void tree_print_log_row(int height)
 }
 
 void tree_log(int height)
-{ // could be done with case statements and a loop but this is more readable imo
-    if (height == 1)
+{
+    switch (height)
     {
+    case 1:
         tree_print_log_row(height);
-    }
-    else if (height == 2)
-    {
-        tree_print_log_row(height);
-        tree_print_log_row(height);
-    }
-    else
-    {
+        break;
+    case 2:
         tree_print_log_row(height);
         tree_print_log_row(height);
+        break;
+    default:
         tree_print_log_row(height);
+        tree_print_log_row(height);
+        tree_print_log_row(height);
+        break;
     }
 }
 
