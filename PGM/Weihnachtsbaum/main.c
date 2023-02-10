@@ -40,7 +40,7 @@ void tree_print_piece(int height, int index)
     {
         tree_print_piece(height, index + 1); // print next piece
     }
-    else if (index == height - 1)
+    else
     { // print the last row of the last piece
         printf("/");
         for (int i = 0; i < tree_width(height); i++)
