@@ -31,3 +31,7 @@ The module measures the time it takes to allocate `loop_cnt` memory blocks using
 The module also frees the memory blocks using `kfree()` when the module is removed from the kernel.
 
 **Please note that this code is intended to be used as a reference and not copied verbatim**
+
+## Refactored Module
+
+**Please note that the refactored code has not been tested!**
