@@ -11,6 +11,7 @@ typedef struct {
 
 void readInput(Cell field[FIELD_WIDTH][FIELD_HEIGHT]) {
     int x, y;
+    char c;
     while (scanf(" %c", &c) == 1) {
         if (c == 'a') {
             scanf("%d %d", &x, &y);
