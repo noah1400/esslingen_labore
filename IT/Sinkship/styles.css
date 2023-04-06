@@ -38,8 +38,17 @@ footer {
 .controls {
     background-color: red;
     width: 80%;
-    height: 3em;
     margin: 1em auto;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin: 1em auto;
+    width: 20%;
+    padding: 0.5em;
+    border-radius: 7px;
+    border: 1px solid black;
 }
 
 .fields {
@@ -51,7 +60,7 @@ footer {
 }
 
 .field {
-    background-color: yellow;
+    background-color: white;
     width: max(35vw, 400px);
     height: max(35vw, 400px);
     border: 1px solid black;
@@ -88,4 +97,66 @@ footer {
 .right {
     background-color: lightblue;
     background-position: -200% -100%;
+}
+
+table {
+    margin: 1em auto;
+}
+
+/* first child */
+table tr td:first-child {
+    text-align: center;
+}
+
+table tr td:last-child {
+    text-align: center;
+}
+
+th {
+   text-align: left; 
+}
+
+th, td {
+    padding: 0.7em;
+}
+
+.battleship-v, .battleship-h,
+.cruiser-v, .cruiser-h,
+.destroyer-v, .destroyer-h,
+.submarine-v, .submarine-h {
+    width: 20px;
+    background-image: url('images/backgrounds.svg');
+    background-size: 500% 400%;
+}
+
+table .battleship-h {
+    background-position: 0 -200%;
+}
+table .battleship-v {
+    background-position: 0 -300%;
+}
+
+table .cruiser-h {
+    background-position: -100% -200%;
+}
+table .cruiser-v {
+    background-position: -100% -300%;
+}
+
+table .destroyer-h {
+    background-position: -200% -200%;
+}
+table .destroyer-v {
+    background-position: -200% -300%;
+}
+
+table .submarine-h {
+    background-position: -300% -200%;
+}
+table .submarine-v {
+    background-position: -300% -300%;
+}
+
+table .selectable:hover {
+    background-color: orange;
 }
