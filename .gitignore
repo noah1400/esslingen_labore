@@ -10,3 +10,4 @@
 **/*.zip
 **/*.html
 !**/task/*.pdf
+!IT/**/*.html
