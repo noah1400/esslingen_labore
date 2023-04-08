@@ -6,28 +6,25 @@
 }
 
 body {
-    background-color: red;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(130deg, #9198e5, #332828, #9198e5);
 }
 
 main {
-    background-color: antiquewhite;
     flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 header {
     height: 10%;
-    background-color: green;
 }
 
 footer {
-    height: 50px;
-    background-color: blue;
+    padding: .3em;
 }
 
 .limiter {
-    background-color: rgba(255, 255, 255, 0.2);
     width: 90%;
     max-width: 1000px;
     margin: 0 auto;
@@ -36,7 +33,6 @@ footer {
 }
 
 .controls {
-    background-color: red;
     width: 80%;
     margin: 1em auto;
     display: flex;
@@ -51,8 +47,11 @@ button {
     border: 1px solid black;
 }
 
+button:hover {
+    background-color: #e5e5e5;
+}
+
 .fields {
-    background-color: lightgray;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -61,10 +60,10 @@ button {
 
 .field {
     background-color: white;
-    width: max(35vw, 400px);
-    height: max(35vw, 400px);
+    width: max(25vw, 400px);
+    height: max(25vw, 400px);
     border: 1px solid black;
-    margin: 1em;
+    margin: .5em;
     flex-grow: 0;
     flex-shrink: 0;
 }
