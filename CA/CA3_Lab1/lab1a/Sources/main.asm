@@ -32,11 +32,46 @@ SPEED:  EQU     $FFFF                   ; Change this number to change counting 
 ; ROM: Code section
 .init: SECTION
 
+
+
+
 main:                                   ; Begin of the program
 Entry:
         LDS  #__SEG_END_SSTACK          ; Initialize stack pointer
         CLI                             ; Enable interrupts, needed for debugger
+        
+        LDAB     #$0000
+        
+        MOVB    #$FF, DDRB
+        MOVB    #$00, PORTB
+        
+Loop:
+        
+        
+        STAB      PORTB
+        
+        JSR       delay_0_5sec
+        
+        ADDB      #2
+        
+        CMPB      #64
+        BLO       Loop
+        
+        LDAB      #0
+        JMP       Loop
+        
+delay_0_5sec:
+        LDY       #$FFFF
+        LDX       #$FFD0
+        delay_loop:
+        DBNE      Y, delay_loop
+        LDY       #$FFFF
+        INX
+        CPX       #$FFFF
+        BLO       delay_loop          
+                 
+        RTS
 
-;       ... ??? ...                     ; Add your code here
+        
 
 

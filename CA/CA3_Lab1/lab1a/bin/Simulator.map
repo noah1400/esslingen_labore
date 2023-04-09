@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\noahs\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1a\bin\Simulator.abs"
+PROGRAM "C:\Users\Megaport\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1a\bin\Simulator.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -23,12 +23,12 @@ Entry point: 0xC000 (Entry)
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                              5     R     0xC000     0xC004   ROM_C000
+.init                             52     R     0xC000     0xC033   ROM_C000
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):           7 (dec:        7)
+READ_ONLY (R):          36 (dec:       54)
 READ_WRITE (R/W):      100 (dec:      256)
 
 *********************************************************************************************
@@ -43,8 +43,11 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- main.asm.o --
 - PROCEDURES:
-     Entry                                     C000       5       5       0   .init       
+     Entry                                     C000      11      17       0   .init       
      main                                      C000       0       0       0   .init       
+     Loop                                      C011      10      16       1   .init       
+     delay_0_5sec                              C021       6       6       1   .init       
+     delay_loop                                C027       D      13       0   .init       
 - VARIABLES:
 - LABELS:
      __SEG_END_SSTACK                          1100       0       0       1               
@@ -53,21 +56,24 @@ MODULE:                 -- main.asm.o --
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  main.asm.o                                   0      5      0
+  main.asm.o                                   0     52      0
   other                                      256      2      0
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".init"
-  main Entry 
+  main Entry Loop delay_0_5sec delay_loop 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
      main                                      C000       0       0       0   .init       
-     Entry                                     C000       5       5       0   .init       
+     Entry                                     C000      11      17       0   .init       
+     Loop                                      C011      10      16       1   .init       
+     delay_0_5sec                              C021       6       6       1   .init       
+     delay_loop                                C027       D      13       0   .init       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -81,6 +87,7 @@ COPYDOWN SECTION
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 Entry                     USES __SEG_END_SSTACK 
+Loop                      USES delay_0_5sec Loop 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -98,5 +105,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 2
-Total size of all blocks to be downloaded: 7
+Total size of all blocks to be downloaded: 54
 
