@@ -25,6 +25,8 @@ SPEED:  EQU     $FFFF                   ; Change this number to change counting 
 
 ; RAM: Variable data section
 .data: SECTION
+        
+        
 
 ; ROM: Constant data
 .const: SECTION
@@ -41,8 +43,9 @@ Entry:
         CLI                             ; Enable interrupts, needed for debugger
         
         counter: DS.W 1 ; declare variable
-        CLR     counter ; set to 0
         
+        
+        MOVW    #0, counter
         MOVB    #$FF, DDRB  ; set data direction to output
         MOVB    #$00, PORTB ; all leds 0
         
@@ -59,7 +62,7 @@ Loop:
         CMPB      #64          ; compare
         BLO       Loop
         
-        CLR       counter
+        MOVW      #0, counter
         BRA       Loop
         
 delay_0_5sec:

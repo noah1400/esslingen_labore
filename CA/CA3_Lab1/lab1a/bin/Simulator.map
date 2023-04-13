@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\noahs\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1a\bin\Simulator.abs"
+PROGRAM "C:\Users\Megaport\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1a\bin\Simulator.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -23,12 +23,12 @@ Entry point: 0xC000 (Entry)
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             62     R     0xC000     0xC03D   ROM_C000
+.init                             68     R     0xC000     0xC043   ROM_C000
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):          40 (dec:       64)
+READ_ONLY (R):          46 (dec:       70)
 READ_WRITE (R/W):      100 (dec:      256)
 
 *********************************************************************************************
@@ -43,11 +43,11 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- main.asm.o --
 - PROCEDURES:
-     Entry                                     C000      14      20       0   .init       
+     Entry                                     C000      17      23       0   .init       
      main                                      C000       0       0       0   .init       
-     Loop                                      C014      1A      26       0   .init       
-     delay_0_5sec                              C02E       6       6       1   .init       
-     delay_loop                                C034       A      10       0   .init       
+     Loop                                      C017      1D      29       0   .init       
+     delay_0_5sec                              C034       6       6       1   .init       
+     delay_loop                                C03A       A      10       0   .init       
 - VARIABLES:
      counter                                   C005       2       2       5   .init       
 - LABELS:
@@ -57,7 +57,7 @@ MODULE:                 -- main.asm.o --
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  main.asm.o                                   0     62      0
+  main.asm.o                                   0     68      0
   other                                      256      2      0
 
 *********************************************************************************************
@@ -71,11 +71,11 @@ OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
      main                                      C000       0       0       0   .init       
-     Entry                                     C000      14      20       0   .init       
+     Entry                                     C000      17      23       0   .init       
      counter                                   C005       2       2       5   .init       
-     Loop                                      C014      1A      26       0   .init       
-     delay_0_5sec                              C02E       6       6       1   .init       
-     delay_loop                                C034       A      10       0   .init       
+     Loop                                      C017      1D      29       0   .init       
+     delay_0_5sec                              C034       6       6       1   .init       
+     delay_loop                                C03A       A      10       0   .init       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -107,5 +107,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 2
-Total size of all blocks to be downloaded: 64
+Total size of all blocks to be downloaded: 70
 
