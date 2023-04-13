@@ -40,37 +40,39 @@ Entry:
         LDS  #__SEG_END_SSTACK          ; Initialize stack pointer
         CLI                             ; Enable interrupts, needed for debugger
         
-        LDAB     #$0000
+        counter: DS.W 1 ; declare variable
+        CLR     counter ; set to 0
         
-        MOVB    #$FF, DDRB
-        MOVB    #$00, PORTB
+        MOVB    #$FF, DDRB  ; set data direction to output
+        MOVB    #$00, PORTB ; all leds 0
         
 Loop:
+        LDD       counter   ; load counter in D
+        STD       PORTB     ; output counter/D 
         
+        JSR       delay_0_5sec ; wait
         
-        STAB      PORTB
+        ADDD      #2           ; add 2 to D
+        STD       counter      ; store increased value in counter
         
-        JSR       delay_0_5sec
-        
-        ADDB      #2
-        
-        CMPB      #64
+        LDD       counter      ; load counter in D
+        CMPB      #64          ; compare
         BLO       Loop
         
-        LDAB      #0
-        JMP       Loop
+        CLR       counter
+        BRA       Loop
         
 delay_0_5sec:
-        LDY       #$FFFF
-        LDX       #$FFD0
+        LDY       #50000
+        LDX       #20
         delay_loop:
         DBNE      Y, delay_loop
-        LDY       #$FFFF
-        INX
-        CPX       #$FFFF
-        BLO       delay_loop          
+        LDY       #50000
+        DBNE      X, delay_loop          
                  
         RTS
+
+
 
         
 
