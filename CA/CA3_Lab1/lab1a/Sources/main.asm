@@ -12,20 +12,29 @@
 ;
 
 ; export symbols
-        XDEF Entry, main
+        XDEF Entry, main, PORTB, DDRB
+        
+        
+        
 
 ; import symbols
         XREF __SEG_END_SSTACK           ; End of stack
 
 ; include derivative specific macros
+
         INCLUDE 'mc9s12dp256.inc'
+        
+        INCLUDE 'delay.asm'
+        INCLUDE 'led.asm'
+        
+                      
 
 ; Defines
 SPEED:  EQU     $FFFF                   ; Change this number to change counting speed
 
 ; RAM: Variable data section
 .data: SECTION
-        
+counter: DS.W 1 ; declare variable        
         
 
 ; ROM: Constant data
@@ -36,24 +45,22 @@ SPEED:  EQU     $FFFF                   ; Change this number to change counting 
 
 
 
+  
 
 main:                                   ; Begin of the program
 Entry:
         LDS  #__SEG_END_SSTACK          ; Initialize stack pointer
         CLI                             ; Enable interrupts, needed for debugger
         
-        counter: DS.W 1 ; declare variable
-        
-        
         MOVW    #0, counter ; set counter to 0
-        MOVB    #$FF, DDRB  ; set data direction to output
-        MOVB    #$00, PORTB ; all leds 0
+        CALL    initLED
+        
         
 Loop:
         LDD       counter   ; load counter in D
-        STD       PORTB     ; output counter/D 
+        CALL      setLED
         
-        JSR       delay_0_5sec ; wait
+        CALL       delay_0_5sec ; wait
         
         ADDD      #2           ; add 2 to D
         STD       counter      ; store increased value in counter
@@ -65,15 +72,7 @@ Loop:
         MOVW      #0, counter  ; reset counter
         BRA       Loop         ; branch to loop
         
-delay_0_5sec:
-        LDY       #50000
-        LDX       #20
-        delay_loop:
-        DBNE      Y, delay_loop
-        LDY       #50000
-        DBNE      X, delay_loop          
-                 
-        RTS
+
 
 
 

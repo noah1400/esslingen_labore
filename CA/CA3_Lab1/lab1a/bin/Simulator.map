@@ -23,13 +23,16 @@ Entry point: 0xC000 (Entry)
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             68     R     0xC000     0xC043   ROM_C000
-.stack                           256   R/W     0x1000     0x10FF   RAM
+.init                             47     R     0xC000     0xC02E   ROM_C000
+.data                              2   R/W     0x1000     0x1001   RAM
+main.asm._SEC000000               20     R   0x308000   0x308013   PAGE_30
+.led                              20     R   0x308014   0x308027   PAGE_30
+.stack                           256   R/W     0x1002     0x1101   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):          46 (dec:       70)
-READ_WRITE (R/W):      100 (dec:      256)
+READ_ONLY (R):          59 (dec:       89)
+READ_WRITE (R/W):      102 (dec:      258)
 
 *********************************************************************************************
 VECTOR-ALLOCATION SECTION
@@ -43,39 +46,55 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- main.asm.o --
 - PROCEDURES:
-     Entry                                     C000      17      23       0   .init       
+     delay_0_5sec                            308000       8       8       2   main.asm._SEC000000
+     delay_loop                              308008       C      12       0   main.asm._SEC000000
+     Entry                                     C000       F      15       0   .init       
      main                                      C000       0       0       0   .init       
-     Loop                                      C017      1D      29       0   .init       
-     delay_0_5sec                              C034       6       6       1   .init       
-     delay_loop                                C03A       A      10       0   .init       
+     Loop                                      C00F      20      32       0   .init       
+     initLED                                 308014       B      11       2   .led        
+     setLED                                  30801F       9       9       2   .led        
 - VARIABLES:
-     counter                                   C005       2       2       5   .init       
+     counter                                   1000       2       2       5   .data       
 - LABELS:
-     __SEG_END_SSTACK                          1100       0       0       1               
+     __SEG_END_SSTACK                          1102       0       0       1               
+     PORTB                                        1       0       0       0   .text       
+     DDRB                                         3       0       0       0   .text       
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  main.asm.o                                   0     68      0
+  main.asm.o                                   2     87      0
   other                                      256      2      0
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  PORTB DDRB 
+SECTION: ".data"
+  counter 
 SECTION: ".init"
-  main Entry counter Loop delay_0_5sec delay_loop 
+  main Entry Loop 
+SECTION: "main.asm._SEC000000"
+  delay_0_5sec delay_loop 
+SECTION: ".led"
+  initLED setLED 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
+     PORTB                                        1       0       0       0   .text       
+     DDRB                                         3       0       0       0   .text       
+     counter                                   1000       2       2       5   .data       
      main                                      C000       0       0       0   .init       
-     Entry                                     C000      17      23       0   .init       
-     counter                                   C005       2       2       5   .init       
-     Loop                                      C017      1D      29       0   .init       
-     delay_0_5sec                              C034       6       6       1   .init       
-     delay_loop                                C03A       A      10       0   .init       
+     Entry                                     C000       F      15       0   .init       
+     Loop                                      C00F      20      32       0   .init       
+     delay_0_5sec                            308000       8       8       2   main.asm._SEC000000
+     delay_loop                              308008       C      12       0   main.asm._SEC000000
+     initLED                                 308014       B      11       2   .led        
+     setLED                                  30801F       9       9       2   .led        
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -88,8 +107,8 @@ COPYDOWN SECTION
 *********************************************************************************************
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
-Entry                     USES __SEG_END_SSTACK counter 
-Loop                      USES counter delay_0_5sec 
+Entry                     USES __SEG_END_SSTACK counter initLED 
+Loop                      USES counter setLED delay_0_5sec 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -99,13 +118,15 @@ DEPENDENCY TREE
  +- main                
  |    
  +- Entry               
-      
+    | 
+    +- initLED             
+         
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 2
-Total size of all blocks to be downloaded: 70
+Number of blocks to be downloaded: 3
+Total size of all blocks to be downloaded: 89
 

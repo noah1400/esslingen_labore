@@ -12,12 +12,16 @@
 ;
 
 ; export symbols
-        XDEF Entry, main
+        XDEF Entry, main, PORTB, DDRB
+        
+        
+        
 
 ; import symbols
         XREF __SEG_END_SSTACK           ; End of stack
 
 ; include derivative specific macros
+
         INCLUDE 'mc9s12dp256.inc'
 ; Based on CPU DB MC9S12DP256_112, version 2.87.441 (RegistersPrg V2.28)
 
@@ -12823,13 +12827,64 @@ mNVFSEC_KEYEN:      equ    %10000000
 ; ---------------------------------------------------------------------------
 
 ; EOF
+        
+        INCLUDE 'delay.asm'
+
+
+delay_0_5sec:
+
+    PSHX      ; push x to stack
+    PSHY      ; push y to stack
+    
+    LDY       #50000
+    LDX       #20
+    delay_loop:
+    DBNE      Y, delay_loop
+    LDY       #50000
+    DBNE      X, delay_loop
+    
+    PULY      ; restore y and x by pulling from stack
+    PULX
+    
+    RTC       ;  return from call
+        INCLUDE 'led.asm'
+
+
+ .led: SECTION        
+    initLED:
+       
+          MOVB    #$FF, DDRB  ; set data direction to output
+          
+          MOVB    #$00, PORTB ; turn off all leds
+          
+          RTC
+
+    setLED: ; Parameter in register B
+          
+          STAB    PORTB  ; output register B
+          
+          RTC
+
+    getLED: ; return value in register B
+          
+          LDAB    PORTB
+          
+          RTC
+          
+    toggleLED: ; leds to toggle in register B
+          
+          EORB    PORTB
+          
+          RTC
+        
+                      
 
 ; Defines
 SPEED:  EQU     $FFFF                   ; Change this number to change counting speed
 
 ; RAM: Variable data section
 .data: SECTION
-        
+counter: DS.W 1 ; declare variable        
         
 
 ; ROM: Constant data
@@ -12840,24 +12895,22 @@ SPEED:  EQU     $FFFF                   ; Change this number to change counting 
 
 
 
+  
 
 main:                                   ; Begin of the program
 Entry:
         LDS  #__SEG_END_SSTACK          ; Initialize stack pointer
         CLI                             ; Enable interrupts, needed for debugger
         
-        counter: DS.W 1 ; declare variable
+        MOVW    #0, counter ; set counter to 0
+        CALL    initLED
         
-        
-        MOVW    #0, counter
-        MOVB    #$FF, DDRB  ; set data direction to output
-        MOVB    #$00, PORTB ; all leds 0
         
 Loop:
         LDD       counter   ; load counter in D
-        STD       PORTB     ; output counter/D 
+        CALL      setLED
         
-        JSR       delay_0_5sec ; wait
+        CALL       delay_0_5sec ; wait
         
         ADDD      #2           ; add 2 to D
         STD       counter      ; store increased value in counter
@@ -12866,18 +12919,10 @@ Loop:
         CMPB      #64          ; compare
         BLO       Loop
         
-        MOVW      #0, counter
-        BRA       Loop
+        MOVW      #0, counter  ; reset counter
+        BRA       Loop         ; branch to loop
         
-delay_0_5sec:
-        LDY       #50000
-        LDX       #20
-        delay_loop:
-        DBNE      Y, delay_loop
-        LDY       #50000
-        DBNE      X, delay_loop          
-                 
-        RTS
+
 
 
 
