@@ -45,7 +45,7 @@ Entry:
         counter: DS.W 1 ; declare variable
         
         
-        MOVW    #0, counter
+        MOVW    #0, counter ; set counter to 0
         MOVB    #$FF, DDRB  ; set data direction to output
         MOVB    #$00, PORTB ; all leds 0
         
@@ -62,8 +62,8 @@ Loop:
         CMPB      #64          ; compare
         BLO       Loop
         
-        MOVW      #0, counter
-        BRA       Loop
+        MOVW      #0, counter  ; reset counter
+        BRA       Loop         ; branch to loop
         
 delay_0_5sec:
         LDY       #50000
