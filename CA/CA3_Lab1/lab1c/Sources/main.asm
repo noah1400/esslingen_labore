@@ -17,6 +17,7 @@
 ; import symbols
         XREF __SEG_END_SSTACK           ; End of stack
         XREF toLower                    ; Referenced from other object file
+        XREF strCpy
 
 ; include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
@@ -29,7 +30,7 @@ Vtext:  DS.B    80                      ; Please store String here
 
 ; ROM: Constant data
 .const: SECTION
-Ctext:  DC.B  "Test 12345 *!? ABCDE abcde zZ", 0
+Ctext:  DC.B  "Test 12345 *!? ABCDE abcde zZ", 0   
 
 ; ROM: Code section
 .init:  SECTION
@@ -40,6 +41,25 @@ Entry:
         CLI                             ; Enable interrupts, needed for debugger
 
 ;       ... ??? ...                     ; Add your code here
+        LDX     #Ctext    ; Load address of Ctext into X
+        LDY     #Vtext    ; Load address of Vtext into Y
+        JSR strCpy
+                          
+        LDD #Vtext 
+        LDY #Vtext
+        JSR toLower
+        
+        nop    ;to set a breakpoint
+        nop
+        
+        
+        
+        
+    
+        
+        
+        
+        
 ;
 ;  To Do
 ;       Copy string from Ctext in ROM to Vtext in RAM
