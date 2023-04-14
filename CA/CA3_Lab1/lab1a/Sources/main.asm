@@ -19,13 +19,13 @@
 
 ; import symbols
         XREF __SEG_END_SSTACK           ; End of stack
+        XREF  initLED, setLED, getLED, toggleLED
 
 ; include derivative specific macros
 
         INCLUDE 'mc9s12dp256.inc'
         
         INCLUDE 'delay.asm'
-        INCLUDE 'led.asm'
         
                       
 
@@ -71,11 +71,3 @@ Loop:
         
         MOVW      #0, counter  ; reset counter
         BRA       Loop         ; branch to loop
-        
-
-
-
-
-        
-
-

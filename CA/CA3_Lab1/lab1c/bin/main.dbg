@@ -1,28 +1,24 @@
-
-;   Labor 1 - Problem 2.2
-;   Incrementing a value once per second and binary output to LEDs
+;   Labor 1 - Vorbereitungsaufgabe 2.4
+;   Convert a zero-terminated ASCIIZ string to lower characters
+;   Main program
 ;
 ;   Computerarchitektur
 ;   (C) 2019-2022 J. Friedrich, W. Zimmermann, R. Keller
 ;   Hochschule Esslingen
 ;
-;   Author:   R. Keller, HS-Esslingen
+;   Author:   R. Keller, Jul 4, 2019
 ;            (based on code provided by J. Friedrich, W. Zimmermann)
 ;   Modified: -
 ;
 
 ; export symbols
-        XDEF Entry, main, PORTB, DDRB
-        
-        
-        
+        XDEF Entry, main
 
 ; import symbols
         XREF __SEG_END_SSTACK           ; End of stack
-        XREF  initLED, setLED, getLED, toggleLED
+        XREF toLower                    ; Referenced from other object file
 
 ; include derivative specific macros
-
         INCLUDE 'mc9s12dp256.inc'
 ; Based on CPU DB MC9S12DP256_112, version 2.87.441 (RegistersPrg V2.28)
 
@@ -12828,68 +12824,28 @@ mNVFSEC_KEYEN:      equ    %10000000
 ; ---------------------------------------------------------------------------
 
 ; EOF
-        
-        INCLUDE 'delay.asm'
-
-
-delay_0_5sec:
-
-    PSHX      ; push x to stack
-    PSHY      ; push y to stack
-    
-    LDY       #50000
-    LDX       #20
-    delay_loop:
-    DBNE      Y, delay_loop
-    LDY       #50000
-    DBNE      X, delay_loop
-    
-    PULY      ; restore y and x by pulling from stack
-    PULX
-    
-    RTC       ;  return from call
-        
-                      
 
 ; Defines
-SPEED:  EQU     $FFFF                   ; Change this number to change counting speed
 
 ; RAM: Variable data section
-.data: SECTION
-counter: DS.W 1 ; declare variable        
-        
+.data:  SECTION
+Vtext:  DS.B    80                      ; Please store String here
 
 ; ROM: Constant data
 .const: SECTION
+Ctext:  DC.B  "Test 12345 *!? ABCDE abcde zZ", 0
 
 ; ROM: Code section
-.init: SECTION
-
-
-
-  
+.init:  SECTION
 
 main:                                   ; Begin of the program
 Entry:
         LDS  #__SEG_END_SSTACK          ; Initialize stack pointer
         CLI                             ; Enable interrupts, needed for debugger
-        
-        MOVW    #0, counter ; set counter to 0
-        CALL    initLED
-        
-        
-Loop:
-        LDD       counter   ; load counter in D
-        CALL      setLED
-        
-        CALL       delay_0_5sec ; wait
-        
-        ADDD      #2           ; add 2 to D
-        STD       counter      ; store increased value in counter
-        
-        LDD       counter      ; load counter in D
-        CMPB      #64          ; compare
-        BLO       Loop
-        
-        MOVW      #0, counter  ; reset counter
-        BRA       Loop         ; branch to loop
+
+;       ... ??? ...                     ; Add your code here
+;
+;  To Do
+;       Copy string from Ctext in ROM to Vtext in RAM
+;       Load pointer to string in D
+;       Call subroutine toLower

@@ -1,6 +1,11 @@
+  XDEF  initLED, setLED, getLED, toggleLED
+  XREF  PORTB, DDRB
+  
+  .data: SECTION
+  
+  .const: SECTION
 
-
- .led: SECTION        
+ .init: SECTION        
     initLED:
        
           MOVB    #$FF, DDRB  ; set data direction to output
@@ -24,5 +29,7 @@
     toggleLED: ; leds to toggle in register B
           
           EORB    PORTB
+          
+          STAB    PORTB
           
           RTC

@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Megaport\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1a\bin\Simulator.abs"
+PROGRAM "C:\Users\Megaport\Desktop\coding\projects\esslingen_labore\CA\CA3_Lab1\lab1c\bin\Simulator.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -13,7 +13,6 @@ Linker      : SmartLinker V-5.0.40 Build 10203, Jul 23 2010
 FILE SECTION
 ---------------------------------------------------------------------------------------------
 main.asm.o                              Model: SMALL,         Lang: Assembler
-led.asm.o                               Model: SMALL,         Lang: Assembler
 
 *********************************************************************************************
 STARTUP SECTION
@@ -24,15 +23,13 @@ Entry point: 0xC000 (Entry)
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             73     R     0xC000     0xC048   ROM_C000
-.data                              2   R/W     0x1000     0x1001   RAM
-main.asm._SEC000000               20     R   0x308000   0x308013   PAGE_30
-.stack                           256   R/W     0x1002     0x1101   RAM
+.init                              5     R     0xC000     0xC004   ROM_C000
+.stack                           256   R/W     0x1000     0x10FF   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):          5F (dec:       95)
-READ_WRITE (R/W):      102 (dec:      258)
+READ_ONLY (R):           7 (dec:        7)
+READ_WRITE (R/W):      100 (dec:      256)
 
 *********************************************************************************************
 VECTOR-ALLOCATION SECTION
@@ -46,65 +43,38 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- main.asm.o --
 - PROCEDURES:
-     delay_0_5sec                            308000       8       8       2   main.asm._SEC000000
-     delay_loop                              308008       C      12       0   main.asm._SEC000000
-     Entry                                     C000       F      15       0   .init       
+     Entry                                     C000       5       5       0   .init       
      main                                      C000       0       0       0   .init       
-     Loop                                      C00F      20      32       0   .init       
 - VARIABLES:
-     counter                                   1000       2       2       5   .data       
 - LABELS:
-     __SEG_END_SSTACK                          1102       0       0       1               
-     PORTB                                        1       0       0       5   .text       
-     DDRB                                         3       0       0       1   .text       
-MODULE:                 -- led.asm.o --
-- PROCEDURES:
-     initLED                                   C02F       B      11       2   .init       
-     setLED                                    C03A       4       4       2   .init       
-     getLED                                    C03E       4       4       0   .init       
-     toggleLED                                 C042       7       7       0   .init       
-- VARIABLES:
+     __SEG_END_SSTACK                          1100       0       0       1               
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  main.asm.o                                   2     67      0
-  led.asm.o                                    0     26      0
+  main.asm.o                                   0      5      0
   other                                      256      2      0
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
-SECTION: ".text"
-  PORTB DDRB 
-SECTION: ".data"
-  counter 
 SECTION: ".init"
-  main Entry Loop initLED setLED getLED toggleLED 
-SECTION: "main.asm._SEC000000"
-  delay_0_5sec delay_loop 
+  main Entry 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     PORTB                                        1       0       0       5   .text       
-     DDRB                                         3       0       0       1   .text       
-     counter                                   1000       2       2       5   .data       
      main                                      C000       0       0       0   .init       
-     Entry                                     C000       F      15       0   .init       
-     Loop                                      C00F      20      32       0   .init       
-     initLED                                   C02F       B      11       2   .init       
-     setLED                                    C03A       4       4       2   .init       
-     getLED                                    C03E       4       4       0   .init       
-     toggleLED                                 C042       7       7       0   .init       
-     delay_0_5sec                            308000       8       8       2   main.asm._SEC000000
-     delay_loop                              308008       C      12       0   main.asm._SEC000000
+     Entry                                     C000       5       5       0   .init       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
+NOT USED VARIABLES
+main.asm.o:
+  Vtext Ctext 
 
 *********************************************************************************************
 COPYDOWN SECTION
@@ -113,12 +83,7 @@ COPYDOWN SECTION
 *********************************************************************************************
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
-Entry                     USES __SEG_END_SSTACK counter initLED 
-Loop                      USES counter setLED delay_0_5sec 
-initLED                   USES DDRB PORTB 
-setLED                    USES PORTB 
-getLED                    USES PORTB 
-toggleLED                 USES PORTB 
+Entry                     USES __SEG_END_SSTACK 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -128,15 +93,13 @@ DEPENDENCY TREE
  +- main                
  |    
  +- Entry               
-    | 
-    +- initLED             
-         
+      
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 3
-Total size of all blocks to be downloaded: 95
+Number of blocks to be downloaded: 2
+Total size of all blocks to be downloaded: 7
 
