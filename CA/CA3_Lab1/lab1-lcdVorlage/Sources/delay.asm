@@ -15,4 +15,4 @@ delay_0_5sec:
     PULY      ; restore y and x by pulling from stack
     PULX
     
-    RTC       ;  return from call
+    RTS       ;  return from subroutine

@@ -13,6 +13,11 @@
 ; Import symbols
         XREF __SEG_END_SSTACK                   ; End of stack
         XREF initLCD, writeLine, delay_10ms     ; LCD functions
+        XREF hexToASCII
+        XREF decToASCII
+        XREF delay_0_5sec
+        XREF toLower
+        
 
 ; Include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
