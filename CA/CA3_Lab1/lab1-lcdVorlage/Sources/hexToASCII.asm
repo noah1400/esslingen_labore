@@ -1,7 +1,6 @@
   XDEF  hexToASCII
   
 .data: SECTION
- string:  DS.B    7
  val:     DS.W    1
   
 
@@ -10,8 +9,6 @@ H2A:    DC.B  "0123456789ABCDEFG"
 
 .init: SECTION
 
-
-hta_loop:
     
 
 hexToASCII:
@@ -25,7 +22,6 @@ hexToASCII:
       PSHA
       PSHB
       
-      LDX   #string
       STD   val
       
       ; Place "0x" at the beginning of the string
@@ -99,7 +95,7 @@ hexToASCII:
       PULB
       PULA
       PULY
-      PULX
+      PULX  ; Restore beginning of string
       
       ; Return from subroutine
       RTS
