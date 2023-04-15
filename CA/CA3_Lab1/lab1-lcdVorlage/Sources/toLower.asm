@@ -29,6 +29,11 @@
 
 
         toLower:
+        
+        PSHA
+        PSHY
+        PSHB
+        
         LDAA 0, Y
         CMPA #0
         BEQ toLower_done
@@ -45,5 +50,10 @@
         STAB    1,Y+      ; store byte into Vtext using Y
         CMPB    #0        ; compare byte to null terminator
         BNE     strCpy    ; loop until null terminator
+        
+        PULB
+        PULY
+        PULA
+        
         RTS
         
