@@ -33,6 +33,8 @@
         PSHA
         PSHY
         PSHB
+
+        toLower_loop:
         
         LDAA 0, Y
         CMPA #0
@@ -40,20 +42,28 @@
         ORAA #%100000     ;every 5th bit set to 1
         STAA 0, Y         ;store OR'd value in Vtext
         INY
-        BRA toLower
+        BRA toLower_loops
         
         toLower_done:
+        PULB
+        PULY
+        PULA
         RTS
 
         strCpy:
+
+        PSHB              ; save B
+        PSHX              ; save X
+        PSHY              ; save Y      
+
         LDAB    1,X+      ; load byte from Ctext into B using X 
         STAB    1,Y+      ; store byte into Vtext using Y
         CMPB    #0        ; compare byte to null terminator
         BNE     strCpy    ; loop until null terminator
         
-        PULB
         PULY
-        PULA
+        PULX
+        PULB
         
         RTS
         
