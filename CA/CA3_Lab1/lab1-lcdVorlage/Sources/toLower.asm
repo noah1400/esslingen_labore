@@ -42,7 +42,7 @@
         ORAA #%100000     ;every 5th bit set to 1
         STAA 0, Y         ;store OR'd value in Vtext
         INY
-        BRA toLower_loops
+        BRA toLower_loop
         
         toLower_done:
         PULB
