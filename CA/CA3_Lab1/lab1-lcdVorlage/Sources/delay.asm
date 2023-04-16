@@ -1,18 +1,25 @@
 
 
 delay_0_5sec:
+    PSHY
+    PSHX
 
-    PSHX      ; push x to stack
-    PSHY      ; push y to stack
+    LDY #50
+    del1:
+        DEY 
+        CPY #0
+        LDX #4000
+        BRA delay
+        BNE del1
+
+    PULY
+    PULY
+    RTS
     
-    LDY       #50000
-    LDX       #20
-    delay_loop:
-    DBNE      Y, delay_loop
-    LDY       #50000
-    DBNE      X, delay_loop
-    
-    PULY      ; restore y and x by pulling from stack
-    PULX
-    
-    RTS       ;  return from subroutine
+
+delay:     
+    dex                   ; 1 cycle
+    inx                   ; 1 cycle
+    dex                   ; 1 cycle
+    bne   del1            ; 3 cylce
+    rts
