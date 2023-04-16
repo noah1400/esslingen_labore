@@ -39,7 +39,12 @@
     LDAA  #NEGATIVE_SIGN
     STAA  1, X+
     ; negate
-    NEG   val    
+    LDD val
+    COMA
+    COMB
+    ADDD #1
+    
+    STD val    
     
     ; BRA   decToASCII_loop
     
