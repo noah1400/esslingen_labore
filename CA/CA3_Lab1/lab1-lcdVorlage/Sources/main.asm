@@ -30,7 +30,11 @@
 ; ROM: Constant data
 .const: SECTION
 MSG1:   dc.b " Mach mal eine",0
-MSG2:   dc.b " kleine Pause", 0
+MSG2:   dc.b " kleine Pause",0
+msgA:   DC.B "ABCDEFGHIJKLMnopqrstuvwxyz1234567890",0  ;on line 0
+msgB:   DC.B "is this OK?",0                           ;on line 1
+
+
 
 ; ROM: Code section
 .init:  SECTION
@@ -45,13 +49,25 @@ Entry:
 
         JSR  initLCD                    ; Initialize the LCD
 
-        LDX  #MSG1                      ; MSG1 for line 0, X points to MSG1
+                                        ; MSG1 for line 0, X points to MSG1
+        LDX #MSG1
         LDAB #0                         ; Write to line 0
         JSR  writeLine
 
-        LDX  #MSG2                      ; MSG2 for line 1, X points to MSG2
+                                        ; MSG2 for line 1, X points to MSG2
+        LDX #MSG2
         LDAB #1                         ; Write to line 1
         JSR  writeLine
+        
+        LDX #msgA
+        LDAB #0                         
+        JSR  writeLine
+
+        LDX #msgB
+        LDAB #1                         ; Write to line 1
+        JSR  writeLine
+        
+        
 
 back:   BRA back
 

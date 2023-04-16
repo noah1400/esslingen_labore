@@ -202,7 +202,9 @@ writeLine:
           jsr  sel_inst   ; select instruction
           pulb
           cmpb #1
-          bne writeLine1
+          ;bne writeLine1
+          beq writeLine1
+          
 writeLine0:
           ldaa #LCD_LINE0 ; set cursor to begin of line 0
           bra  wDo
@@ -213,16 +215,38 @@ wDo:      jsr  outputByte
           jsr  sel_data   ; select data
 
 msg_out:                  ; output the message character by character
-          ldab #16        ; max. 16 characters
+          ;ldab #16        ; max. 16 characters
+          ldab #17
 next:     ldaa 0,x        ; get character
           decb
           beq  wEnd       ; not more than 16 characters
+          cmpa #0         ; character is a space ('') if (B != 0 && A = 0)
+          BEQ fill_w_spaces
           jsr  outputByte ; write character to LCD
           inx             ; continue with next character
           bra  next
 wEnd:     pulx
           puld
           rts
+
+fill_w_spaces:
+          LDAA #$0020
+          jsr outputByte
+          decb
+          cmpb #0
+          bne fill_w_spaces
+          bra wEnd
+
+
+
+
+
+
+
+
+
+
+
 
 ;**************************************************************
 ; Public interface function: delay_10ms
