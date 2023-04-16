@@ -54,6 +54,8 @@ Entry:
         
         
 main_loop:
+        JSR delay_0_5sec
+        
         LDX #msgDec
         LDD i
         JSR decToASCII
@@ -75,16 +77,56 @@ main_loop:
         LDD i
         JSR setLED                                 
         
-        ;increment i
+        
+        BRSET PTH, #$01, button0pressed ; check if button on port PTH.0
+        BRSET PTH, #$02, button1pressed ; check if button on port PTH.1
+        BRSET PTH, #$04, button2pressed ; check if button on port PTH.2
+        BRSET PTH, #$08, button3pressed ; check if button on port PTH.3
+    
+
+        ; continue here if not pressed
+        ;increment i by 1
         LDD i
         ADDD #1
-        STD i
+        STD i                                
         
-        JSR delay_0_5sec
+       
+        
+        
         BRA main_loop
         
-        
+         
         
 
 back:   BRA back
+
+button0pressed:
+        LDD i
+        ADDD #16
+        STD i
+        BRA main_loop
+
+button1pressed:
+        LDD i
+        ADDD #10
+        STD i
+        BRA main_loop
+        
+
+
+button2pressed:
+        LDD i
+        SUBD #16
+        STD i
+        BRA main_loop
+        
+
+
+button3pressed:
+        LDD i
+        SUBD #10
+        STD i
+        BRA main_loop
+        
+
 
