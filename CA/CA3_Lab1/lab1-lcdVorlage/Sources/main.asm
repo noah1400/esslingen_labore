@@ -13,12 +13,7 @@
 ; Import symbols
         XREF __SEG_END_SSTACK                   ; End of stack
         XREF initLCD, writeLine, delay_10ms     ; LCD functions
-        XREF hexToASCII
-        XREF decToASCII
-        XREF delay_0_5sec
-        XREF toLower
-        
-
+        XREF decToASCII, hexToASCII
 ; Include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
 
@@ -26,10 +21,10 @@
 
 ; RAM: Variable data section
 .data:  SECTION
-i DS.W 1
-msgDec DS.B 7
-msgHex DS.B 7
-
+ i: ds.w  1
+ msgDec: ds.b 7  
+ msgHex: ds.b 7
+ 
 ; ROM: Constant data
 .const: SECTION
 MSG1:   dc.b " Mach mal eine",0
@@ -51,9 +46,10 @@ Entry:
         JSR  delay_10ms                 ; by Jump-Subroutine (use step-over)
 
         JSR  initLCD                    ; Initialize the LCD
+
+        MOVW #-7, i
         
-        MOVW #5, i
-        
+main_loop:
         LDX #msgDec
         LDD i
         JSR decToASCII
@@ -69,24 +65,16 @@ Entry:
         LDX #msgHex
         LDAB #1
         JSR writeLine
-
-                                        ; MSG1 for line 0, X points to MSG1
-        ;LDX #MSG1
-        ;LDAB #0                         ; Write to line 0
-        ;JSR  writeLine
-
-                                        ; MSG2 for line 1, X points to MSG2
-        ;LDX #MSG2
-        ;LDAB #1                         ; Write to line 1
-        ;JSR  writeLine
         
-        ;LDX #msgA
-        ;LDAB #0                         
-        ;JSR  writeLine
-
-        ;LDX #msgB
-        ;LDAB #1                         ; Write to line 1
-        ;JSR  writeLine
+                                         
+        ;increment i
+        LDD i
+        ADDD #1
+        STD i
+        BRA main_loop
+        
+        
+        
 
 back:   BRA back
 
