@@ -12,19 +12,19 @@
           
           MOVB    #$00, PORTB ; turn off all leds
           
-          RTC
+          RTS
 
     setLED: ; Parameter in register B
           
           STAB    PORTB  ; output register B
           
-          RTC
+          RTS
 
     getLED: ; return value in register B
           
           LDAB    PORTB
           
-          RTC
+          RTS
           
     toggleLED: ; leds to toggle in register B
           
@@ -32,4 +32,4 @@
           
           STAB    PORTB
           
-          RTC
+          RTS

@@ -9,11 +9,14 @@
 ;   Last Modified: R. Keller, August 2022
 ; Export symbols
         XDEF Entry, main
+        XDEF PORTB, DDRB
 
 ; Import symbols
         XREF __SEG_END_SSTACK                   ; End of stack
         XREF initLCD, writeLine, delay_10ms     ; LCD functions
         XREF decToASCII, hexToASCII
+        XREF setLED, initLED
+        XREF delay_0_5sec
 ; Include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
 
@@ -47,7 +50,8 @@ Entry:
 
         JSR  initLCD                    ; Initialize the LCD
 
-        MOVW #-7, i
+        MOVW #60000, i
+        
         
 main_loop:
         LDX #msgDec
@@ -58,6 +62,8 @@ main_loop:
         LDD i
         JSR hexToASCII
         
+        
+        
         LDX #msgDec
         LDAB #0
         JSR writeLine
@@ -66,11 +72,15 @@ main_loop:
         LDAB #1
         JSR writeLine
         
-                                         
+        LDD i
+        JSR setLED                                 
+        
         ;increment i
         LDD i
         ADDD #1
         STD i
+        
+        JSR delay_0_5sec
         BRA main_loop
         
         
