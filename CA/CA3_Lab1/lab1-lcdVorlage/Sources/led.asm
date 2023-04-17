@@ -1,5 +1,5 @@
   XDEF  initLED, setLED, getLED, toggleLED
-  XREF  PORTB, DDRB
+  XREF  PORTB, DDRB, DDRJ, PTJ
   
   .data: SECTION
   
@@ -7,6 +7,9 @@
 
  .init: SECTION        
     initLED:
+
+          MOVW    #FF, DDRJ
+          MOVW    #2, PTJ
        
           MOVB    #$FF, DDRB  ; set data direction to output
           

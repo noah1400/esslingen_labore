@@ -1,15 +1,15 @@
 ;
-;   Labor 1 - Test program for LCD driver
+;   Lab1 - Task3.2 Finished Code
 ;
 ;   Computerarchitektur
 ;   (C) 2019-2022 J. Friedrich, W. Zimmermann, R. Keller
 ;   Hochschule Esslingen
 ;
-;   Author:   	   J.Friedrich, W. Zimmermann
-;   Last Modified: R. Keller, August 2022
+;   Author:   	   Noah Scholz, Mateusz Frydryszak
+;   Last Modified: Noah Scholz, April 2023
 ; Export symbols
         XDEF Entry, main
-        XDEF PORTB, DDRB
+        XDEF PORTB, DDRB, DDRJ, PTJ
 
 ; Import symbols
         XREF __SEG_END_SSTACK                   ; End of stack
@@ -49,6 +49,7 @@ Entry:
         JSR  delay_10ms                 ; by Jump-Subroutine (use step-over)
 
         JSR  initLCD                    ; Initialize the LCD
+        JSR  initLED                    ; Initialize the LEDs
 
         MOVW #60000, i
         
@@ -78,10 +79,10 @@ main_loop:
         JSR setLED                                 
         
         
-        BRSET PTH, #$01, button0pressed ; check if button on port PTH.0
-        BRSET PTH, #$02, button1pressed ; check if button on port PTH.1
-        BRSET PTH, #$04, button2pressed ; check if button on port PTH.2
-        BRSET PTH, #$08, button3pressed ; check if button on port PTH.3
+        BRCLR PTH, #$01, button0pressed ; check if button on port PTH.0
+        BRCLR PTH, #$02, button1pressed ; check if button on port PTH.1
+        BRCLR PTH, #$04, button2pressed ; check if button on port PTH.2
+        BRCLR PTH, #$08, button3pressed ; check if button on port PTH.3
     
 
         ; continue here if not pressed

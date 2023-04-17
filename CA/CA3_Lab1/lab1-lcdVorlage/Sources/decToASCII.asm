@@ -11,6 +11,16 @@
 
 .init: SECTION
 
+
+  ; Description: This assembly function converts a 16-bit value passed in register D 
+  ;              to its corresponding integer string representation and 
+  ;              saves it to the location pointed to by the string pointer passed in register x.
+
+  ; Parameters:
+
+  ; Register D: A 16-bit value to be converted to its integer string representation.
+  ; Register x: A pointer to a string where the resulting integer string will be stored.
+
   decToASCII:
     ; Save registers to stack
     PSHA

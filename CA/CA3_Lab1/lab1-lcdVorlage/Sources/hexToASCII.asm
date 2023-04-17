@@ -9,7 +9,14 @@ H2A:    DC.B  "0123456789ABCDEFG"
 
 .init: SECTION
 
-    
+  ; Description: This assembly function converts a 16-bit value passed in register D 
+  ;              to its corresponding hex string representation and saves 
+  ;              it to the location pointed to by the string pointer passed in register x.
+
+  ; Parameters:
+
+  ; Register D: A 16-bit value to be converted to its hex string representation.
+  ; Register x: A pointer to a string where the resulting hex string will be stored.   
 
 hexToASCII:
     
