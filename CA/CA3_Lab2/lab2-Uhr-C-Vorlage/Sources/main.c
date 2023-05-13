@@ -86,12 +86,13 @@ void main(void)
 
     initClock();
     tickClock();
+    
 
     for(;;)                                     // Endless loop
     {   if (clockEvent)
     	{   clockEvent = 0;
     
-// ??? Add your code here ???
+        tickClock();
     
     	}
     }

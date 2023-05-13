@@ -6,6 +6,10 @@
     XREF decToASCII
     XREF writeLine
     
+    INCLUDE 'mc9s12dp256.inc'
+    
+    SELECT12HOURS: equ 1
+    
 .data: SECTION
 
 scnds:    DS.B  1
@@ -19,7 +23,17 @@ tempTXT:  DS.B  7
 
 mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
-time:  DS.B  9 ;HH:MM:SS\n 
+
+
+  IF SELECT12HOURS == 1
+     time:  DS.B  11 ;HH:MM:SSam\n
+     am:  DS.B  1 ; AM?
+  ELSE
+     time:  DS.B  9 ;HH:MM:SS\n
+  ENDIF
+
+ 
+.const: SECTION
 
 
 .init: SECTION
@@ -28,12 +42,14 @@ initClock:
   JSR   initLED ; Initialize LEDs
   
   PSHA
-  LDAA  #23
+  LDAA  #12
   STAA  hrs
-  LDAA  #58
+  LDAA  #59
   STAA  mins
-  LDAA  #30
+  LDAA  #59
   STAA  scnds
+  LDAA  #1
+  STAA  am
   PULA
   
   rts
@@ -176,9 +192,31 @@ combineStrings:
       
    combineStrings_loop_end:
       DEY           ; Decrement the resulting string pointer to remove the last delimiter ':'
+      IF SELECT12HOURS == 1
+           JSR  addAMPM
+      ENDIF
       CLRA          ; Set the null character
       STAA  0, Y    ; Null terminate the resulting string
       rts
+      
+   IF SELECT12HOURS == 1
+   addAMPM:
+      LDAA  am            ; Load am variable
+      CMPA  #1            ; Check if am is set
+      BEQ   addAM         ; If yes branch
+      addPM:
+      LDAA  #'p'          ; Load 'p'
+      BRA   addAMPM_end
+      addAM:
+      LDAA  #'a'          ; Load 'a'
+      addAMPM_end:
+      STAA  0, Y          ; Store previous character ( 'a' or 'b' ) in resulting string
+      INY                 ; Increase resulting string pointer
+      LDAA  #'m'          ; Load 'm'
+      STAA  0, Y          ; Store 'm' in resulting string
+      INY
+      rts
+   ENDIF
       
   
   
@@ -213,17 +251,63 @@ incrementAndCheckHourOverflow:
   LDAB  hrs
   INCB
   STAB  hrs
-  CMPB  #24
-  BEQ   resetHours
+  IF SELECT12HOURS==0
+    CMPB #24
+    BEQ   resetHours
+  ELSE
+    LDAA  am  ; load am variable
+    CMPA  #0
+    BEQ   checkPMOverflow
+    checkAMOverflow:
+      CMPB  #13
+      BEQ   am12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59am -> 01:00:00am
+      CMPB  #12
+      BEQ   am11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59am -> 12:00:00pm
+      BRA   AMPMOverflow_end    ; no overflow
+    
+      am11to12_overflow:        ; keep hrs the same but change am to pm
+        LDAA  #0
+        STAA  am
+        BRA   AMPMOverflow_end
+      
+      am12to13_overflow:        ; stay with AM but set hrs to 1
+        LDAA  #1                
+        STAA  hrs
+        BRA   AMPMOverflow_end
+    
+    checkPMOverflow:
+      CMPB  #13
+      BEQ   pm12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59pm -> 01:00:00pm
+      CMPB  #12
+      BEQ   pm11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59pm -> 12:00:00am 
+      BRA   AMPMOverflow_end
+      
+      pm11to12_overflow:        ; keep hrs the same but change from pm to am
+        LDAA  #1
+        STAA  am
+        BRA   AMPMOverflow_end  
+      
+      pm12to13_overflow:        ; stay with pm but set hrs to 1
+        LDAA  #1
+        STAA  hrs
+        ; BRA AMPMOverflow_end
+        
+    
+    AMPMOverflow_end:
+  ENDIF
   RTS
+  
+  IF SELECT12HOURS==0 
+  
 resetHours:
   ; hours overflowed
   ; reset hours
   LDAB  #0
   STAB  hrs
   RTS
+  
+  ENDIF
 ; end tick section
 ; ###########################################################
-
 
   
