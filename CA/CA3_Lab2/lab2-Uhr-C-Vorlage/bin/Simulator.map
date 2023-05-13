@@ -22,25 +22,25 @@ lcd.asm.o                               Model: SMALL,         Lang: Assembler
 STARTUP SECTION
 ---------------------------------------------------------------------------------------------
 Entry point: 0xC029 (_Startup)
-_startupData is allocated at 0xC12B and uses 11 Bytes
+_startupData is allocated at 0xC133 and uses 11 Bytes
 extern struct _tagStartup {
   unsigned flags          0
-  _PFunc   main           0xC172    (main)
+  _PFunc   main           0xC17A    (main)
   long     stackOffset    0x1103
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1000     4
-  _Copy    *toCopyDownBeg 0xC1A2
+  _Copy    *toCopyDownBeg 0xC1AA
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                            299     R     0xC000     0xC12A   ROM_C000
-.startData                        15     R     0xC12B     0xC139   ROM_C000
-.rodata1                          30     R     0xC13A     0xC157   ROM_C000
-.text                             65     R     0xC158     0xC198   ROM_C000
-.copy                              2     R     0xC1A2     0xC1A3   ROM_C000
+.init                            307     R     0xC000     0xC132   ROM_C000
+.startData                        15     R     0xC133     0xC141   ROM_C000
+.rodata1                          30     R     0xC142     0xC15F   ROM_C000
+.text                             65     R     0xC160     0xC1A0   ROM_C000
+.copy                              2     R     0xC1AA     0xC1AB   ROM_C000
 .data                              3   R/W     0x1000     0x1002   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -569,12 +569,12 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg524
 ticker.asm__ORG00001               2     R     0xFFE6     0xFFE7   .absSeg525
 .bss                               1   R/W     0x1003     0x1003   RAM
-.const                             9     R     0xC199     0xC1A1   ROM_C000
+.const                             9     R     0xC1A1     0xC1A9   ROM_C000
 .stack                           256   R/W     0x1004     0x1103   RAM
 .vectSeg526_vect                   2     R     0xFFFE     0xFFFF   .vectSeg526
 
 Summary of section sizes per section type:
-READ_ONLY (R):         1A8 (dec:      424)
+READ_ONLY (R):         1B0 (dec:      432)
 READ_WRITE (R/W):      104 (dec:      260)
 NO_INIT (N/I):         24E (dec:      590)
 
@@ -1118,59 +1118,59 @@ MODULE:                 -- mc9s12dp256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     WriteLine_Wrapper                         C158       A      10       2   .text       
-     initLED_C                                 C162      10      16       1   .text       
-     main                                      C172      27      39       0   .text       
+     WriteLine_Wrapper                         C160       A      10       2   .text       
+     initLED_C                                 C16A      10      16       1   .text       
+     main                                      C17A      27      39       0   .text       
 - VARIABLES:
-     STRING.Clock.Template.1                   C13A       F      15       1   .rodata1    
-     STRING..C..HE.Prof..Z.2                   C149       F      15       1   .rodata1    
-     clockEvent                                1003       1       1       2   .bss        
+     STRING.Clock.Template.1                   C142       F      15       1   .rodata1    
+     STRING..C..HE.Prof..Z.2                   C151       F      15       1   .rodata1    
+     clockEvent                                1003       1       1       3   .bss        
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029      10      16       0   .init       
 - VARIABLES:
-     _startupData                              C12B       B      11       5   .startData  
+     _startupData                              C133       B      11       5   .startData  
 - LABELS:
      __SEG_END_SSTACK                          1104       0       0       1               
 MODULE:                 -- ticker.asm.o --
 - PROCEDURES:
      initTicker                                C039      1B      27       1   .init       
-     isrECT4                                   C054      1F      31       1   .init       
-     notYet                                    C073       1       1       0   .init       
+     isrECT4                                   C054      27      39       1   .init       
+     notYet                                    C07B       1       1       0   .init       
 - VARIABLES:
      ticks                                     1000       1       1       4   .data       
      int12                                     FFE6       2       2       0   .text       
 MODULE:                 -- lcd.asm.o --
 - PROCEDURES:
-     initLCD                                   C074      27      39       1   .init       
-     inext1                                    C09B      18      24       0   .init       
-     inext2                                    C0B3       F      15       0   .init       
-     writeLine                                 C0C2       F      15       1   .init       
-     writeLine1                                C0D1       2       2       0   .init       
-     wDo                                       C0D3       8       8       0   .init       
-     next                                      C0DB       F      15       0   .init       
-     wEnd                                      C0EA       3       3       0   .init       
-     fill_w_spaces                             C0ED       C      12       0   .init       
-     delay_10ms                                C0F9       8       8       1   .init       
-     delay_5ms                                 C101       8       8       2   .init       
-     delay_50us                                C109       8       8       1   .init       
-     del1                                      C111       6       6       0   .init       
-     sel_data                                  C117       4       4       1   .init       
-     sel_inst                                  C11B       4       4       3   .init       
-     outputByte                                C11F       C      12       5   .init       
+     initLCD                                   C07C      27      39       1   .init       
+     inext1                                    C0A3      18      24       0   .init       
+     inext2                                    C0BB       F      15       0   .init       
+     writeLine                                 C0CA       F      15       1   .init       
+     writeLine1                                C0D9       2       2       0   .init       
+     wDo                                       C0DB       8       8       0   .init       
+     next                                      C0E3       F      15       0   .init       
+     wEnd                                      C0F2       3       3       0   .init       
+     fill_w_spaces                             C0F5       C      12       0   .init       
+     delay_10ms                                C101       8       8       1   .init       
+     delay_5ms                                 C109       8       8       2   .init       
+     delay_50us                                C111       8       8       1   .init       
+     del1                                      C119       6       6       0   .init       
+     sel_data                                  C11F       4       4       1   .init       
+     sel_inst                                  C123       4       4       3   .init       
+     outputByte                                C127       C      12       5   .init       
 - VARIABLES:
      VAR00001                                  1001       1       1       2   .data       
      temp1                                     1002       1       1       0   .data       
-     VAR00002                                  C199       1       1       1   .const      
-     VAR00003                                  C19A       1       1       0   .const      
-     VAR00004                                  C19B       1       1       0   .const      
-     VAR00005                                  C19C       1       1       0   .const      
-     VAR00006                                  C19D       1       1       1   .const      
-     VAR00007                                  C19E       1       1       0   .const      
-     VAR00008                                  C19F       1       1       0   .const      
-     VAR00009                                  C1A0       1       1       0   .const      
-     VAR00010                                  C1A1       1       1       0   .const      
+     VAR00002                                  C1A1       1       1       1   .const      
+     VAR00003                                  C1A2       1       1       0   .const      
+     VAR00004                                  C1A3       1       1       0   .const      
+     VAR00005                                  C1A4       1       1       0   .const      
+     VAR00006                                  C1A5       1       1       1   .const      
+     VAR00007                                  C1A6       1       1       0   .const      
+     VAR00008                                  C1A7       1       1       0   .const      
+     VAR00009                                  C1A8       1       1       0   .const      
+     VAR00010                                  C1A9       1       1       0   .const      
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -1179,7 +1179,7 @@ MODULE STATISTIC
   mc9s12dp256.c.o                            590      0      0
   main.c.o                                     1     65     30
   Start12.c.o                                  0     57      0
-  ticker.asm.o                                 1     59      2
+  ticker.asm.o                                 1     67      2
   lcd.asm.o                                    2    183      9
   other                                      256     17      2
 
@@ -2784,42 +2784,42 @@ OBJECT LIST SORTED BY ADDRESS
      ticks                                     1000       1       1       4   .data       
      VAR00001                                  1001       1       1       2   .data       
      temp1                                     1002       1       1       0   .data       
-     clockEvent                                1003       1       1       2   .bss        
+     clockEvent                                1003       1       1       3   .bss        
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029      10      16       0   .init       
      initTicker                                C039      1B      27       1   .init       
-     isrECT4                                   C054      1F      31       1   .init       
-     notYet                                    C073       1       1       0   .init       
-     initLCD                                   C074      27      39       1   .init       
-     inext1                                    C09B      18      24       0   .init       
-     inext2                                    C0B3       F      15       0   .init       
-     writeLine                                 C0C2       F      15       1   .init       
-     writeLine1                                C0D1       2       2       0   .init       
-     wDo                                       C0D3       8       8       0   .init       
-     next                                      C0DB       F      15       0   .init       
-     wEnd                                      C0EA       3       3       0   .init       
-     fill_w_spaces                             C0ED       C      12       0   .init       
-     delay_10ms                                C0F9       8       8       1   .init       
-     delay_5ms                                 C101       8       8       2   .init       
-     delay_50us                                C109       8       8       1   .init       
-     del1                                      C111       6       6       0   .init       
-     sel_data                                  C117       4       4       1   .init       
-     sel_inst                                  C11B       4       4       3   .init       
-     outputByte                                C11F       C      12       5   .init       
-     STRING.Clock.Template.1                   C13A       F      15       1   .rodata1    
-     STRING..C..HE.Prof..Z.2                   C149       F      15       1   .rodata1    
-     WriteLine_Wrapper                         C158       A      10       2   .text       
-     initLED_C                                 C162      10      16       1   .text       
-     main                                      C172      27      39       0   .text       
-     VAR00002                                  C199       1       1       1   .const      
-     VAR00003                                  C19A       1       1       0   .const      
-     VAR00004                                  C19B       1       1       0   .const      
-     VAR00005                                  C19C       1       1       0   .const      
-     VAR00006                                  C19D       1       1       1   .const      
-     VAR00007                                  C19E       1       1       0   .const      
-     VAR00008                                  C19F       1       1       0   .const      
-     VAR00009                                  C1A0       1       1       0   .const      
-     VAR00010                                  C1A1       1       1       0   .const      
+     isrECT4                                   C054      27      39       1   .init       
+     notYet                                    C07B       1       1       0   .init       
+     initLCD                                   C07C      27      39       1   .init       
+     inext1                                    C0A3      18      24       0   .init       
+     inext2                                    C0BB       F      15       0   .init       
+     writeLine                                 C0CA       F      15       1   .init       
+     writeLine1                                C0D9       2       2       0   .init       
+     wDo                                       C0DB       8       8       0   .init       
+     next                                      C0E3       F      15       0   .init       
+     wEnd                                      C0F2       3       3       0   .init       
+     fill_w_spaces                             C0F5       C      12       0   .init       
+     delay_10ms                                C101       8       8       1   .init       
+     delay_5ms                                 C109       8       8       2   .init       
+     delay_50us                                C111       8       8       1   .init       
+     del1                                      C119       6       6       0   .init       
+     sel_data                                  C11F       4       4       1   .init       
+     sel_inst                                  C123       4       4       3   .init       
+     outputByte                                C127       C      12       5   .init       
+     STRING.Clock.Template.1                   C142       F      15       1   .rodata1    
+     STRING..C..HE.Prof..Z.2                   C151       F      15       1   .rodata1    
+     WriteLine_Wrapper                         C160       A      10       2   .text       
+     initLED_C                                 C16A      10      16       1   .text       
+     main                                      C17A      27      39       0   .text       
+     VAR00002                                  C1A1       1       1       1   .const      
+     VAR00003                                  C1A2       1       1       0   .const      
+     VAR00004                                  C1A3       1       1       0   .const      
+     VAR00005                                  C1A4       1       1       0   .const      
+     VAR00006                                  C1A5       1       1       1   .const      
+     VAR00007                                  C1A6       1       1       0   .const      
+     VAR00008                                  C1A7       1       1       0   .const      
+     VAR00009                                  C1A8       1       1       0   .const      
+     VAR00010                                  C1A9       1       1       0   .const      
      int12                                     FFE6       2       2       0   .text       
 
 *********************************************************************************************
@@ -2832,7 +2832,7 @@ main.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC1A2 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC1AA ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2842,7 +2842,7 @@ OBJECT-DEPENDENCIES SECTION
 Init                      USES _startupData 
 _Startup                  USES _startupData __SEG_END_SSTACK Init 
 initTicker                USES ticks 
-isrECT4                   USES ticks 
+isrECT4                   USES ticks clockEvent 
 initLCD                   USES delay_10ms VAR00002 VAR00001 sel_inst 
 inext1                    USES outputByte delay_5ms VAR00006 VAR00001 sel_inst 
 inext2                    USES outputByte delay_5ms 
@@ -2956,5 +2956,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 424
+Total size of all blocks to be downloaded: 432
 
