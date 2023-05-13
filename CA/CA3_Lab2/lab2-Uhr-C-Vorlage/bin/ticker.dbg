@@ -12839,7 +12839,11 @@ mNVFSEC_KEYEN:      equ    %10000000
 ; Defines
 ONESEC      equ 100
 TENMS       equ 1875            ; 10 ms
-TIMER_ON    equ $70             ; tscr1 value to turn ECT on
+
+;TIMER_ON    equ $70             ; tscr1 value to turn ECT on
+;BUG #1 ^ TSCR1 needs bits 10000000 to be enabled
+TIMER_ON equ %10000000
+
 TIMER_CH4   equ $10             ; Bit position for channel 4
 TCTL1_CH4   equ $03             ; Mask corresponds to TCTL1 OM4, OL4
 
@@ -12864,19 +12868,23 @@ int12:  DC.W isrECT4
 ; Return:    -
 initTicker:
         ldab #TIMER_ON          ; Timer master ON switch
-        stab TSCR1
+        stab TSCR1        
         bset TIOS,#TIMER_CH4    ; Set channel 4 in "output compare" mode
 
         bset TIE,#TIMER_CH4     ; Enable channel 4 interrupt; bit 4 corresponds to channel 4
 
         movb #0, ticks          ; Set tick counter to 0
 
+        
         ; Set timer prescaler (bus clock : prescale factor)
         ; In our case: divide by 2^7 = 128. This gives a timer
         ; driver frequency of 187500 Hz or 5.3333 us time interval
         ldab TSCR2
         andb #$f8
-        orab #8
+        
+        ;BUG #2 bits 2..0 need to be set to 1 -> OR with #7
+        ;orab #8
+        orab #7
         stab TSCR2
         bclr TCTL1,#TCTL1_CH4   ; Switch timer on
         rts

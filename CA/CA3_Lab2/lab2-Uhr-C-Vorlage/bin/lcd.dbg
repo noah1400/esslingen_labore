@@ -2,13 +2,12 @@
 ;   Simple LCD driver for Dragon12's 16 x 2 LCD
 ;                               (16 characters in 2 rows)
 ;
-;   Computerarchitektur 3
-;   (C) 2018 J. Friedrich, W. Zimmermann
+;   Computerarchitektur
+;   (C) 2019-2022 J. Friedrich, W. Zimmermann, R. Keller
 ;   Hochschule Esslingen
 ;
-;   Author:   J.Friedrich
-;   Modified: W.Zimmermann, Jun  10, 2016
-;
+;   Author:   	   J.Friedrich, W. Zimmermann
+;   Last Modified: R. Keller, August 22, 2022
 ;
 ;   Usage:
 ;               JSR initLCD   --> Initialization
@@ -12921,9 +12920,9 @@ inidsp2:
 
 ; Defines
 ONE_MS:   equ   4000    ; 4000 x 250ns = 1 ms at 24 MHz bus speed
-FIVE_MS:  equ   20000
-TEN_MS:   equ   40000
-FIFTY_US: equ   200
+FIVE_MS:  equ   20000   ; 5 x above value
+TEN_MS:   equ   40000   ; 10x above value
+FIFTY_US: equ   200     ; 50 usecs = 200*250ns
 
 LCD:      equ   PORTK   ; Port for LCD data bus
 DATAMASK: equ   $3C     ; Bit 5...2 on LCD
@@ -12952,7 +12951,7 @@ initLCD:  pshd
 
           movb #$ff, DDRK ; initialize port K as output
           movb #$00, LCDCTRL; ... and set to 0
-  IFDEF  SIMULATOR
+  IFDEF  SIMULATOR        ; when running in debugger, vs. when running on real hardware
           movb #$ff, DDRA ; initialize port A as output
           movb #$00, LCD  ;   ... and set to 0
   ENDIF
@@ -13000,7 +12999,9 @@ writeLine:
           jsr  sel_inst   ; select instruction
           pulb
           cmpb #1
-          bne writeLine1
+          ;bne writeLine1
+          beq writeLine1
+          
 writeLine0:
           ldaa #LCD_LINE0 ; set cursor to begin of line 0
           bra  wDo
@@ -13011,16 +13012,38 @@ wDo:      jsr  outputByte
           jsr  sel_data   ; select data
 
 msg_out:                  ; output the message character by character
-          ldab #16        ; max. 16 characters
+          ;ldab #16        ; max. 16 characters
+          ldab #17
 next:     ldaa 0,x        ; get character
           decb
           beq  wEnd       ; not more than 16 characters
+          cmpa #0         ; character is a space ('') if (B != 0 && A = 0)
+          BEQ fill_w_spaces
           jsr  outputByte ; write character to LCD
           inx             ; continue with next character
           bra  next
 wEnd:     pulx
           puld
           rts
+
+fill_w_spaces:
+          LDAA #$0020
+          jsr outputByte
+          decb
+          cmpb #0
+          bne fill_w_spaces
+          bra wEnd
+
+
+
+
+
+
+
+
+
+
+
 
 ;**************************************************************
 ; Public interface function: delay_10ms
