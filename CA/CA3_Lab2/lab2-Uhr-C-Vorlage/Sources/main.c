@@ -29,6 +29,9 @@
 //       For non-void functions a C wrapper function is required.
 void initTicker(void);
 
+void initClock(void);
+void tickClock(void);
+
 
 // Prototypes and wrapper functions for dec2ASCII (from lab 1)
 void decToASCII(void);
@@ -79,6 +82,10 @@ void main(void)
     WriteLine_Wrapper("(C) HE Prof. Z", 1);    
 
     initTicker();                               // Initialize the time ticker
+
+
+    initClock();
+    tickClock();
 
     for(;;)                                     // Endless loop
     {   if (clockEvent)

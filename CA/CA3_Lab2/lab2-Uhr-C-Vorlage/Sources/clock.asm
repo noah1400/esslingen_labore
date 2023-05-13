@@ -15,6 +15,8 @@ minsTXT:  DS.B  3
 hrs:      DS.B  1
 hrsTXT:   DS.B  3
 
+tempTXT:  DS.B  7
+
 mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
 time:  DS.B  9 ;HH:MM:SS\n 
@@ -24,6 +26,16 @@ time:  DS.B  9 ;HH:MM:SS\n
 
 initClock:
   JSR   initLED ; Initialize LEDs
+  
+  PSHA
+  LDAA  #23
+  STAA  hrs
+  LDAA  #58
+  STAA  mins
+  LDAA  #30
+  STAA  scnds
+  PULA
+  
   rts
   
 
@@ -66,6 +78,7 @@ exitTick:
   
 updateTime:
   CLRA
+  LDX   #tempTXT
   LDAB  scnds
   JSR   decToASCII  ; ASCII String now in X
   LDY   #scndsTXT
@@ -80,6 +93,8 @@ updateTime:
   JSR   decToASCII
   LDY   #hrsTXT
   JSR   onlyLastTwoChars
+  
+  JSR   combineStrings
   
   rts
   
@@ -100,6 +115,8 @@ onlyLastTwoChars:   ; decToASCII: "0035" -> "35"
   PSHX
   PSHY
   LDAB  #2 ; Counter to remove two characters
+  INX      ; Skip two characters
+  INX
   lastTwoChars_loop:
      LDAA   2, X
      STAA   0, Y
@@ -143,19 +160,18 @@ combineStrings:
    combineStrings_loop:
       LDAA  0, X    ; Load a character from the current string
       CMPA  #0   ; Check if the end of the current string is reached
-      BEQ   combineStrings_loop_rts ; If yes, exit and continue with next string
+      BEQ   combineStrings_loop_delimiter ; If yes, add delimiter, exit and continue with next string
       
       STAA  0, Y    ; Store the character in the resulting string
       INX           ; Increment the current string pointer
       INY           ; Increment the resulting string pointer
       
+      BRA   combineStrings_loop ; Repeat for the next character
+      
+   combineStrings_loop_delimiter:
       LDAA  #':'    ; Load the delimiter ":"
       STAA  0, Y    ; Store the delimiter in the resulting string
       INY           ; Increment the resulting string pointer
-      
-      BRA   combineStrings_loop ; Repeat for the next character
-      
-   combineStrings_loop_rts:
       rts
       
    combineStrings_loop_end:

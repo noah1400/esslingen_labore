@@ -1,5 +1,7 @@
   XDEF  initLED, setLED, getLED, toggleLED, clrLED
-  XREF  PORTB, DDRB, DDRJ, PTJ
+  
+  INCLUDE 'mc9s12dp256.inc'
+  
   
   .data: SECTION
   
