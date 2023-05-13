@@ -1,4 +1,4 @@
-  XDEF  initLED, setLED, getLED, toggleLED
+  XDEF  initLED, setLED, getLED, toggleLED, clrLED
   XREF  PORTB, DDRB, DDRJ, PTJ
   
   .data: SECTION
@@ -35,4 +35,9 @@
           
           STAB    PORTB
           
+          RTS
+          
+    clrLED:
+          LDAB    #$00
+          STAB    PORTB
           RTS
