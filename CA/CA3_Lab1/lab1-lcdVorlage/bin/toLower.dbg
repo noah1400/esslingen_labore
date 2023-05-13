@@ -1,0 +1,69 @@
+                  ;   Labor 1 - Problem 2.4
+;   Convert a zero-terminated ASCIIZ string to lower characters
+;   Subroutine toLower
+;
+;   Computerarchitektur
+;   (C) 2019-2022 J. Friedrich, W. Zimmermann, R. Keller
+;   Hochschule Esslingen
+;
+;   Author:   R. Keller, HS-Esslingen
+;            (based on code provided by J. Friedrich, W. Zimmermann)
+;   Modified: -
+;
+
+; export symbols
+        XDEF toLower
+        XDEF strCpy
+
+; Defines
+
+; RAM: Variable data section
+.data: SECTION
+
+; ROM: Constant data
+.const: SECTION
+
+; ROM: Code section
+.init: SECTION
+
+
+
+        toLower:
+        
+        PSHA
+        PSHY
+        PSHB
+
+        toLower_loop:
+        
+        LDAA 0, Y
+        CMPA #0
+        BEQ toLower_done
+        ORAA #%100000     ;every 5th bit set to 1
+        STAA 0, Y         ;store OR'd value in Vtext
+        INY
+        BRA toLower_loop
+        
+        toLower_done:
+        PULB
+        PULY
+        PULA
+        RTS
+
+        strCpy:
+
+        PSHB              ; save B
+        PSHX              ; save X
+        PSHY              ; save Y      
+
+        LDAB    1,X+      ; load byte from Ctext into B using X 
+        STAB    1,Y+      ; store byte into Vtext using Y
+        CMPB    #0        ; compare byte to null terminator
+        BNE     strCpy    ; loop until null terminator
+        
+        PULY
+        PULX
+        PULB
+        
+        RTS
+        

@@ -4,7 +4,10 @@
 **/*.pdf
 **/*.exe
 **/*.gch
+**/*.s
+**/*.o
 **/*.out
 **/*.zip
 **/*.html
 !**/task/*.pdf
+!IT/**/*.html
