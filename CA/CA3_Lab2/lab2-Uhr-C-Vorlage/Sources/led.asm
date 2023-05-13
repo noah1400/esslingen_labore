@@ -21,6 +21,7 @@
           
           STAB    PORTB  ; output register B
           
+          
           RTS
 
     getLED: ; return value in register B

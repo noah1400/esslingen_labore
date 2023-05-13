@@ -23,6 +23,20 @@ initClock:
 
 tickClock:
   PSHB
+  
+  ; LED0 toggles once per second
+  ; LED7 on in setmode
+  
+  ; toggling LED0
+  LDAB  #$80
+  JSR   toggleLED
+  ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ; TODO: check correctness of setLED
+  ; Output whole register B?
+  ; Or just set single bits
+  ; Same for clrLED
+  ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
   LDAB  mode
   CMPB  #1
   BEQ   exitTick ; If in Set Mode exit tick
