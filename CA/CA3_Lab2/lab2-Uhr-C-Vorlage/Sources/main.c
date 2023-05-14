@@ -31,6 +31,7 @@ void initTicker(void);
 
 void initClock(void);
 void tickClock(void);
+void checkButtons(void);
 
 
 // Prototypes and wrapper functions for dec2ASCII (from lab 1)
@@ -97,5 +98,6 @@ void main(void)
         tickClock();
     
     	}
+    	checkButtons();
     }
 }

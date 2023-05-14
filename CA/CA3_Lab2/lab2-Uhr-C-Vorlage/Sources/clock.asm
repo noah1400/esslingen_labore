@@ -1,5 +1,6 @@
     XDEF initClock
     XDEF tickClock
+    XDEF checkButtons
     XDEF scnds, mins, hrs, time
     
     XREF initLED, clrLED, toggleLED, setBitsLED, clrBitsLED
@@ -8,7 +9,8 @@
     
     INCLUDE 'mc9s12dp256.inc'
     
-    SELECT12HOURS: equ 1
+    SELECT12HOURS:  equ 1
+    SIM:            equ 1
     
 .data: SECTION
 
@@ -39,13 +41,150 @@ mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 .init: SECTION
 
 
+;**************************************************************
+; Public interface function: checkButtons ... Checks state of buttons
+; and changes mode/setting time (called as often as possible)
+; checks states through polling
+;
+; BEGIN SECTION CHECKBUTTONS
+checkButtons:
+  IF SIM==1
+    BRSET PTH, #$08, toggleMode
+  ELSE
+    BRCLR PTH, #$08, toggleMode
+  ENDIF
+  PSHB
+  LDAB  mode
+  CMPB  #1  ; Is set mode ?
+  PULB
+  BEQ   checkSetClockButtons  ; if yes check for other buttons
+  rts   ; else return
+toggleMode:
+  PSHB
+  LDAB  mode
+  EORB  #$01
+  STAB  mode
+  PULB
+  rts
+checkSetClockButtons:
+  IF SIM==1
+    BRSET PTH, #$04, incrementAndCheckSecondOverflow
+    BRSET PTH, #$02, incrementAndCheckMinuteOverflow
+    BRSET PTH, #$01, incrementAndCheckHourOverflow
+  ELSE
+    BRSET PTH, #$04, incrementAndCheckSecondOverflow
+    BRSET PTH, #$02, incrementAndCheckMinuteOverflow
+    BRSET PTH, #$01, incrementAndCheckHourOverflow
+  ENDIF
+  JSR updateTime
+  JSR outputTime
+  rts
+;
+; END SECTION CHECKBUTTONS
+;**************************************************************
 
 
+
+;**************************************************************
+; Internal functions to increase clock value
+;
+; BEGIN SECTION OVERFLOW  
+incrementAndCheckSecondOverflow:
+  LDAB  scnds
+  INCB
+  STAB  scnds
+  CMPB  #60
+  BEQ   resetSecondsAndContinue
+  RTS
+resetSecondsAndContinue:
+  ; seconds overflowed
+  ; reset seconds
+  LDAB  #0
+  STAB  scnds
+incrementAndCheckMinuteOverflow:
+  ; increment minutes
+  LDAB  mins
+  INCB
+  STAB  mins
+  CMPB  #60
+  BEQ   resetMinutesAndContinue
+  RTS
+resetMinutesAndContinue:
+  ; minutes overflowed
+  ; reset minutes
+  LDAB  #0
+  STAB  mins
+incrementAndCheckHourOverflow:
+  ; increment hours
+  LDAB  hrs
+  INCB
+  STAB  hrs
+  IF SELECT12HOURS==0
+    CMPB #24
+    BEQ   resetHours
+  ELSE
+    LDAA  am  ; load am variable
+    CMPA  #0
+    BEQ   checkPMOverflow
+    checkAMOverflow:
+      CMPB  #13
+      BEQ   am12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59am -> 01:00:00am
+      CMPB  #12
+      BEQ   am11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59am -> 12:00:00pm
+      BRA   AMPMOverflow_end    ; no overflow
+    
+      am11to12_overflow:        ; keep hrs the same but change am to pm
+        LDAA  #0
+        STAA  am
+        BRA   AMPMOverflow_end
+      
+      am12to13_overflow:        ; stay with AM but set hrs to 1
+        LDAA  #1                
+        STAA  hrs
+        BRA   AMPMOverflow_end
+    
+    checkPMOverflow:
+      CMPB  #13
+      BEQ   pm12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59pm -> 01:00:00pm
+      CMPB  #12
+      BEQ   pm11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59pm -> 12:00:00am 
+      BRA   AMPMOverflow_end
+      
+      pm11to12_overflow:        ; keep hrs the same but change from pm to am
+        LDAA  #1
+        STAA  am
+        BRA   AMPMOverflow_end  
+      
+      pm12to13_overflow:        ; stay with pm but set hrs to 1
+        LDAA  #1
+        STAA  hrs
+        ; BRA AMPMOverflow_end
+        
+    
+    AMPMOverflow_end:
+  ENDIF
+  RTS
+  
+  IF SELECT12HOURS==0 
+  
+resetHours:
+  ; hours overflowed
+  ; reset hours
+  LDAB  #0
+  STAB  hrs
+  RTS
+  
+  ENDIF
+;
+; END SECTION OVERFLOW  
+;**************************************************************
 
 ;**************************************************************
 ; Public interface function: initClock ... Initialize Clock (called once)
 ; Parameter: -
 ; Return:    -
+;
+; BEGIN SECTION INITCLOCK
 initClock:
   JSR   initLED ; Initialize LEDs
   
@@ -63,6 +202,9 @@ initClock:
   PULA
   
   rts
+;
+; END SECTION INITCLOCK
+;************************************************************** 
   
 ;**************************************************************
 ; Public interface function: tickClock ... called every second
@@ -265,96 +407,6 @@ combineStrings:
   
   
 
-;**************************************************************
-; Internal functions to increase clock value
-;
-; BEGIN SECTION OVERFLOW  
-incrementAndCheckSecondOverflow:
-  LDAB  scnds
-  INCB
-  STAB  scnds
-  CMPB  #60
-  BEQ   incrementAndCheckMinuteOverflow
-  RTS
-incrementAndCheckMinuteOverflow:
-  ; seconds overflowed
-  ; reset seconds
-  LDAB  #0
-  STAB  scnds
-  ; increment minutes
-  LDAB  mins
-  INCB
-  STAB  mins
-  CMPB  #60
-  BEQ   incrementAndCheckHourOverflow
-  RTS
-incrementAndCheckHourOverflow:
-  ; minutes overflowed
-  ; reset minutes
-  LDAB  #0
-  STAB  mins
-  ; increment hours
-  LDAB  hrs
-  INCB
-  STAB  hrs
-  IF SELECT12HOURS==0
-    CMPB #24
-    BEQ   resetHours
-  ELSE
-    LDAA  am  ; load am variable
-    CMPA  #0
-    BEQ   checkPMOverflow
-    checkAMOverflow:
-      CMPB  #13
-      BEQ   am12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59am -> 01:00:00am
-      CMPB  #12
-      BEQ   am11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59am -> 12:00:00pm
-      BRA   AMPMOverflow_end    ; no overflow
-    
-      am11to12_overflow:        ; keep hrs the same but change am to pm
-        LDAA  #0
-        STAA  am
-        BRA   AMPMOverflow_end
-      
-      am12to13_overflow:        ; stay with AM but set hrs to 1
-        LDAA  #1                
-        STAA  hrs
-        BRA   AMPMOverflow_end
-    
-    checkPMOverflow:
-      CMPB  #13
-      BEQ   pm12to13_overflow   ; hours overflowed from 12 to 13; 12:59:59pm -> 01:00:00pm
-      CMPB  #12
-      BEQ   pm11to12_overflow   ; hours overflowed from 11 to 12; 11:59:59pm -> 12:00:00am 
-      BRA   AMPMOverflow_end
-      
-      pm11to12_overflow:        ; keep hrs the same but change from pm to am
-        LDAA  #1
-        STAA  am
-        BRA   AMPMOverflow_end  
-      
-      pm12to13_overflow:        ; stay with pm but set hrs to 1
-        LDAA  #1
-        STAA  hrs
-        ; BRA AMPMOverflow_end
-        
-    
-    AMPMOverflow_end:
-  ENDIF
-  RTS
-  
-  IF SELECT12HOURS==0 
-  
-resetHours:
-  ; hours overflowed
-  ; reset hours
-  LDAB  #0
-  STAB  hrs
-  RTS
-  
-  ENDIF
-;
-; END SECTION OVERFLOW  
-;**************************************************************
+
 
   
