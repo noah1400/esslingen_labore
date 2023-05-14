@@ -77,7 +77,7 @@ void outputLCD_state(void) {
   if (LCD_state==0) {
     WriteLine_Wrapper("Noah, Mateusz",0); 
   } else  {
-    WriteLine_Wrapper("© IT W2021/22",0); 
+    WriteLine_Wrapper("© IT SS2023",0); 
   }
 }
 
