@@ -38,6 +38,10 @@ mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
 .init: SECTION
 
+
+
+
+
 ;**************************************************************
 ; Public interface function: initClock ... Initialize Clock (called once)
 ; Parameter: -

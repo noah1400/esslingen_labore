@@ -28,7 +28,7 @@
         XDEF initTicker
 
 ; Import symbols
-        XREF  setClockEvent
+        XREF  clockEvent
         
 
 ; Include derivative specific macros
@@ -107,7 +107,8 @@ isrECT4:
         
         ; --- Add user code here: Add whatever you want to do every second ---
 
-        JSR   setClockEvent
+        ; JSR   setClockEvent
+        MOVB  #1, clockEvent
 
         ; --- End of user code -----------------------------------------------
 
