@@ -66,7 +66,20 @@ void initLED_C(void)
     PORTB       = 0x55;
 }
 
+int LCD_state = 0; // 0 = Name of all members, 1 =  © IT W2021/22
 
+void toggleLCD_state(void) {
+    LCD_state = ~LCD_state; 
+}
+
+void outputLCD_state(void) {
+  toggleLCD_state();
+  if (LCD_state==0) {
+    WriteLine_Wrapper("Noah, Mateusz",0); 
+  } else  {
+    WriteLine_Wrapper("© IT W2021/22",0); 
+  }
+}
 
 
 
@@ -80,9 +93,7 @@ void main(void)
 
     initLED_C();                    		// Initialize the LEDs
 
-    initLCD();                    		// Initialize the LCD
-    WriteLine_Wrapper("Clock Template", 0);
-    WriteLine_Wrapper("(C) HE Prof. Z", 1);    
+    initLCD();                    		// Initialize the LCD   
 
     initTicker();                               // Initialize the time ticker
 
@@ -96,7 +107,7 @@ void main(void)
     	{   clockEvent = 0;
     
         tickClock();
-    
+        outputLCD_state();
     	}
     	checkButtons();
     }
