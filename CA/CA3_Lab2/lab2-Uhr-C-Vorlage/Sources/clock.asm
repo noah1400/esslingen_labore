@@ -295,7 +295,7 @@ outputTime:
 ; Return:     -
 ;
 ; BEGIN SECTION LASTTWOCHARS  
-onlyLastTwoChars:   ; decToASCII: "0035" -> "35"
+onlyLastTwoChars:   ; decToASCII: " 00035" -> "35"
   ; Register X: original String
   ; Register Y pointer to resulting string
   PSHB
