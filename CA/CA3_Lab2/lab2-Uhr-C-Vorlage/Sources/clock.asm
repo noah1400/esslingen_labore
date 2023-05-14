@@ -38,6 +38,10 @@ mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
 .init: SECTION
 
+;**************************************************************
+; Public interface function: initClock ... Initialize Clock (called once)
+; Parameter: -
+; Return:    -
 initClock:
   JSR   initLED ; Initialize LEDs
   
@@ -54,7 +58,12 @@ initClock:
   
   rts
   
-
+;**************************************************************
+; Public interface function: tickClock ... called every second
+; Parameter: -
+; Return:    -
+;
+; BEGIN SECTION TICKCLOCK
 tickClock:
   PSHB
   
@@ -87,6 +96,7 @@ tickClock:
   
   PULB
   rts
+
 
 exitTick:
   PULB
@@ -121,8 +131,19 @@ outputTime:
   JSR   writeLine 
 
   rts
+;
+; END SECTION TICKCLOCK
+;**************************************************************
+
+
   
-  
+;**************************************************************
+; Private function: Returns the last two chars of a string returned by decToASCII
+; Parameter:  X ... Pointer to string returned by decToASCII " 00035"
+;             Y ... Pointer to where the resulting string should be stored
+; Return:     -
+;
+; BEGIN SECTION LASTTWOCHARS  
 onlyLastTwoChars:   ; decToASCII: "0035" -> "35"
   ; Register X: original String
   ; Register Y pointer to resulting string
@@ -147,8 +168,20 @@ onlyLastTwoChars:   ; decToASCII: "0035" -> "35"
   PULX
   PULA
   PULB
-  rts
+  rts  
+;
+; END SECTION LASTTWOCHARS  
+;**************************************************************
+
+
   
+;**************************************************************
+; Internal function: Combines seconds, mins, hrs to time string
+; Updates time variable
+; Parameter:  -
+; Return:     -
+;
+; BEGIN SECTION COMBINESTRINGS  
 combineStrings:
    ; Uses  variables scndsTXT, minsTXT, hrsTXT
    ; And combines them to HH:MM:SS\n
@@ -217,12 +250,16 @@ combineStrings:
       INY
       rts
    ENDIF
-      
+;
+; END SECTION COMBINESTRINGS  
+;**************************************************************      
   
   
 
-; ###########################################################
-; tick section  
+;**************************************************************
+; Internal functions to increase clock value
+;
+; BEGIN SECTION OVERFLOW  
 incrementAndCheckSecondOverflow:
   LDAB  scnds
   INCB
@@ -307,7 +344,8 @@ resetHours:
   RTS
   
   ENDIF
-; end tick section
-; ###########################################################
+;
+; END SECTION OVERFLOW  
+;**************************************************************
 
   

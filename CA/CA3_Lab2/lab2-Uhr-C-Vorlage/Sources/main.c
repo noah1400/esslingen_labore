@@ -65,11 +65,18 @@ void initLED_C(void)
     PORTB       = 0x55;
 }
 
+void setClockEvent(void);
+
+
+
 
 // ****************************************************************************
 // Global variables
 unsigned char clockEvent = 0;
 
+void setClockEvent(void) {
+  clockEvent = 1; 
+}
 
 // ****************************************************************************
 void main(void) 
@@ -85,7 +92,7 @@ void main(void)
 
 
     initClock();
-    tickClock();
+
     
 
     for(;;)                                     // Endless loop

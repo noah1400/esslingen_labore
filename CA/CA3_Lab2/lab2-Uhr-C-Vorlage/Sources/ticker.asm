@@ -28,7 +28,8 @@
         XDEF initTicker
 
 ; Import symbols
-        XREF clockEvent
+        XREF  setClockEvent
+        
 
 ; Include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
@@ -106,10 +107,7 @@ isrECT4:
         
         ; --- Add user code here: Add whatever you want to do every second ---
 
-        PSHX
-        LDX  #1
-        STX  clockEvent
-        PULX
+        JSR   setClockEvent
         
         ldab PORTB              ; In this example we let blink the LED on port B.0
         comb
