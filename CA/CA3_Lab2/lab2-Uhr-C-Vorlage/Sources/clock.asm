@@ -289,7 +289,7 @@ outputTime:
 
   
 ;**************************************************************
-; Private function: Returns the last two chars of a string returned by decToASCII
+; Internal function: Returns the last two chars of a string returned by decToASCII
 ; Parameter:  X ... Pointer to string returned by decToASCII " 00035"
 ;             Y ... Pointer to where the resulting string should be stored
 ; Return:     -
@@ -322,8 +322,7 @@ onlyLastTwoChars:   ; decToASCII: "0035" -> "35"
   rts  
 ;
 ; END SECTION LASTTWOCHARS  
-;**************************************************************
-
+;**************************************************************    
 
   
 ;**************************************************************
