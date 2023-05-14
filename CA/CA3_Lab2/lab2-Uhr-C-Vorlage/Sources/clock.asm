@@ -68,16 +68,30 @@ toggleMode:
   rts
 checkSetClockButtons:
   IF SIM==1
-    BRSET PTH, #$04, incrementAndCheckSecondOverflow
-    BRSET PTH, #$02, incrementAndCheckMinuteOverflow
-    BRSET PTH, #$01, incrementAndCheckHourOverflow
+    BRSET PTH, #$04, secondPressed
+    BRSET PTH, #$02, minutePressed
+    BRSET PTH, #$01, hourPressed
+    BRA              noButtonPressed
   ELSE
-    BRSET PTH, #$04, incrementAndCheckSecondOverflow
-    BRSET PTH, #$02, incrementAndCheckMinuteOverflow
-    BRSET PTH, #$01, incrementAndCheckHourOverflow
+    BRSET PTH, #$04, secondPressed
+    BRSET PTH, #$02, minutePressed
+    BRSET PTH, #$01, hourPressed
+    BRA              noButtonPressed
   ENDIF
+  
+secondPressed:
+  JSR   incrementAndCheckSecondOverflow
+  BRA   updateScreen
+minutePressed:
+  JSR   incrementAndCheckMinuteOverflow
+  BRA   updateScreen
+hourPressed:
+  JSR   incrementAndCheckHourOverflow
+  ; BRA updateScreen
+updateScreen:
   JSR updateTime
   JSR outputTime
+noButtonPressed:
   rts
 ;
 ; END SECTION CHECKBUTTONS
@@ -189,15 +203,15 @@ initClock:
   JSR   initLED ; Initialize LEDs
   
   PSHA
-  LDAA  #12
+  LDAA  #11
   STAA  hrs
   LDAA  #59
   STAA  mins
-  LDAA  #59
+  LDAA  #50
   STAA  scnds
-  LDAA  #1
-  STAA  am
   LDAA  #0
+  STAA  am
+  LDAA  #1
   STAA  mode
   PULA
   
@@ -248,7 +262,9 @@ exitTick:
 
   ; In set Mode
   LDAB #$01
-  JSR  setBitsLED 
+  JSR  setBitsLED
+  JSR  updateTime
+  JSR  outputTime 
 
   PULB
   rts
