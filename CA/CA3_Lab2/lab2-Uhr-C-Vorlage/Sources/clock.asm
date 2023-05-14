@@ -12,6 +12,7 @@
     SELECT12HOURS:  equ 1
     SIM:            equ 1
     
+    
 .data: SECTION
 
 scnds:    DS.B  1
@@ -48,23 +49,25 @@ mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 ;
 ; BEGIN SECTION CHECKBUTTONS
 checkButtons:
+  PSHA
+  PSHB
   IF SIM==1
     BRSET PTH, #$08, toggleMode
   ELSE
     BRCLR PTH, #$08, toggleMode
   ENDIF
-  PSHB
   LDAB  mode
   CMPB  #1  ; Is set mode ?
-  PULB
   BEQ   checkSetClockButtons  ; if yes check for other buttons
+  PULB
+  PULA
   rts   ; else return
 toggleMode:
-  PSHB
   LDAB  mode
   EORB  #$01
   STAB  mode
   PULB
+  PULA
   rts
 checkSetClockButtons:
   IF SIM==1
@@ -73,9 +76,9 @@ checkSetClockButtons:
     BRSET PTH, #$01, hourPressed
     BRA              noButtonPressed
   ELSE
-    BRSET PTH, #$04, secondPressed
-    BRSET PTH, #$02, minutePressed
-    BRSET PTH, #$01, hourPressed
+    BRCLR PTH, #$04, secondPressed
+    BRCLR PTH, #$02, minutePressed
+    BRCLR PTH, #$01, hourPressed
     BRA              noButtonPressed
   ENDIF
   
@@ -89,9 +92,11 @@ hourPressed:
   JSR   incrementAndCheckHourOverflow
   ; BRA updateScreen
 updateScreen:
-  JSR updateTime
-  JSR outputTime
+  JSR   updateTime
+  JSR   outputTime
 noButtonPressed:
+  PULB
+  PULA
   rts
 ;
 ; END SECTION CHECKBUTTONS

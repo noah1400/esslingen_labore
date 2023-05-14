@@ -108,7 +108,7 @@ void main(void)
     
         tickClock();
         outputLCD_state();
+    	  checkButtons();
     	}
-    	checkButtons();
     }
 }
