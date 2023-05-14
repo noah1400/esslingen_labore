@@ -2,7 +2,7 @@
     XDEF tickClock
     XDEF scnds, mins, hrs, time
     
-    XREF initLED, clrLED, toggleLED
+    XREF initLED, clrLED, toggleLED, setBitsLED, clrBitsLED
     XREF decToASCII
     XREF writeLine
     
@@ -54,6 +54,8 @@ initClock:
   STAA  scnds
   LDAA  #1
   STAA  am
+  LDAA  #0
+  STAA  mode
   PULA
   
   rts
@@ -73,16 +75,14 @@ tickClock:
   ; toggling LED0
   LDAB  #$80
   JSR   toggleLED
-  ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ; TODO: check correctness of setLED
-  ; Output whole register B?
-  ; Or just set single bits
-  ; Same for clrLED
-  ; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
   
   LDAB  mode
   CMPB  #1
   BEQ   exitTick ; If in Set Mode exit tick
+  
+  LDAB  #$01
+  JSR   clrBitsLED
   
   ; tick clock
   ; Increment seconds
@@ -99,6 +99,11 @@ tickClock:
 
 
 exitTick:
+
+  ; In set Mode
+  LDAB #$01
+  JSR  setBitsLED 
+
   PULB
   rts
   

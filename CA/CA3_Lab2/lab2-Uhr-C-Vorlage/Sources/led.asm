@@ -1,4 +1,4 @@
-  XDEF  initLED, setLED, getLED, toggleLED, clrLED
+  XDEF  initLED, setLED, getLED, toggleLED, clrLED, setBitsLED, clrBitsLED
   
   INCLUDE 'mc9s12dp256.inc'
   
@@ -25,6 +25,14 @@
           
           
           RTS
+          
+    setBitsLED:
+    
+          ORAB    PORTB
+          
+          STAB    PORTB
+    
+          RTS
 
     getLED: ; return value in register B
           
@@ -44,3 +52,10 @@
           LDAB    #$00
           STAB    PORTB
           RTS
+          
+    clrBitsLED:
+    
+        COMB
+        ANDB    PORTB
+        STAB    PORTB
+        RTS
