@@ -66,14 +66,14 @@ toggleMode:
   rts
 checkSetClockButtons:
   IF SIM==1
-    BRSET PTH, #$04, secondPressed
+    BRSET PTH, #$04, hourPressed
     BRSET PTH, #$02, minutePressed
-    BRSET PTH, #$01, hourPressed
+    BRSET PTH, #$01, secondPressed
     BRA              noButtonPressed
   ELSE
-    BRCLR PTH, #$04, secondPressed
+    BRCLR PTH, #$04, hourPressed
     BRCLR PTH, #$02, minutePressed
-    BRCLR PTH, #$01, hourPressed
+    BRCLR PTH, #$01, secondPressed
     BRA              noButtonPressed
   ENDIF
   
