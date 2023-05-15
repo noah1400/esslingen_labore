@@ -6,11 +6,12 @@
     XREF initLED, clrLED, toggleLED, setBitsLED, clrBitsLED
     XREF decToASCII
     XREF writeLine
+    XREF delay_0_5sec 
     
     INCLUDE 'mc9s12dp256.inc'
     
     SELECT12HOURS:  equ 1
-    SIM:            equ 1
+    SIM:            equ 0
     
     
 .data: SECTION
@@ -87,8 +88,9 @@ hourPressed:
   JSR   incrementAndCheckHourOverflow
   ; BRA updateScreen
 updateScreen:
+  JSR   delay_0_5sec
   JSR   updateTime
-  JSR   outputTime
+  ;JSR   outputTime
 noButtonPressed:
   PULB
   PULA

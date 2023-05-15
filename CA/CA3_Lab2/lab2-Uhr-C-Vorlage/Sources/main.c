@@ -87,10 +87,17 @@ void concatStrings() {
   output_string[16] = 0;
 }
 
+int LCD_state_counter = 0;
 int LCD_state = 0; // 0 = Name of all members, 1 =  © IT W2021/22
 
 void toggleLCD_state(void) {
-    LCD_state = ~LCD_state; 
+    if (LCD_state_counter == 10) {
+      LCD_state = ~LCD_state;
+      LCD_state_counter = 0;
+    } else {
+      LCD_state_counter++; 
+    }
+     
 }
 
 void outputLCD_state(void) {
@@ -98,7 +105,7 @@ void outputLCD_state(void) {
   if (LCD_state==0) {
     WriteLine_Wrapper("Noah, Mateusz",0); 
   } else  {
-    WriteLine_Wrapper("© IT SS2023",0); 
+    WriteLine_Wrapper("(C) IT SS2023",0); 
   }
 }
 
@@ -133,7 +140,8 @@ void main(void)
         updateThermo();
         concatStrings();
         WriteLine_Wrapper(output_string, 1);
-    	  checkButtons();
+    	  
     	}
+    	checkButtons();
     }
 }

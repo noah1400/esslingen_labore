@@ -38,27 +38,20 @@ wait1:
 
 ;Register D holds 10 bit analog value
   
-  LDX #4
-  IDIV 
-  ;DIVIDE with 4 because 10 bits -> we are working with 8 bit registers
-  TFR X, A
+  
+  PSHY
+  PSHX
     
-  LDAB #100  ;multiply by 100
-  MUL
-    
-  ;now divide by 1023
-  LDX #1023
-  IDIV ;X holds result
-    
-  TFR X, D
-    
-    
-  ;undo division from before by multiplying
-    
-  LDAA #4
-  MUL
-    
-  SUBD #30
+  LDY #100  ;multiply by 100
+  EMULS
+  LDX   #1023
+  EDIV
+  TFR   Y, D
+  SUBD  #30
+  
+  PULX
+  PULY
+  
   
 ;################################################################################
   
@@ -99,7 +92,7 @@ formatString:
   LDAA #'C'
   STAA 1, Y+
     
-  LDAA #'°'
+  LDAA #'o'
   STAA 1, Y+
     
   LDAA #0    ;null terminator
