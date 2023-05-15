@@ -27,13 +27,8 @@ tempTXT:  DS.B  7
 mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
 
-
-  IF SELECT12HOURS == 1
-     time:  DS.B  11 ;HH:MM:SSam\n
-     am:  DS.B  1 ; AM?
-  ELSE
-     time:  DS.B  9 ;HH:MM:SS\n
-  ENDIF
+  time:  DS.B  11 ;HH:MM:SSam\n
+  am:  DS.B  1 ; AM?
 
  
 .const: SECTION
@@ -216,7 +211,7 @@ initClock:
   STAA  scnds
   LDAA  #0
   STAA  am
-  LDAA  #1
+  LDAA  #0
   STAA  mode
   PULA
   
@@ -257,7 +252,7 @@ tickClock:
   JSR   updateTime
   
   ; output string
-  JSR   outputTime
+  ; JSR   outputTime
   
   PULB
   rts
@@ -396,14 +391,18 @@ combineStrings:
       
    combineStrings_loop_end:
       DEY           ; Decrement the resulting string pointer to remove the last delimiter ':'
-      IF SELECT12HOURS == 1
+      IF SELECT12HOURS==1
            JSR  addAMPM
+      ELSE
+           LDAA #' '
+           STAA 1, Y+
+           STAA 1, Y+
       ENDIF
       CLRA          ; Set the null character
       STAA  0, Y    ; Null terminate the resulting string
       rts
       
-   IF SELECT12HOURS == 1
+   IF SELECT12HOURS==1
    addAMPM:
       LDAA  am            ; Load am variable
       CMPA  #1            ; Check if am is set

@@ -48,6 +48,12 @@ void decToASCII_Wrapper(char *txt, int val)
 // Prototypes and wrapper functions for LCD driver (from lab 1)
 void initLCD(void);
 void writeLine(void);
+void updateThermo(void);
+void initThermo(void);
+
+extern char temp[7];
+extern char time[11];
+char output_string[17];
 
 void WriteLine_Wrapper(char *text, char line)
 {   asm
@@ -64,6 +70,21 @@ void initLED_C(void)
     PTIJ_PTIJ1  = 0;		
     DDRB        = 0xFF;		// Port B as output
     PORTB       = 0x55;
+}
+
+void concatStrings() {
+  char* temp_tmp = temp;
+  char* time_tmp = time;
+  
+  int i = 0;
+  int j = 0;
+  for(i = 0; i < 10; i++) {
+    output_string[i] = time_tmp[i]; 
+  }
+  for(j = 10; j < 16; j++){
+    output_string[j] = temp_tmp[j-10]; 
+  }
+  output_string[16] = 0;
 }
 
 int LCD_state = 0; // 0 = Name of all members, 1 =  © IT W2021/22
@@ -99,6 +120,7 @@ void main(void)
 
 
     initClock();
+    initThermo();
 
     
 
@@ -108,6 +130,9 @@ void main(void)
     
         tickClock();
         outputLCD_state();
+        updateThermo();
+        concatStrings();
+        WriteLine_Wrapper(output_string, 1);
     	  checkButtons();
     	}
     }
