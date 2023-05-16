@@ -8,8 +8,8 @@
  .init: SECTION        
     initLED:
 
-          MOVW    #$FF, DDRJ
-          MOVW    #2, PTJ
+          BSET    DDRJ, #2
+          BCLR    PTJ,  #2
        
           MOVB    #$FF, DDRB  ; set data direction to output
           
