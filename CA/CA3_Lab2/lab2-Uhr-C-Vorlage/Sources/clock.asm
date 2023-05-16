@@ -39,9 +39,13 @@ mode:       DS.B  1 ;0 = Normal Mode, 1 = Set Mode
 
 
 ;**************************************************************
-; Public interface function: checkButtons ... Checks state of buttons
-; and changes mode/setting time (called as often as possible)
+; Public interface function: checkButtons
+; Purpose: Checks state of buttons
+; and changes mode/setting time
 ; checks states through polling
+; Parameter: -
+; Return:    -
+; Registers: Unchanged ( when function returns)
 ;
 ; BEGIN SECTION CHECKBUTTONS
 checkButtons:
@@ -102,7 +106,11 @@ noButtonPressed:
 
 
 ;**************************************************************
-; Internal functions to increase clock value
+; Internal functions to increment time
+; Handles all overflows
+; Parameter: -
+; Return:    -
+; Registers: Unchanged ( when function returns)
 ;
 ; BEGIN SECTION OVERFLOW  
 incrementAndCheckSecondOverflow:
@@ -226,6 +234,7 @@ initClock:
 ; Public interface function: tickClock ... called every second
 ; Parameter: -
 ; Return:    -
+; Registers: Unchanged ( when function returns)
 ;
 ; BEGIN SECTION TICKCLOCK
 tickClock:
@@ -270,7 +279,13 @@ exitTick:
 
   PULB
   rts
-  
+
+
+; Internal function: updateTime
+; Purpose: Updates the time values (seconds, minutes, hours) and combines them into the resulting string.
+; Parameters: -
+; Return: -
+; Registers: Unchanged (when function returns) 
 updateTime:
   CLRA
   LDX   #tempTXT
@@ -292,7 +307,12 @@ updateTime:
   JSR   combineStrings
   
   rts
-  
+
+; Internal function: outputTime
+; Purpose: Outputs the time string to the LCD
+; Parameters: -
+; Return: -
+; Registers: Unchanged (when function returns)  
 outputTime:
   
   LDX   #time
@@ -305,13 +325,14 @@ outputTime:
 ;**************************************************************
 
 
-  
-;**************************************************************
-; Internal function: Returns the last two chars of a string returned by decToASCII
-; Parameter:  X ... Pointer to string returned by decToASCII " 00035"
-;             Y ... Pointer to where the resulting string should be stored
-; Return:     -
-;
+;**************************************************************  
+; Internal function: onlyLastTwoChars
+; Purpose: Returns the last two characters of a string returned by decToASCII.
+; Parameters:
+;     X ... Pointer to the original string returned by decToASCII (" 00035")
+;     Y ... Pointer to where the resulting string should be stored
+; Return: -
+; Registers: Unchanged (when function returns)
 ; BEGIN SECTION LASTTWOCHARS  
 onlyLastTwoChars:   ; decToASCII: " 00035" -> "35"
   ; Register X: original String
@@ -344,11 +365,12 @@ onlyLastTwoChars:   ; decToASCII: " 00035" -> "35"
 
   
 ;**************************************************************
-; Internal function: Combines seconds, mins, hrs to time string
-; Updates time variable
-; Parameter:  -
-; Return:     -
-;
+; Internal function: combineStrings
+; Purpose: Combines three strings (scndsTXT, minsTXT, hrsTXT) into the format HH:MM:SS\n. 
+;          If the 12-hour format is selected, it will add "am" or "pm" accordingly to the resulting string.
+; Parameter: -
+; Return: -
+; Registers: Unchanged (when function returns)
 ; BEGIN SECTION COMBINESTRINGS  
 combineStrings:
    ; Uses  variables scndsTXT, minsTXT, hrsTXT
@@ -424,10 +446,4 @@ combineStrings:
    ENDIF
 ;
 ; END SECTION COMBINESTRINGS  
-;**************************************************************      
-  
-  
-
-
-
-  
+;**************************************************************
