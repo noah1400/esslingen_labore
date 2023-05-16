@@ -1,0 +1,111 @@
+  XDEF  hexToASCII
+  
+.data: SECTION
+ val:     DS.W    1
+  
+
+.const: SECTION
+H2A:    DC.B  "0123456789ABCDEFG"
+
+.init: SECTION
+
+  ; Description: This assembly function converts a 16-bit value passed in register D 
+  ;              to its corresponding hex string representation and saves 
+  ;              it to the location pointed to by the string pointer passed in register x.
+
+  ; Parameters:
+
+  ; Register D: A 16-bit value to be converted to its hex string representation.
+  ; Register x: A pointer to a string where the resulting hex string will be stored.   
+
+hexToASCII:
+    
+      ; val: 16-bit in register D
+      ; string: pointer to a location in RAM that is large enough to hold the result
+      
+      ; Save registers to stack
+      PSHX
+      PSHY
+      PSHA
+      PSHB
+      
+      STD   val
+      
+      ; Place "0x" at the beginning of the string
+      LDAA  #$0030 ; '0'
+      STAA  1, X+
+      LDAA  #$0078 ; 'x'
+      STAA  1, X+
+      
+      ; Convert each nibble to ASCII and append to the string
+      ; First nibble ( string[2] = H2A[(val >> 12) & 0xF]; )
+      LDY   #H2A
+      LDD   val
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      ANDB  #$000F  
+      ABY
+      LDAB  0,  Y
+      STAB  1,  X+
+      
+      ; Second nibble ( string[3] = H2A[(val >> 8) & 0xF]; )
+      LDY   #H2A
+      LDD   val
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      ANDB  #$000F
+      ABY
+      LDAB  0,  Y
+      STAB  1,  X+
+      
+      ; Third nibble ( string[4] = H2A[(val >> 4) & 0xF]; )
+      LDY   #H2A
+      LDD   val
+      LSRD
+      LSRD
+      LSRD
+      LSRD
+      ANDB  #$000F
+      ABY
+      LDAB  0,  Y
+      STAB  1,  X+
+      
+      ; Last nibble ( string[5] = H2A[ val & 0xF]; )
+      LDY   #H2A
+      LDD   val
+      ANDB  #$000F
+      ABY
+      LDAB  0,  Y
+      STAB  1,  X+
+      
+      ; ADD null terminator
+      CLRB
+      STAB  0,  X
+         
+      ; Restore registers from stack
+      PULB
+      PULA
+      PULY
+      PULX  ; Restore beginning of string
+      
+      ; Return from subroutine
+      RTS
+      
+
+  
