@@ -1,6 +1,6 @@
 # Objekt Orientierte Systeme 1
 
-Bei manchen Laboraufgaben werden je nach Semester die main-Methoden leicht geändert (z.B. statt deutsch wird englisch benutzt) das Schema ist aber meistens trotzdem gleich. Sie müssen also evtl. funktionsnamen und terminal Ausgaben anpassen. Beachte das, wenn eine main-Methode gegeben ist, diese meistens nicht geändert werden.
+Bei manchen Laboraufgaben werden je nach Semester die main-Methoden leicht geändert (z.B. statt deutsch wird englisch benutzt) das Schema ist aber meistens trotzdem gleich. Sie müssen also evtl. funktionsnamen und terminal Ausgaben anpassen. Beachte das, wenn eine main-Methode gegeben ist, diese meistens nicht geändert werden dürfen.
 
 ## Note
 
