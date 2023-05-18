@@ -24,6 +24,12 @@ initThermo:
   rts
   
 
+; Public interface function: updateThermo ... reads and converts Analog value of thermometer
+; string to LCD 
+; Parameter:
+; Y ... pointer points to adress where result string is to be stored
+; Return: -
+; Registers: X points to result string address
 updateThermo: ;once per second convertADC is called
   PSHB
   PSHY
