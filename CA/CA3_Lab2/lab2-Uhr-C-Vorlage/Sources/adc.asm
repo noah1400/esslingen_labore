@@ -13,12 +13,26 @@
 
 .init: SECTION
 
+
+; Public interface function: initADC ... Initialize ACD (called
+; once in main.c before using the ADC) 
+; Parameter: -
+; Return: -
+; Registers: Unchanged (when function returns
 initADC:
   MOVB #$C0, ATD0CTL2 ; Enable ATD, no interrupt
   MOVB #$08, ATD0CTL3 ; Single conversion only
   MOVB #$05, ATD0CTL4 ; 10 bit, 2 MHz ATD0 clock
   rts
   
+
+
+; Public interface function: convertADC ... Convert analog values 0...1023 into the corresponding temperature -30°C .. 70°C
+; string to LCD 
+; Parameter:
+; Y ... pointer points to adress of result string
+; Return: correctly formated result string stored in Register Y
+; Registers: Y points to result string address
 
 convertADC:
 
@@ -27,16 +41,16 @@ convertADC:
 wait1:
 ;Wait for End of Conversion (EOC), busy waiting:
   BRCLR ATD0STAT0, #$80, wait1
-  LDD ATD0DR0 ; Read conversion result � D  
+  LDD ATD0DR0 ; Read conversion result à D  
 
 
 
 
 ;######################### Calculation happens here ##################################
   
-  ;STD #initial_measure ;to view value in debugger
+  
 
-;Register D holds 10 bit analog value
+;Register D holds 10 bit analog value --> we need to use EMUL and EDIV
   
   
   PSHY
@@ -73,7 +87,7 @@ wait1:
   
   
   
-formatString:
+formatString: ;results in a string with the format: [SIGN][digit][digit]['C']['°'][0]
 
   LDAA #' '  
   STAA 1, Y+
