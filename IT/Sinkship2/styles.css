@@ -113,6 +113,10 @@ button:hover {
     background-position: -400% -200%;
 }
 
+.usable {
+    background-color: lightgreen;
+}
+
 table {
     margin: 1em auto;
     border-spacing: 0;
