@@ -117,6 +117,10 @@ button:hover {
     background-color: lightgreen;
 }
 
+.disabled {
+    background-color: lightgray;
+}
+
 table {
     margin: 1em auto;
     border-spacing: 0;
@@ -178,4 +182,8 @@ table .submarine-v {
 
 table .selectable:hover {
     background-color: orange;
+}
+
+table .noRemaining {
+    background-color: gray;
 }
