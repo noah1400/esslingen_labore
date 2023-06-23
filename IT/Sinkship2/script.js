@@ -9,14 +9,36 @@ let ship = {
     cfield: null,
     inventory: [],
     selectedShip: null,
+    buildMenu: null,
+    fields: null,
+    playing: false,
+    outputDiv: null,
+    url: "https://www2.hs-esslingen.de/~melcher/internet-technologien/sinkship/?request=",
+    token: null,
+    state: null,
 
     // init
     init: function () {
         document.body.appendChild(this.makeHeader());
         document.body.appendChild(this.makeMain());
         document.body.appendChild(this.makeFooter());
-        this.fillInventory();
+        this.inventory = this.fillInventory();
         this.addShipPlacementHandler(this.pfield);
+        this.addShootHandler(this.cfield);
+        this.state = 0; // not started
+    },
+    addShootHandler: function (field) {
+        let cells = field.cells;
+        let self = this; // Store outer 'this' reference
+
+        for (let i = 0; i < cells.length; i++) {
+            let cell = cells[i];
+            cell.element.addEventListener('click', function () {
+                let x = i % 10;
+                let y = Math.floor(i / 10);
+                self.shootHandler(x, y); // Use the stored 'this' reference
+            });
+        }
     },
     makeHeader: function () {
         let header = document.createElement('header');
@@ -34,28 +56,87 @@ let ship = {
         let main = document.createElement('main');
         let limiter = this.makeLimiter();
         let ctrls = this.makeControls();
-        let fields = this.makeDiv('fields');
+        this.outputDiv = this.makeOutputDiv();
+        this.fields = this.makeDiv('fields');
         this.pfield = this.makeField('playerfield');
         this.cfield = this.makeField('computerfield');
-        fields.appendChild(this.pfield.field);
+        this.fields.appendChild(this.pfield.field);
         //fields.appendChild(this.cfield.field);
-        let buildMenu = this.makeBuildMenu();
-        fields.appendChild(buildMenu);
+        this.buildMenu = this.makeBuildMenu();
+        this.fields.appendChild(this.buildMenu);
         limiter.appendChild(ctrls);
-        limiter.appendChild(fields);
+        limiter.appendChild(this.outputDiv);
+        limiter.appendChild(this.fields);
         main.appendChild(limiter);
         return main;
     },
+    disableButton: function (id) {
+        document.getElementById(id).disabled = true;
+    },
+    enableButton: function (id) {
+        document.getElementById(id).disabled = false;
+    },
     makeControls: function () {
         let ctrls = this.makeDiv('controls');
-        let btn1 = this.makeButton('Build');
-        let btn2 = this.makeButton('Play');
+        let btn1 = this.makeButton('Build', 'btn-build');
+        let btn2 = this.makeButton('Play', 'btn-play');
+        let btn3 = this.makeButton('Auto Place', 'btn-auto-place');
+        btn2.disabled = true;
+        btn1.addEventListener('click', () => {
+            this.buildButtonClicked();
+        });
+        btn2.addEventListener('click', () => {
+            this.playButtonClicked();
+        });
+        btn3.addEventListener('click', () => {
+            this.autoPlacement();
+        });
+
         ctrls.appendChild(btn1);
+        ctrls.appendChild(btn3);
         ctrls.appendChild(btn2);
         return ctrls;
     },
-    makeButton: function (label) {
+    buildButtonClicked: function () {
+        this.disableButton('btn-build');
+        this.disableButton('btn-play');
+        for (const ship of this.inventory) {
+            this.removeShip(this.pfield, ship);
+            ship.placed = false;
+            this.updatePlacementCells();
+        }
+        if (this.playing == true) {
+            this.fields.removeChild(this.cfield.field);
+            this.fields.appendChild(this.buildMenu);
+            this.updatePlacementCells();
+        }
+        this.pfield.cells.forEach(cell => {
+            cell.element.classList = 'cell';
+        });
+        this.playing = false;
+        this.state = 0; // not started
+        this.enableButton('btn-auto-place');
+        this.enableButton('btn-build');
+    },
+    playButtonClicked: function () {
+        this.disableButton('btn-build');
+        this.disableButton('btn-play');
+        this.disableButton('btn-auto-place');
+        this.fields.removeChild(this.buildMenu);
+        this.fields.appendChild(this.cfield.field);
+        this.playing = true;
+        this.pfield.cells.forEach(cell => {
+            if (!cell.used) {
+                cell.element.classList.add('water');
+            }
+
+        });
+        this.sendStartRequest();
+        this.state = 1; // player shooting
+    },
+    makeButton: function (label, id) {
         let btn = document.createElement('button');
+        btn.id = id;
         btn.innerHTML = label;
         return btn;
     },
@@ -107,7 +188,7 @@ let ship = {
         };
     },
     fillInventory: function () {
-        this.inventory = [];
+        let inventory = [];
         const shipData = [
             { type: 'Battleship', size: 5, hits: [false, false, false, false, false] },
             { type: 'Cruiser', size: 4, hits: [false, false, false, false] },
@@ -129,8 +210,9 @@ let ship = {
                 y: 0,
                 placed: false
             };
-            this.inventory.push(newShip);
+            inventory.push(newShip);
         });
+        return inventory;
     },
     updatePlacementCells: function () {
         const remaining = this.remainingShips();
@@ -421,6 +503,7 @@ let ship = {
             const cell = field.getCell(x, y);
             cell.element.classList = ["cell"];
             cell.used = false;
+            this.disableButton('btn-play');
         }
     },
     placementHandler: function (x, y, ship) {
@@ -433,8 +516,14 @@ let ship = {
             this.resetCells(this.pfield);
             this.selectedShip = null;
             this.updatePlacementCells();
-        } else if (!ship) {
+            remaining = this.remainingShips();
+            // if all values of key value pairs are 0 all ships are placed
+            if (Object.values(remaining).every(v => v === 0)) {
+                this.enableButton('btn-play');
+            }
+        } else if (!ship && !this.playing) {
             let ship = this.getShipAtPosition(x, y);
+            console.log(ship);
             if (ship) {
                 this.removeShip(this.pfield, ship);
                 ship.placed = false;
@@ -442,4 +531,145 @@ let ship = {
             }
         }
     },
+    shootHandler: function (x, y) {
+        if (this.state == 1) this.shoot(x, y);
+    },
+    autoPlacement: function () {
+        // Clear Inventory
+        // And remove all ships
+        // place all ships randomly
+        // update inventory
+
+        this.inventory.forEach(ship => {
+            ship.placed = false;
+            this.removeShip(this.pfield, ship);
+        }
+        );
+        this.pfield.cells.forEach(cell => {
+            cell.element.classList = ["cell"];
+            cell.used = false;
+        });
+        this.inventory.forEach(ship => {
+            ship.orientation = Math.floor(Math.random() * 2) === 0 ? 'h' : 'v';
+            let usableCells = this.getUsableCells(this.pfield, ship.size, ship.orientation);
+            let randomCell = usableCells[Math.floor(Math.random() * usableCells.length)];
+            this.launchShip(this.pfield, randomCell.x, randomCell.y, ship.size, ship.orientation);
+            ship.x = randomCell.x;
+            ship.y = randomCell.y;
+            ship.placed = true;
+            this.resetCells(this.pfield);
+        });
+
+        this.selectedShip = null;
+        this.updatePlacementCells();
+        this.enableButton('btn-play');
+    },
+    makeOutputDiv: function () {
+        let outputDiv = document.createElement('div');
+        outputDiv.classList.add('outputDiv');
+        outputDiv.id = 'output';
+        return outputDiv;
+    },
+
+    sendStartRequest: function () {
+        payload = "start&userid=" + "noscit00";
+        let self = this;
+        fetch(this.url + payload)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                self.token = data.token;
+                self.outputDiv.innerHTML = data.statusText;
+                self.state = data.state;
+            }
+            );
+    },
+    shoot: function (x, y) {
+        console.log("shoot")
+        payload = "shoot&x=" + x + "&y=" + y + "&token=" + this.token;
+        let self = this;
+        fetch(this.url + payload)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                self.outputDiv.innerHTML = data.statusText;
+                self.state = data.state;
+                if (data.result == 1 || data.result == 2)
+                    self.cfield.getCell(x, y).element.classList = ["cell hit"];
+                else if (data.result == 0)
+                    self.cfield.getCell(x, y).element.classList = ["cell water"];
+                else if (data.result == 4) {
+                    self.cfield.getCell(x, y).element.classList = ["cell hit"];
+                    self.outputDiv.innerHTML = "You won!";
+                    self.state = 0;
+                }
+                if (data.state != 1)
+                    self.getShotCoordinates();
+            }
+            );
+
+    },
+    checkHit: function (x, y) {
+        console.log("checkHit")
+        let ship = this.getShipAtPosition(x, y);
+        if (ship) {
+            if (ship.orientation === 'h') {
+                hitIndex = x - ship.x;
+            } else {
+                hitIndex = y - ship.y;
+            }
+            ship.hits[hitIndex] = true;
+            this.pfield.getCell(x, y).element.classList = ["cell hit"];
+            if (ship.hits.every(v => v === true)) {
+                this.sendShipSunk();
+            } else {
+                this.sendHit();
+            }
+        } else {
+            this.sendMiss();
+        }
+    },
+    getShotCoordinates: function () {
+        console.log("getShotCoordinates")
+        payload = "getshotcoordinates&token=" + this.token;
+        let self = this;
+        fetch(this.url + payload)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                self.outputDiv.innerHTML = data.statusText;
+                self.state = data.state;
+                self.checkHit(data.x, data.y);
+            }
+            );
+    },
+    sendResult: function (result) {
+        payload = "sendingresult&result=" + result + "&token=" + this.token;
+        let self = this;
+        fetch(this.url + payload)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                self.outputDiv.innerHTML = data.statusText;
+                self.state = data.state;
+                if (data.state == 2)
+                    self.getShotCoordinates();
+            }
+            );
+    },
+    sendHit: function () {
+        console.log("sendHit")
+        this.sendResult(1);
+    },
+    sendMiss: function () {
+        console.log("sendMiss")
+        this.sendResult(0);
+    },
+    sendShipSunk: function () {
+        console.log("sendShipSunk")
+        this.sendResult(2);
+    },
+
+    
+
 };

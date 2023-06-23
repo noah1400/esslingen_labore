@@ -83,6 +83,11 @@ button:hover {
     background-position: -100% 0;
 }
 
+.hit {
+    background-color: red;
+    background-position: -200% 0;
+}
+
 .left {
     background-color: lightblue;
     background-position: 0 -100%;
@@ -186,4 +191,11 @@ table .selectable:hover {
 
 table .noRemaining {
     background-color: gray;
+}
+
+.outputDiv {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    min-height: 100px;
 }
