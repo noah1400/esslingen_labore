@@ -599,9 +599,7 @@ let ship = {
                 else if (data.result == 0)
                     self.cfield.getCell(x, y).element.classList = ["cell water"];
                 else if (data.result == 4) {
-                    self.cfield.getCell(x, y).element.classList = ["cell hit"];
-                    self.outputDiv.innerHTML = "You won!";
-                    self.state = 0;
+                    this.endGame("Player won");
                 }
                 if (data.state != 1)
                     self.getShotCoordinates();
@@ -621,7 +619,7 @@ let ship = {
             ship.hits[hitIndex] = true;
             this.pfield.getCell(x, y).element.classList = ["cell hit"];
             if (ship.hits.every(v => v === true)) {
-                this.sendShipSunk();
+                this.endGameOrShipSunk();
             } else {
                 this.sendHit();
             }
@@ -669,7 +667,43 @@ let ship = {
         console.log("sendShipSunk")
         this.sendResult(2);
     },
+    endGameOrShipSunk: function () {
+        let allSunk = true;
+        this.inventory.forEach(ship => {
+            if (!ship.hits.every(v => v === true)) {
+                allSunk = false;
+            }
+        }
+        );
+        if (allSunk) {
+            this.endGame("Computer won");
+        } else {
+            this.sendShipSunk();
+        }
+    },
 
+    endGame: function (text) {
+
+        this.state = 0;
+        this.playing = false;
+
+        // clear body
+        document.body.innerHTML = "";
+        // create new div
+        let overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        overlay.id = 'overlay';
+        let endDiv = document.createElement('div');
+        endDiv.classList.add('endDiv');
+        endDiv.id = 'endDiv';
+
+        let endText = document.createElement('h1');
+        endText.innerHTML = text;
+        endDiv.appendChild(endText);
+
+        overlay.appendChild(endDiv);
+        document.body.appendChild(overlay);
+    }
     
 
 };
