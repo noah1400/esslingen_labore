@@ -1,0 +1,226 @@
+* {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(130deg, #9198e5, #332828, #9198e5);
+}
+
+main {
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+header {
+    height: 10%;
+}
+
+footer {
+    padding: .3em;
+}
+
+.limiter {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.controls {
+    width: 80%;
+    margin: 1em auto;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin: 1em auto;
+    width: 20%;
+    padding: 0.5em;
+    border-radius: 7px;
+    border: 1px solid black;
+}
+
+button:hover {
+    background-color: #e5e5e5;
+}
+
+.fields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.field {
+    background-color: white;
+    width: max(25vw, 400px);
+    height: max(25vw, 400px);
+    border: 1px solid black;
+    margin: .5em;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.cell {
+    border: 1px solid black;
+    width: calc(10% - 2px);
+    height: calc(10% - 2px);
+    float: left;
+    background-image: url('images/backgrounds.svg');
+    background-size: 500% 400%;
+    background-position: 0 0;
+}
+
+.water {
+    background-color: lightblue;
+    background-position: -100% 0;
+}
+
+.hit {
+    background-color: red;
+    background-position: -200% 0;
+}
+
+.left {
+    background-color: lightblue;
+    background-position: 0 -100%;
+}
+
+.horizontal {
+    background-color: lightblue;
+    background-position: -100% -100%;
+}
+
+.right {
+    background-color: lightblue;
+    background-position: -200% -100%;
+}
+
+.top {
+    background-color: lightblue;
+    background-position: -400% 0;
+}
+
+.vertical {
+    background-color: lightblue;
+    background-position: -400% -100%;
+}
+
+.bottom {
+    background-color: lightblue;
+    background-position: -400% -200%;
+}
+
+.usable {
+    background-color: lightgreen;
+}
+
+.disabled {
+    background-color: lightgray;
+}
+
+table {
+    margin: 1em auto;
+    border-spacing: 0;
+}
+
+/* first child */
+table tr td:first-child {
+    text-align: center;
+}
+
+table tr td:last-child {
+    text-align: center;
+}
+
+th {
+   text-align: left; 
+}
+
+th, td {
+    padding: 0.7em;
+}
+
+.battleship-v, .battleship-h,
+.cruiser-v, .cruiser-h,
+.destroyer-v, .destroyer-h,
+.submarine-v, .submarine-h {
+    width: 20px;
+    background-image: url('images/backgrounds.svg');
+    background-size: 500% 400%;
+}
+
+table .battleship-h {
+    background-position: 0 -200%;
+}
+table .battleship-v {
+    background-position: 0 -300%;
+}
+
+table .cruiser-h {
+    background-position: -100% -200%;
+}
+table .cruiser-v {
+    background-position: -100% -300%;
+}
+
+table .destroyer-h {
+    background-position: -200% -200%;
+}
+table .destroyer-v {
+    background-position: -200% -300%;
+}
+
+table .submarine-h {
+    background-position: -300% -200%;
+}
+table .submarine-v {
+    background-position: -300% -300%;
+}
+
+table .selectable:hover {
+    background-color: orange;
+}
+
+table .noRemaining {
+    background-color: gray;
+}
+
+.outputDiv {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    min-height: 100px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+.endDiv {
+    /* Center Div */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Other */
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    min-width: 250px;
+    min-height: 200px;
+    padding: 1em;
+    text-align: center;
+}
