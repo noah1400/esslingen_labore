@@ -1,0 +1,19 @@
+<?php
+
+use function Core\base_path;
+
+
+return $config = [
+    "app" => [
+        "name" => "SWB_DB2_Projekt",
+    ],
+    "db" => [
+        "connection" => "sqlsrv",
+        "host" => "---------------",
+        "name" => "---------------",
+        "username" => "------------",
+        "password" => "------------"
+    ],
+    "debug" => "false",
+    "url" => "http://localhost:8080"
+    ];
