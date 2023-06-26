@@ -38,7 +38,7 @@ class Route {
         }
 
         $pattern = preg_replace('/\//', '\/', $this->uri);
-        $pattern = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z0-9]+)', $pattern);
+        $pattern = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[A-Za-z0-9\$\-_\.\+!\*\'\(\)]+)', $pattern);
         $pattern = '/^' . $pattern . '$/i';
 
         debug("Pattern: {$pattern}");
