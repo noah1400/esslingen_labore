@@ -2,5 +2,6 @@
 
 Inventory Management System with extremely limited functionality
 
-## Framework:
+## Framework
+
 This application uses the php framework [PHPFrame](https://github.com/noah1400/PHPFrame)
