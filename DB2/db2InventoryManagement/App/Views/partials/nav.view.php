@@ -14,8 +14,8 @@ use function Core\route;
       <div class="flex gap-x-12">
         <a href="<?= route('parts.index') ?>" class="text-sm font-semibold leading-6 text-gray-900">Parts</a>
         <a href="<?= route('parts.create') ?>" class="text-sm font-semibold leading-6 text-gray-900">Add new Part</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
+        <!-- <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a> -->
       </div>
     </div>
   </nav>
