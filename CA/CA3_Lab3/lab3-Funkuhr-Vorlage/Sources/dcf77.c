@@ -31,16 +31,16 @@
 
 // Global variable holding the last DCF77 event
 DCF77EVENT dcf77Event = NODCF77EVENT;
-int DataOk = 0;
-char lastsignal = 0;
+int dataOK = 0;
+char lastSig = 0;
 int Tlow = 0;
 int Tpulse = 0;
 int Tcur = 0;
-int databit[60];
-int secCnt = 0;
+int timedata[60];
+int secCounter = 0;
 const char dow[8][4] = { {"ERR"}, {"Mon"}, {"Tue"}, {"Wed"}, {"Thu"}, {"Fri"}, {"Sat"}, {"Sun"}};
 unsigned char us_on = 0;
-const int maxMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+const int maxDayofMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
 // Modul internal global variables
@@ -88,10 +88,10 @@ void initDCF77(void)
 // Parameter:   -
 // Returns:     -
 void displayDateDcf77(void)
-{   char datum[32];
+{   char date[32];
     
-    (void) sprintf(datum, "%s: %02d.%02d.%04d", dow[dcf77Dow], dcf77Day, dcf77Month, dcf77Year);
-    writeLine(datum, 1);
+    (void) sprintf(date, "%s: %02d.%02d.%04d", dow[dcf77Dow], dcf77Day, dcf77Month, dcf77Year);
+    writeLine(date, 1);
 }
 
 // ****************************************************************************
@@ -102,11 +102,14 @@ void displayDateDcf77(void)
 DCF77EVENT sampleSignalDCF77(int currentTime) {
     DCF77EVENT event = NODCF77EVENT;
     
-    char signal = readPort(); // For real Board use readPort() <------------------------------------------------------------------
+    char signal = readPortSim() | readPort();
+    
+    //char signal = readPort(); // For real Board use readPort() <------------------------------------------------------------------
+    
     
     //clrLED(LED2);
     
-    if (signal != lastsignal && signal == 0) {         // signal is low - falling edge
+    if (signal != lastSig && signal == 0) {         // signal is low - falling edge
         Tpulse = currentTime - Tcur;
         Tcur = currentTime;
         Tlow = 0;
@@ -123,7 +126,7 @@ DCF77EVENT sampleSignalDCF77(int currentTime) {
             event = INVALID;
         }
     } 
-    else if (signal != lastsignal && signal > 0) {
+    else if (signal != lastSig && signal > 0) {
         Tlow = currentTime - Tcur;
         clrLED(LED1);  
         if (Tlow >= 70 && Tlow <= 130) {
@@ -137,7 +140,7 @@ DCF77EVENT sampleSignalDCF77(int currentTime) {
             event = INVALID;
         }      
     }
-    lastsignal = signal;
+    lastSig = signal;
     return event;
 }
 
@@ -149,21 +152,21 @@ DCF77EVENT sampleSignalDCF77(int currentTime) {
 // Returns:     -
 void processEventsDCF77(DCF77EVENT event) {
   if(event == VALIDONE) {
-    databit[secCnt] = 1;
+    timedata[secCounter] = 1;
   } 
   else if(event == VALIDZERO) {
-    databit[secCnt] = 0;
+    timedata[secCounter] = 0;
   } 
   else if(event == VALIDSECOND) {
-    secCnt++;
+    secCounter++;
   }
   else if(event == INVALID) {
-    databit[secCnt] = -1;
+    timedata[secCounter] = -1;
   } 
   else if(event == VALIDMINUTE) {
-    secCnt = 0;
+    secCounter = 0;
     eventMinute();
-    if(DataOk) {
+    if(dataOK) {
       if(us_on) {
         USDE();
       }
@@ -193,7 +196,7 @@ void eventMinute(void) {
   
   //Decode Year
   for(i = 50; i <= 57; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       year = year + bitValue[cnt];
     }
     cnt++;
@@ -202,7 +205,7 @@ void eventMinute(void) {
   
   //Decode Month
   for(i = 45; i <= 49; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       month = month + bitValue[cnt];
     }
     cnt++;
@@ -210,13 +213,13 @@ void eventMinute(void) {
   cnt = 0;
   //Check Month
   if(month < 1 || month > 12) {
-    DataOk = -1;
+    dataOK = -1;
     setLED(LED2);
   }
   
   //Decode DayOfWeek
   for(i = 42; i <= 44; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       dow = dow + bitValue[cnt];
     }
     cnt++;
@@ -224,13 +227,13 @@ void eventMinute(void) {
   cnt = 0;
   //Check DayOfWeek
   if(dow < 1 || dow > 7) {
-    DataOk = -1;
+    dataOK = -1;
     setLED(LED2);
   }
   
   //Decode Day
   for(i = 36; i <= 41; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       day = day + bitValue[cnt];
     }
     cnt++;
@@ -238,13 +241,13 @@ void eventMinute(void) {
   cnt = 0;
   //Check Day
   if(day < 1 || day > 31) {
-    DataOk = -1;
+    dataOK = -1;
     setLED(LED2);
   }
   
   //Decode Hours
   for(i = 29; i <= 34; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       hours = hours + bitValue[cnt];
     }
     cnt++;
@@ -252,13 +255,13 @@ void eventMinute(void) {
   cnt = 0;
   //Check Hours
   if(hours < 0 || hours > 23) {
-    DataOk = -1;
+    dataOK = -1;
     setLED(LED2);
   }
   
   //Decode Minutes
   for(i = 21; i <= 27; i++) {
-    if(databit[i]) {
+    if(timedata[i]) {
       min = min + bitValue[cnt];
     }
     cnt++;
@@ -266,25 +269,25 @@ void eventMinute(void) {
   cnt = 0;
   //Check Minutes
   if(min < 0 || min > 59) {
-    DataOk = -1;
+    dataOK = -1;
     setLED(LED2);
   }
   
   //Parity Check
   //Parity Check Minutes
   for(i = 21; i <= 27; i++) {
-    parMin = parMin + databit[i];
+    parMin = parMin + timedata[i];
   }
   //Parity Check Hours
   for(i = 29; i <= 34; i++) {
-    parHrs = parHrs + databit[i];
+    parHrs = parHrs + timedata[i];
   }
   //Parity Check Date
   for(i = 36; i <= 57; i++) {
-    parDat = parDat + databit[i];
+    parDat = parDat + timedata[i];
   }
    
-  if(parMin % 2 == databit[28] && parHrs % 2 == databit[35] && parDat % 2 == databit[58] && DataOk != -1) {
+  if(parMin % 2 == timedata[28] && parHrs % 2 == timedata[35] && parDat % 2 == timedata[58] && dataOK != -1) {
     dcf77Year = year;
     dcf77Month = month;
     dcf77Dow = dow;
@@ -293,12 +296,12 @@ void eventMinute(void) {
     dcf77Minute = min;
     clrLED(LED2);
     setLED(LED3);
-    DataOk = 1;
+    dataOK = 1;
   } 
   else {
     clrLED(LED3);
     setLED(LED2);
-    DataOk = 0;
+    dataOK = 0;
   }
 }
 
@@ -307,10 +310,10 @@ void eventMinute(void) {
 // Parameter:  
 // Returns:
 void USDE_Pressed() {
-  if(~PTH & 0x08) {
+  if(PTH & 0x08) {      // '~PTH' for board!!!
           us_on = ~us_on;
           USDE();          
-          setClock(dcf77Hour, dcf77Minute, secCnt);
+          setClock(dcf77Hour, dcf77Minute, secCounter);
           displayDateDcf77();
   }         
 }
@@ -394,7 +397,7 @@ void USDE(int tempVal) {
       else {
         dcf77Dow--;
       }
-      if(dcf77Day > maxMonth[dcf77Month]) {
+      if(dcf77Day > maxDayofMonth[dcf77Month]) {
         if(dcf77Month > 11) {
           dcf77Month = 1;
           dcf77Year++;

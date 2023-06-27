@@ -12874,8 +12874,8 @@ initTicker:
         ldab TSCR2
         andb #$f8
     ifdef SIMULATOR
+        orab #5                 ; Speedup clock for debugging in simulator
     else
-        orab #7
     endif
         stab TSCR2
         bclr TCTL1,#TCTL1_CH4   ; Switch timer on

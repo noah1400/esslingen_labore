@@ -69,6 +69,8 @@
 ;   the symbol _HCS12_SERIALMON (defined when compiling for the MONITOR target (=real Dragon12
 ;   hardware) and symbol SIMULATOR (defined, when compiled for the SIMULATOR target).
   IFNDEF _HCS12_SERIALMON
+    IFNDEF SIMULATOR 
+    ENDIF
   ENDIF
 
 
@@ -12900,17 +12902,18 @@ temp1:  ds.b 1
 ; (see Hantroix LCD_Spec.pdf, pg. 4: Software Initialization for 4bit Interfaces
 inidsp1:
   IFDEF  SIMULATOR
+        dc.b 3          ; Nummer of commands
+        dc.b $30        ; Reset char
+        dc.b $30        ; Reset char
+        dc.b $30        ; Reset char
   ELSE
-        dc.b 2          ; Nummer of commands
-        dc.b $33        ; Reset char
-        dc.b $32        ; Reset char
   ENDIF
 ; Sequence 2 will output the commands described below
 inidsp2:
         dc.b 4          ; Number of commands
   IFDEF  SIMULATOR
+        dc.b $38        ; Command Function Set:    8 bit mode, 2 rows, 5 X 7 dot matrix
   ELSE
-        dc.b $28        ; Command Function Set:    4 bit mode, 2 rows, 5 X 7 dot matrix
   ENDIF
         dc.b $0C        ; Command Display Control: display on, cursor off, non blinking
         dc.b $01        ; Command Clear display:   clear display memory, set cursor to home position
@@ -12927,9 +12930,9 @@ DATAMASK: equ   $3C     ; Bit 5...2 on LCD
 REG_SEL:  equ   $01     ; Bit 0 on LCDCTRL: signal RS: 0=reg,    1=data
 
   IFDEF  SIMULATOR
+        LCDCTRL:  equ   PORTA   ; Port LCD control signals
+        ENABLE:   equ   $04     ; Bit 1 on LCDCTRL: signal E:  0=disable 1=enable,
   ELSE
-        LCDCTRL:  equ   PORTK   ; Port LCD control signals
-        ENABLE:   equ   $02     ; Bit 1 on LCDCTRL: signal E:  0=disable 1=enable,
   ENDIF
 
 LCD_LINE0: equ   $80    ; LCD command: set cursor to begin of line 0 (Command Set Display Data RAM Address)
@@ -12950,6 +12953,8 @@ initLCD:  pshd
           movb #$ff, DDRK ; initialize port K as output
           movb #$00, LCDCTRL; ... and set to 0
   IFDEF  SIMULATOR
+          movb #$ff, DDRA ; initialize port A as output
+          movb #$00, LCD  ;   ... and set to 0
   ENDIF
           ldx  #inidsp1   ; x points to initialization command sequence 1
           movb #1, reset_seq; need more delay for first reset seq.
@@ -13088,37 +13093,12 @@ sel_inst: bclr LCDCTRL, REG_SEL
 ; Parameter: a ... byte (data or command) to send to display
 ; Return:    -
   IFDEF  SIMULATOR
-  ELSE
 outputByte:
-          psha              ; save it temporarily
-
-          anda #$f0         ; upper nibble --> A.5...2
-          lsra
-          lsra              ;
-
-          bclr LCD, DATAMASK; output data to PORTK.5..2 without
           bset LCDCTRL, ENABLE  ; set E = 1, i.e. write data to LCD
-          oraa LCD          ; changing other bits in PORTK
-          staa LCD          ; write data to LCD
+          staa LCD
           bclr LCDCTRL, ENABLE  ; set E = 0 again
           jsr  delay_50us       ; delay 50us
-
-          ldaa reset_seq
-          beq  wrtpls
-          jsr  delay_5ms    ; delay for reset sequence
-;
-wrtpls:   pula              ; get the temporarily saved value
-          anda #$0F         ; lower nibble --> A.5...2
-          lsla
-          lsla
-
-          bclr LCD, DATAMASK; output data to PORTK.5..2 without
-          bset LCDCTRL, ENABLE  ; set E = 1, i.e. write data to LCD
-          oraa LCD          ; changing other bits in PORTK
-          staa LCD          ; write data to LCD
-          bclr LCDCTRL, ENABLE  ; set E = 0 again
-          jsr  delay_50us       ; delay 50us
-
           rts
+  ELSE
   ENDIF
 
