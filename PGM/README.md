@@ -8,6 +8,12 @@ Ich empfehlen Ihnen, diese Lösungen als Lernhilfe zu nutzen, um Ihre eigenen F�
 
 Viel Erfolg beim Lernen und Programmieren
 
+| Symbol | Bedeutung |
+| --- | --- |
+| :heavy_check_mark: | Eine funktionierende Lösung existiert |
+| :hourglass: | Eine Lösung existiert, aber sie wurde noch nicht getestet |
+| :x: | Es existiert keine Lösung |
+
 | Semester | Labor 1 | Labor 2 | Labor 3 | Labor 4 | Labor 5 | Labor 6 | Labor 7 | Labor 8 | Labor 9 | Labor 10 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | SS23 | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
