@@ -53,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "postcss": "^8.4.23",
+    "postcss": "^8.4.31",
     "react-router-dom": "^6.11.2"
   }
 }
