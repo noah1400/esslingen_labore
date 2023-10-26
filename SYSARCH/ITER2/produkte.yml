@@ -1,0 +1,6 @@
+- name: Gurke
+  durability: 21
+  baseprice: 5
+- name: Aprikose
+  durability: 4
+  baseprice: 20
