@@ -137,7 +137,7 @@ The PDF Merger script combines multiple PDF files into a single document with co
 ### Command-Line Options
 
 ```
-usage: merge_pdfs.py [-h] (-f FILES [FILES ...] | -d DIRECTORY) [-o OUTPUT] [-r] [-p PATTERN]
+usage: mergePDFs.py [-h] (-f FILES [FILES ...] | -d DIRECTORY) [-o OUTPUT] [-r] [-p PATTERN]
                     [-l] [--reverse] [-b] [-H] [-e] [-v]
 
 Merge multiple PDF files into a single PDF with customizable ordering.
@@ -171,42 +171,42 @@ other options:
 
 **Merge specific PDF files in the given order:**
 ```bash
-python merge_pdfs.py -f file1.pdf file2.pdf file3.pdf -o output.pdf
+python mergePDFs.py -f file1.pdf file2.pdf file3.pdf -o output.pdf
 ```
 
 **Merge all PDFs in a directory (alphabetically):**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -o merged.pdf
+python mergePDFs.py -d /path/to/pdfs -o merged.pdf
 ```
 
 **Merge PDFs recursively with bookmarks:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -r -b -o merged.pdf
+python mergePDFs.py -d /path/to/pdfs -r -b -o merged.pdf
 ```
 
 **Use hierarchical bookmarks reflecting directory structure:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -r -H -o merged.pdf
+python mergePDFs.py -d /path/to/pdfs -r -H -o merged.pdf
 ```
 
 **Remove file extensions from bookmark names:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -r -H -e -o merged.pdf
+python mergePDFs.py -d /path/to/pdfs -r -H -e -o merged.pdf
 ```
 
 **Merge PDFs with a specific pattern:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -p "report_*.pdf" -o reports.pdf
+python mergePDFs.py -d /path/to/pdfs -p "report_*.pdf" -o reports.pdf
 ```
 
 **List files that would be merged without actually merging them:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs -r -l
+python mergePDFs.py -d /path/to/pdfs -r -l
 ```
 
 **Merge in reverse order:**
 ```bash
-python merge_pdfs.py -d /path/to/pdfs --reverse -o reversed.pdf
+python mergePDFs.py -d /path/to/pdfs --reverse -o reversed.pdf
 ```
 
 ### Bookmark Organization
