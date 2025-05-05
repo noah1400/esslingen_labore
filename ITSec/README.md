@@ -3,8 +3,8 @@
 If you saved your Lab-Files as stated in the lab tasks, running these commands will generate the document that you need to upload:
 ```bash
 python3 add_filename_to_pdf.py -m 30 -f 15 -c red --pages all --overwrite -r Safety_Lab
-python3 combine.py -d output -o combined.pdf -r
-python3 combine.py -o ITSec.pdf -f YourLabReport.pdf combined.pdf
+python3 mergePDFs.py -d output -o combined.pdf -r
+python3 mergePDFs.py -o ITSec.pdf -f YourLabReport.pdf combined.pdf
 ```
 
 # PDF Tools Documentation
