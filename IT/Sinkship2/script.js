@@ -701,8 +701,34 @@ let ship = {
         endText.innerHTML = text;
         endDiv.appendChild(endText);
 
+        let newGameButton = document.createElement('button');
+        newGameButton.innerHTML = 'Neues Spiel';
+        newGameButton.style.marginTop = '20px';
+        newGameButton.addEventListener('click', () => {
+            this.resetGame();
+        });
+        endDiv.appendChild(newGameButton);
+
         overlay.appendChild(endDiv);
         document.body.appendChild(overlay);
+    },
+
+    resetGame: function () {
+        // Zurücksetzen aller Spielvariablen
+        this.inventory = [];
+        this.selectedShip = null;
+        this.playing = false;
+        this.token = null;
+        this.state = 0;
+        this.pfield = null;
+        this.cfield = null;
+        this.buildMenu = null;
+        this.fields = null;
+        this.outputDiv = null;
+        
+        // Body leeren und Spiel neu initialisieren
+        document.body.innerHTML = "";
+        this.init();
     }
     
 
